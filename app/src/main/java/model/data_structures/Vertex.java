@@ -1,4 +1,4 @@
-package Model.data_structures;
+package model.data_structures;
 
 public class Vertex<K, V> implements Comparable<Vertex<K, V>>{
 	private K key;

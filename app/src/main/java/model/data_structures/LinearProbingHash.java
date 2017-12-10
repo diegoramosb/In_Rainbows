@@ -1,4 +1,4 @@
-package Model.data_structures;
+package model.data_structures;
 
 import api.IHashTable;
 

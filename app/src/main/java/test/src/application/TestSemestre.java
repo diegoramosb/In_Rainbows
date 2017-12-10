@@ -1,4 +1,4 @@
-package com.example.diego.inrainbows;
+package test.src.application;
 
 import junit.framework.TestCase;
 

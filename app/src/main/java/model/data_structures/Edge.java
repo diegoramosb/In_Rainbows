@@ -1,4 +1,4 @@
-package Model.data_structures;
+package model.data_structures;
 /**
  * Clase que representa un eje con peso de un grafo no dirigido
  * Implementaci�n basada en: https://algs4.cs.princeton.edu/43mst/Edge.java.html

@@ -1,39 +1,71 @@
-package com.example.diego.inrainbows;
+package model.application;
 
 /**
  * Created by diego on 31/05/2017.
+ * This class represents a subject
  */
+public class Subject {
 
-public class Materia extends Nodo{
+    /**
+     * Subject name
+     */
+    private String name;
 
-    private double creditos;
+    /**
+     * Amount of credits the subject is worth
+     */
+    private double credits;
 
-    private int horasSemanales;
+    /**
+     * Total expected weekly hours of study
+     */
+    private int totalHours;
 
-    private double horasClase;
+    /**
+     * Weekly hours of class
+     */
+    private double classHours;
 
-    private double horasExtra;
+    /**
+     * Extra expected hours of study (hours without counting class)
+     */
+    private double extraHours;
 
-    public double horasEstudiadasDia;
+    /**
+     * Actual studied hours on this day
+     */
+    public double studiedHoursDay;
 
-    private double horasEstudiadasSemana;
+    /**
+     * Actual studied hours this week
+     */
+    private double studiedHoursWeek;
 
-    private double horasEstudiadasSemestre;
+    /**
+     * Actual studied hours this semester
+     */
+    private double studiedHoursSemester;
 
+    /**
+     * Creates a new subject, total hours are number of credits * 3 by default, extra hours are total hours - class hours.
+     * @param pName Subject name
+     * @param pCredits Amount of credits subject is worth
+     * @param pClassHours Weekly hours of class of this subject
+     * @throws IllegalArgumentException If any argument is invalid
+     */
+    public Subject(String pName, int pCredits, double pClassHours ) throws IllegalArgumentException {
+        if( pName != "" && pName != " " && pName != null)
+            name = pName;
+        else throw new IllegalArgumentException("Subject name not valid.");
+        if( pCredits > 0.0 )
+            credits = pCredits;
+        else throw new IllegalArgumentException("A subject must have at least 1 credit.");
+        if( pClassHours > 0.0 )
+            classHours = pClassHours;
+        else throw new IllegalArgumentException("A subject must have at least 1 weekly hour of class.");
 
-    public Materia( String pNombre, int pCreditos, double pHorasClase ){
-
-        super( pNombre );
-
-        creditos = pCreditos;
-        horasClase = pHorasClase;
-        horasSemanales = pCreditos * 3;
-        horasExtra = horasSemanales - horasClase;
-
-        anterior = null;
-        siguiente = null;
-
-        verificarInvariante();
+        totalHours = pCredits * 3;
+        extraHours = totalHours - classHours;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -109,35 +141,35 @@ public class Materia extends Nodo{
     //----------------------------------------------------------------------------------------------
 
     public double darCreditos(){
-        return creditos;
+        return credits;
     }
 
     public int darHorasSemanales(){
-        return horasSemanales;
+        return totalHours;
     }
 
     public double darHorasClase(){
-        return horasClase;
+        return classHours;
     }
 
     public double darHorasExtra(){
-        return horasExtra;
+        return extraHours;
     }
 
     public double darHorasEstudiadasDia(){
-        return horasEstudiadasDia;
+        return studiedHoursDay;
     }
 
     public double darHorasEstudiadasSemana(){
-        return horasEstudiadasSemana;
+        return studiedHoursWeek;
     }
 
     public double darHorasEstudiadasSemestre(){
-        return horasEstudiadasSemestre;
+        return studiedHoursSemester;
     }
 
     public void cambiarHorasClase( double pHorasClase ){
-        horasClase = pHorasClase;
+        classHours = pHorasClase;
     }
 
     public boolean cambiarNota( String pNombre, double pCalificacion ) throws Exception {
@@ -151,35 +183,35 @@ public class Materia extends Nodo{
       }
 
     public void cambiarCreditos( int pCreditos){
-        creditos = pCreditos;
+        credits = pCreditos;
     }
 
     public void restarHorasEstudiadasDia( double pHorasARestar){
-        horasEstudiadasDia -= pHorasARestar;
+        studiedHoursDay -= pHorasARestar;
     }
 
     public void sumarHorasEstudiadasDia( double pHorasASumar ){
-        horasEstudiadasDia += pHorasASumar;
+        studiedHoursDay += pHorasASumar;
     }
 
     public void sumarHorasEstudiadasSemana(){
-        horasEstudiadasSemana += horasEstudiadasDia;
+        studiedHoursWeek += studiedHoursDay;
     }
 
     public void sumarHorasEstudiadasSemestre(){
-        horasEstudiadasSemestre += horasEstudiadasSemana;
+        studiedHoursSemester += studiedHoursWeek;
     }
 
     public String toString(){
         //TODO pensar en un toString para materia.
-        return nombre + ", " + creditos + " c, ";
+        return nombre + ", " + credits + " c, ";
     }
 
     private void verificarInvariante(){
-        assert ( horasSemanales > 0 ) : "El número de horas semanales debe ser positivo";
-        assert ( horasClase > 0 ) : "El número de horas de clase debe ser positivo";
-        assert ( horasSemanales > horasClase ) : "El número de horas semanales debe ser mayor al número de horas de clase";
-        assert ( horasExtra > 0 ) : "El número de horas extra debe ser mayor a cero";
+        assert ( totalHours > 0 ) : "El número de horas semanales debe ser positivo";
+        assert ( classHours > 0 ) : "El número de horas de clase debe ser positivo";
+        assert ( totalHours > classHours) : "El número de horas semanales debe ser mayor al número de horas de clase";
+        assert ( extraHours > 0 ) : "El número de horas extra debe ser mayor a cero";
         assert( darSumaPorcentajesNotasEntregadas() >= 100.0 ) : "Los porcentajes de las notas deben sumar por lo menos 100%";
     }
 }

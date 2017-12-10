@@ -1,6 +1,4 @@
-package com.example.diego.inrainbows;
-
-import java.util.ArrayList;
+package model.application;
 
 /**
  * Created by diego on 6/06/2017.

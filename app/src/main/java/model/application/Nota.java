@@ -1,4 +1,4 @@
-package com.example.diego.inrainbows;
+package model.application;
 
 /**
  * Created by diego on 1/06/2017.

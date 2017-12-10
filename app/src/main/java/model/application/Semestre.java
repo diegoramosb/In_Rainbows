@@ -1,4 +1,4 @@
-package com.example.diego.inrainbows;
+package model.application;
 
 import java.util.Calendar;
 
@@ -42,7 +42,7 @@ public class Semestre extends Nodo{
 
         Nodo actual = darPrimerHijo();
         while( actual != null ){
-            creditos += ((Materia) actual).darCreditos();
+            creditos += ((Subject) actual).darCreditos();
             actual = actual.darSiguiente();
         }
 
@@ -72,7 +72,7 @@ public class Semestre extends Nodo{
         Nodo actual = darPrimerHijo();
         double sumaNotas = 0;
         while( actual != null ){
-            sumaNotas += ((Materia) actual ).calcularNota();
+            sumaNotas += ((Subject) actual ).calcularNota();
             actual = actual.darSiguiente();
         }
         promedioSemestre = sumaNotas / creditos;

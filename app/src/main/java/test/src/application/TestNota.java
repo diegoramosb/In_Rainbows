@@ -1,6 +1,8 @@
-package com.example.diego.inrainbows;
+package test.src.application;
 
 import junit.framework.TestCase;
+
+import model.application.Nota;
 
 /**
  * Created by diego on 6/06/2017.
