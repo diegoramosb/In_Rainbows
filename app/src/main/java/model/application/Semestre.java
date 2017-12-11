@@ -41,10 +41,10 @@ public class Semestre extends Nodo{
         semanaFin = fechaFin.getWeekYear();
 
         Nodo actual = darPrimerHijo();
-        while( actual != null ){
-            creditos += ((Subject) actual).darCreditos();
-            actual = actual.darSiguiente();
-        }
+//        while( actual != null ){
+//            creditos += ((Subject) actual).darCreditos();
+//            actual = actual.darSiguiente();
+//        }
 
     }
 
@@ -69,13 +69,13 @@ public class Semestre extends Nodo{
     }
 
     public void calcularPromedioSemestre(){
-        Nodo actual = darPrimerHijo();
-        double sumaNotas = 0;
-        while( actual != null ){
-            sumaNotas += ((Subject) actual ).calcularNota();
-            actual = actual.darSiguiente();
-        }
-        promedioSemestre = sumaNotas / creditos;
+//        Nodo actual = darPrimerHijo();
+//        double sumaNotas = 0;
+//        while( actual != null ){
+//            sumaNotas += ((Subject) actual ).calcularNota();
+//            actual = actual.darSiguiente();
+//        }
+//        promedioSemestre = sumaNotas / creditos;
     }
 
     public void VerificarInvariante(){

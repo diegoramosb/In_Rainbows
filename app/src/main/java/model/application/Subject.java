@@ -89,16 +89,17 @@ public class Subject {
      * @return Suma de los porcentajes de las notas entregadas.
      */
     public double darSumaPorcentajesNotasEntregadas(){
-        Nodo actual = primerHijo;
-        double rta = 0;
-
-        while(actual!=null){
-            if( ((Task)actual).darEntregada() == true ) {
-                rta = rta + ((Task) actual).darPorcentajeNotaFinal();
-            }
-            actual = actual.darSiguiente();
-        }
-        return rta;
+//        Nodo actual = primerHijo;
+//        double rta = 0;
+//
+//        while(actual!=null){
+//            if( ((Task)actual).darEntregada() == true ) {
+//                rta = rta + ((Task) actual).darPorcentajeNotaFinal();
+//            }
+//            actual = actual.darSiguiente();
+//        }
+//        return rta;
+        return 0.0;
     }
 
     /**
@@ -109,23 +110,23 @@ public class Subject {
      */
     public double calcularNota(){
         double rta = 0;
-
-        if( darSumaPorcentajesNotasEntregadas() >= 100 ){
-            Nodo actual = primerHijo;
-            while( actual != null ) {
-                rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal()/100.0);
-                actual = actual.darSiguiente();
-            }
-        }
-        else {
-            Nodo actual = primerHijo;
-            while (actual != null) {
-                if(((Task)actual).darEntregada() == true) {
-                    rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal() / darSumaPorcentajesNotasEntregadas());
-                }
-                actual = actual.darSiguiente();
-            }
-        }
+//
+//        if( darSumaPorcentajesNotasEntregadas() >= 100 ){
+//            Nodo actual = primerHijo;
+//            while( actual != null ) {
+//                rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal()/100.0);
+//                actual = actual.darSiguiente();
+//            }
+//        }
+//        else {
+//            Nodo actual = primerHijo;
+//            while (actual != null) {
+//                if(((Task)actual).darEntregada() == true) {
+//                    rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal() / darSumaPorcentajesNotasEntregadas());
+//                }
+//                actual = actual.darSiguiente();
+//            }
+//        }
         return rta;
     }
 
@@ -167,11 +168,11 @@ public class Subject {
 
     public boolean cambiarNota( String pNombre, double pCalificacion ) throws Exception {
         boolean rta = false;
-        Task task = (Task) buscarNodoNombre(pNombre);
-        if( task != null) {
-            task.cambiarCalificacion(pCalificacion);
-            return rta = true;
-        }
+//        Task task = (Task) buscarNodoNombre(pNombre);
+//        if( task != null) {
+//            task.cambiarCalificacion(pCalificacion);
+//            return rta = true;
+//        }
         return rta;
       }
 
