@@ -5,7 +5,7 @@ package test.src.data_structures;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
-import model.data_structures.DoubleLinkedList;
+import model.data_structures.DoublyLinkedList;
 
 
 /**
@@ -13,19 +13,19 @@ import model.data_structures.DoubleLinkedList;
  * @author da.ramos,hd.castellanos
  *
  */
-public class DoubleLinkedListTest extends TestCase {
+public class DoublyLinkedListTest extends TestCase {
 
 	/**
-	 * Atributo que permite probar la clase DoubleLinkedList
+	 * Atributo que permite probar la clase DoublyLinkedList
 	 */
-	private DoubleLinkedList<Double> list;
+	private DoublyLinkedList<Double> list;
 
 	/**
 	 * Crea un escenario con la nueva lista y los 3 nodos
 	 */
 	public void setup1(){
 		try{
-			list = new DoubleLinkedList<>();
+			list = new DoublyLinkedList<>();
 		} catch( Exception e){
 			fail( "No deber�a lanzar excepci�n" );
 		}
@@ -40,7 +40,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * Prueba el metodo get size de la clase DoubleLinkedList
+	 * Prueba el metodo get size de la clase DoublyLinkedList
 	 */
 	public void testGetSize(){
 		setup1();
@@ -53,7 +53,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * Prueba el metodo isEmpty() de la clase DoubleLinkedList
+	 * Prueba el metodo isEmpty() de la clase DoublyLinkedList
 	 */
 	public void testIsEmpty(){
 		setup1();
@@ -63,7 +63,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 	
 	/**
-	 * Prueba el m�todo isOrdered() de la clase DoubleLinkedList.
+	 * Prueba el m�todo isOrdered() de la clase DoublyLinkedList.
 	 */
 	public void testIsOrdered(){
 		setup1();
@@ -80,7 +80,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * Prueba el metodo addAtEnd() de la clase DoubleLinkedList
+	 * Prueba el metodo addAtEnd() de la clase DoublyLinkedList
 	 */
 	public void testAddAtEnd(){
 		setup1();
@@ -96,7 +96,7 @@ public class DoubleLinkedListTest extends TestCase {
 
 
 	/**
-	 * Prueba el metodo addAtK() de la clase DoubleLinkedList
+	 * Prueba el metodo addAtK() de la clase DoublyLinkedList
 	 * y verifica que el nodo se agregue correctamente en el indice deseado
 	 */
 	public void testAddAtK(){
@@ -118,7 +118,7 @@ public class DoubleLinkedListTest extends TestCase {
 		} catch( NoSuchElementException e){
 			assertEquals( "No se agreg� el nodo", 2, list.getSize() );
 		}
-		list = new DoubleLinkedList<Double>();
+		list = new DoublyLinkedList<Double>();
 		list.addAtEnd(5.2);
 		list.addAtEnd(443.3);
 		list.addAtK(53.2, 2);
@@ -127,13 +127,13 @@ public class DoubleLinkedListTest extends TestCase {
 		assertEquals( "El tercer elemento no es el esperado", 53.2, list.getLast() );
 
 
-		list = new DoubleLinkedList<Double>();
+		list = new DoublyLinkedList<Double>();
 		list.addAtEnd(2.3);
 		list.addAtK(1.2, 1);
 		assertEquals( "El primer elemento no es el esperado", 2.3, list.getFirst() );
 		assertEquals( "El segundo elemento no es el esperado", 1.2, list.getElement(1) );
 
-		list = new DoubleLinkedList<Double>();
+		list = new DoublyLinkedList<Double>();
 		list.addAtEnd(1.5);
 		list.addAtEnd(3.36);
 		list.addAtK(2.35, 0);
@@ -143,7 +143,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * Prueba el metodo getElement() de la clase DoubleLinkedList
+	 * Prueba el metodo getElement() de la clase DoublyLinkedList
 	 * y comprueba que recupere el nodo que se encuentra en el indice 
 	 * dado por parametro
 	 */
@@ -167,7 +167,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * prueba el metodo delete() de la clase DoubleLinkedList
+	 * prueba el metodo delete() de la clase DoublyLinkedList
 	 * y comprueba que se elimine correctamente el nodo deseado
 	 */
 	public void testDelete(){
@@ -203,7 +203,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * prueba el metodo deleteAtK() de la clase DoubleLinkedList
+	 * prueba el metodo deleteAtK() de la clase DoublyLinkedList
 	 * y comprueba que se elimine correctamente el nodo que se encuentra en 
 	 * el indice que entra por parametro
 	 */
@@ -237,7 +237,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 
 	/**
-	 * Prueba el metodo postionOf() de la clase DoubleLinkedList
+	 * Prueba el metodo postionOf() de la clase DoublyLinkedList
 	 * y comprueba que se retorne la posicion del nodo dado por parametro
 	 */
 	public void testPositionOf(){
@@ -262,7 +262,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 	
 	/**
-	 * Prueba el m�todo replace de DoubleLinkedList
+	 * Prueba el m�todo replace de DoublyLinkedList
 	 */
 	public void testReplace(){
 		setup1();
@@ -283,7 +283,7 @@ public class DoubleLinkedListTest extends TestCase {
 	}
 	
 	/**
-	 * Prueba el m�todo mergeSort() de DoubleLinkedList.
+	 * Prueba el m�todo mergeSort() de DoublyLinkedList.
 	 */
 	public void testMergeSort(){
 		setup1();

@@ -14,7 +14,7 @@ import api.IList;
  * @author da.ramos, hd.castellanos
  * @param <T> Tipo de datos que va a manejar la lista.
  */
-public class DoubleLinkedList<T extends Comparable<T>> implements IList<T>, Iterable<T>, Comparator<T> {
+public class DoublyLinkedList<T extends Comparable<T>> implements IList<T>, Iterable<T>, Comparator<T> {
 
 	/**
 	 * Primer nodo de la lista.
@@ -36,7 +36,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements IList<T>, Iter
 	/**
 	 * Crea una lista vac�a.
 	 */
-	public DoubleLinkedList(){
+	public DoublyLinkedList(){
 		first = null;
 		last = null;
 		size = 0;
