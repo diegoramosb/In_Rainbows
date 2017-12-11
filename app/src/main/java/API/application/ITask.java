@@ -35,5 +35,5 @@ public interface ITask {
     /**
      * Changes the graded status of the task
      */
-   void setGraded();
+   void setGraded( boolean pGraded );
 }
