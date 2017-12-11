@@ -1,6 +1,6 @@
-RE/Q RE Q R_EQ REQ/ RE_Q R EQ
+ï»¿RE/Q RE Q R_EQ REQ/ RE_Q R EQ
 1. Persistencia.
-  a) ¿Desde un archivo de texto?
+  a) Desde un archivo de texto?
   b) Investigar persistencia en Android.
 2. Materia:
   a. Agregar y quitar materias.

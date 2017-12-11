@@ -80,15 +80,8 @@ public class Subject {
      * @param pEntregada true si la nota ya fue entregada, false si no ha sido entregada.
      * @return true si la nota fue agregada correctamente, false si no.
      */
-    public boolean agregarNota( String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada ){
-        boolean agregada = false;
+    public void addTask(String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada ){
 
-        if( buscarNodoNombre(pNombre) == null){
-            Nota paraAgregar = new Nota( pNombre, pCalificacion, pPorcentajeFinal, pEntregada );
-            agregarNodo(paraAgregar);
-            return agregada = true;
-        }
-        return agregada;
     }
 
     /**
@@ -100,8 +93,8 @@ public class Subject {
         double rta = 0;
 
         while(actual!=null){
-            if( ((Nota)actual).darEntregada() == true ) {
-                rta = rta + ((Nota) actual).darPorcentajeNotaFinal();
+            if( ((Task)actual).darEntregada() == true ) {
+                rta = rta + ((Task) actual).darPorcentajeNotaFinal();
             }
             actual = actual.darSiguiente();
         }
@@ -112,7 +105,7 @@ public class Subject {
      * Retorna la nota actual de la materia. El cálculo se hace así: Si la suma de las notas
      * entregadas es 100 se calcula calificacionActual * (porcentaje / 100). Sino, se calcula
      * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
-     * @return Nota actual de la materia (solo de las notas entregadas)
+     * @return ITask actual de la materia (solo de las notas entregadas)
      */
     public double calcularNota(){
         double rta = 0;
@@ -120,15 +113,15 @@ public class Subject {
         if( darSumaPorcentajesNotasEntregadas() >= 100 ){
             Nodo actual = primerHijo;
             while( actual != null ) {
-                rta += ((Nota) actual).darCalificacion() * (((Nota) actual).darPorcentajeNotaFinal()/100.0);
+                rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal()/100.0);
                 actual = actual.darSiguiente();
             }
         }
         else {
             Nodo actual = primerHijo;
             while (actual != null) {
-                if(((Nota)actual).darEntregada() == true) {
-                    rta += ((Nota) actual).darCalificacion() * (((Nota) actual).darPorcentajeNotaFinal() / darSumaPorcentajesNotasEntregadas());
+                if(((Task)actual).darEntregada() == true) {
+                    rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal() / darSumaPorcentajesNotasEntregadas());
                 }
                 actual = actual.darSiguiente();
             }
@@ -174,9 +167,9 @@ public class Subject {
 
     public boolean cambiarNota( String pNombre, double pCalificacion ) throws Exception {
         boolean rta = false;
-        Nota nota = (Nota) buscarNodoNombre(pNombre);
-        if( nota != null) {
-            nota.cambiarCalificacion(pCalificacion);
+        Task task = (Task) buscarNodoNombre(pNombre);
+        if( task != null) {
+            task.cambiarCalificacion(pCalificacion);
             return rta = true;
         }
         return rta;
@@ -204,14 +197,6 @@ public class Subject {
 
     public String toString(){
         //TODO pensar en un toString para materia.
-        return nombre + ", " + credits + " c, ";
-    }
-
-    private void verificarInvariante(){
-        assert ( totalHours > 0 ) : "El número de horas semanales debe ser positivo";
-        assert ( classHours > 0 ) : "El número de horas de clase debe ser positivo";
-        assert ( totalHours > classHours) : "El número de horas semanales debe ser mayor al número de horas de clase";
-        assert ( extraHours > 0 ) : "El número de horas extra debe ser mayor a cero";
-        assert( darSumaPorcentajesNotasEntregadas() >= 100.0 ) : "Los porcentajes de las notas deben sumar por lo menos 100%";
+        return name + ", " + credits + " c, ";
     }
 }

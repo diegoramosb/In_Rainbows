@@ -4,7 +4,7 @@ package model.application;
  * Created by diego on 1/06/2017.
  */
 
-public class Nota extends Nodo{
+public class Task extends Nodo{
 
     /**
      * Calificación.
@@ -28,7 +28,7 @@ public class Nota extends Nodo{
      * @param pPorcentajeFinal Porcentaje en la nota final.
      * @param pEntregada La nota ha sido entregada o no.
      */
-    public Nota(String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada){
+    public Task(String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada){
 
         super( pNombre );
 
