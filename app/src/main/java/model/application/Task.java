@@ -1,40 +1,51 @@
 package model.application;
 
+import API.application.ITask;
+
 /**
  * Created by diego on 1/06/2017.
  */
 
-public class Task extends Nodo{
+public class Task implements ITask{
 
     /**
-     * Calificación.
+     * Task name.
      */
-    private double calificación;
+    private String name;
 
     /**
-     * Porcentaje de la nota en la definitiva.
+     * Task grade.
      */
-    private double porcentajeNotaFinal;
+    private double grade;
 
     /**
-     * Indica si la nota ha sido entregada o no.
+     * Final subect grade percentage.
      */
-    private boolean entregada;
+    private double percentage;
 
     /**
-     * Crea una nueva nota.
+     * Indicates if task has been delivered.
+     */
+    private boolean delivered;
+
+    /**
+     * Indicates if task has been graded.
+     */
+    private boolean graded;
+
+    /**
+     * Creates a new task.
      * @param pNombre Nombre de la nota.
      * @param pCalificacion Calificación.
      * @param pPorcentajeFinal Porcentaje en la nota final.
      * @param pEntregada La nota ha sido entregada o no.
      */
-    public Task(String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada){
-
-        super( pNombre );
-
-        calificación = pCalificacion;
-        porcentajeNotaFinal = pPorcentajeFinal;
-        entregada = pEntregada;
+    public Task(String pName, double pPercentage){
+        name = pName;
+        percentage = pPercentage;
+        grade = 0;
+        delivered = false;
+        graded = false;
     }
 
     public double darCalificacion(){
@@ -70,5 +81,45 @@ public class Task extends Nodo{
     private void verificarInvariante(){
         assert (calificación >= 0) : "La calificación debe ser positiva.";
         assert ( (porcentajeNotaFinal > 0) && porcentajeNotaFinal <= 100) : "El porcentaje en la nota final no es válido.";
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public void setName(String pName) {
+
+    }
+
+    @Override
+    public double getPercentage() {
+        return 0;
+    }
+
+    @Override
+    public void setPercentage(double pPercentage) {
+
+    }
+
+    @Override
+    public boolean getGraded() {
+        return false;
+    }
+
+    @Override
+    public void setGraded(boolean pGraded) {
+
+    }
+
+    @Override
+    public boolean getDelivered() {
+        return false;
+    }
+
+    @Override
+    public void setDelivered(boolean pDelivered) {
+
     }
 }
