@@ -134,10 +134,22 @@ public interface ISubject {
     Iterable<Task> getNonDeliveredTasks();
 
     /**
+     * @param pTaskName name of the task
+     * @return Task with name pTaskName
+     */
+    Task getTask( String pTaskName );
+
+    /**
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
      * @param pTask new task to be added
      */
     void addTask( Task pTask );
+
+    /**
+     * Deletes task with name pTaskName from the task list of the subject
+     * @param pTaskName name of the task to be deleted
+     */
+    void deleteTask( String pTaskName );
 
     /**
      * Marks the task with name pTaskName to delivered
