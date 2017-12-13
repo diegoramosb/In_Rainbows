@@ -35,91 +35,110 @@ public class Task implements ITask{
 
     /**
      * Creates a new task.
-     * @param pNombre Nombre de la nota.
-     * @param pCalificacion Calificación.
-     * @param pPorcentajeFinal Porcentaje en la nota final.
-     * @param pEntregada La nota ha sido entregada o no.
+     * @param pName task name.
+     * @param pPercentage final grade percentage of the task.
      */
     public Task(String pName, double pPercentage){
         name = pName;
         percentage = pPercentage;
-        grade = 0;
+        grade = -1.0; //Grade set to -1 when task has not been graded
+        //Sets delivered and graded to false by default
         delivered = false;
         graded = false;
     }
 
-    public double darCalificacion(){
-        return calificación;
-    }
-
-    public double darPorcentajeNotaFinal(){
-        return porcentajeNotaFinal;
-    }
-
-    public boolean darEntregada(){
-        return entregada;
-    }
-
-    public void cambiarCalificacion( double pCalificacion )
-    {
-        calificación = pCalificacion;
-    }
-
-    public void cambiarPorcentajeNotaFinal( double pPorcenteje){
-        porcentajeNotaFinal = pPorcenteje;
-    }
-
-    public void cambiarEntregada( boolean pEntregada ){
-        entregada = pEntregada;
-    }
-
+    /**
+     * @return a string indicating the task status
+     */
     public String toString()
     {
-        return super.toString() + ", " + calificación + ", " + porcentajeNotaFinal + "%, " + ((entregada == true)? "Entregada." : "No entregada.");
+        //shows "Grade: 5.0" if task has been graded or "Not graded yet if it hasn't"
+        String gradeString = ((graded)? "Grade: " : "Not graded yet") + ((grade != -1)? "" : grade);
+        //Shows "not delivered yet" if it has not been delivered or Delivered, + gradeString if it has
+        String deliveredString = (delivered)? "Delivered, "  + gradeString : "Not delivered yet";
+        return name + ", " + deliveredString + ", " + percentage + "%, ";
     }
 
-    private void verificarInvariante(){
-        assert (calificación >= 0) : "La calificación debe ser positiva.";
-        assert ( (porcentajeNotaFinal > 0) && porcentajeNotaFinal <= 100) : "El porcentaje en la nota final no es válido.";
-    }
-
+    /**
+     * @return task name
+     */
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
+    /**
+     * @return task grade
+     */
+    @Override
+    public double getGrade() {
+        return grade;
+    }
+
+    /**
+     * Sets the task grade to pGrade
+     */
+    @Override
+    public void setGrade(double pGrade) {
+        grade = pGrade;
+    }
+
+    /**
+     * Sets the task name to pName
+     * @param pName new task name
+     */
     @Override
     public void setName(String pName) {
-
+        name = pName;
     }
 
+    /**
+     * @returns percentage of the Subject that the task is worth
+     */
     @Override
     public double getPercentage() {
-        return 0;
+        return percentage;
     }
 
+    /**
+     * @returns percentage of the Subject that the task is worth
+     */
     @Override
     public void setPercentage(double pPercentage) {
-
+        percentage = pPercentage;
     }
 
+    /**
+     * @returns true if the task has been graded, false otherwise
+     */
     @Override
     public boolean getGraded() {
-        return false;
+        return graded;
     }
 
+    /**
+     * Changes the graded status of the task
+     * @param pGraded new graded status
+     */
     @Override
     public void setGraded(boolean pGraded) {
-
+        graded = pGraded;
     }
 
+    /**
+     * @returns true if the task was delivered by the student, false otherwise
+     */
     @Override
     public boolean getDelivered() {
-        return false;
+        return delivered;
     }
 
+    /**
+     * Changes the delivered status of this task to pDelivered
+     * @param pDelivered new delivered status
+     */
     @Override
     public void setDelivered(boolean pDelivered) {
-
+        delivered = pDelivered;
     }
 }
