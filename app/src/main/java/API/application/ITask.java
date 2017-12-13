@@ -18,7 +18,6 @@ public interface ITask {
 
     /**
      * Sets the task grade to pGrade
-     * @return
      */
     void setGrade( double pGrade );
 
