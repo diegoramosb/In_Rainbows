@@ -1,8 +1,8 @@
 package test.src.data_structures;
 
 import junit.framework.TestCase;
-import Model.data_structures.LinearProbingHash;
-import Model.data_structures.SeparateChainingHash;
+
+import model.data_structures.SeparateChainingHash;
 
 public class SeparateChainigHashTest extends TestCase {
 
