@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.example.diego.inrainbows.R;
 
+import org.joda.time.JodaTimePermission;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -13,5 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        JodaTimeAndroid.init(this);
     }
 }
