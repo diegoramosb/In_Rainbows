@@ -12,6 +12,17 @@ public interface ITask {
     String getName();
 
     /**
+     * @return task grade
+     */
+    double getGrade();
+
+    /**
+     * Sets the task grade to pGrade
+     * @return
+     */
+    void setGrade( double pGrade );
+
+    /**
      * Sets the task name to pName
      * @param pName new task name
      */
