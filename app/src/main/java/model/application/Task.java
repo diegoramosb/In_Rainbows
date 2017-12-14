@@ -3,7 +3,7 @@ package model.application;
 import API.application.ITask;
 
 /**
- * Created by diego on 1/06/2017.
+ * @author diego on 1/06/2017.
  */
 
 public class Task implements ITask{
@@ -12,6 +12,16 @@ public class Task implements ITask{
      * Task name.
      */
     private String name;
+
+    /**
+     * Task tag
+     */
+    private String tag;
+
+    /**
+     * Done status of the task
+     */
+    private boolean done;
 
     /**
      * Task grade.
@@ -40,6 +50,8 @@ public class Task implements ITask{
      */
     public Task(String pName, double pPercentage){
         name = pName;
+        tag = "";
+        done = false;
         percentage = pPercentage;
         grade = -1.0; //Grade set to -1 when task has not been graded
         //Sets delivered and graded to false by default
@@ -93,7 +105,41 @@ public class Task implements ITask{
     }
 
     /**
-     * @returns percentage of the Subject that the task is worth
+     * @return true if the task has been completed, false otherwise
+     */
+    @Override
+    public boolean getDone() {
+        return done;
+    }
+
+    /**
+     * Sets the done status to pDone
+     * @param pDone new done status
+     */
+    @Override
+    public void setDone(boolean pDone) {
+        done = pDone;
+    }
+
+    /**
+     * @return Task tag
+     */
+    @Override
+    public String getTag() {
+        return tag;
+    }
+
+    /**
+     * Sets the task tag to pTag
+     * @param pTag tag to be set
+     */
+    @Override
+    public void setTag(String pTag) {
+        tag = pTag;
+    }
+
+    /**
+     * @return percentage of the Subject that the task is worth
      */
     @Override
     public double getPercentage() {
@@ -101,7 +147,8 @@ public class Task implements ITask{
     }
 
     /**
-     * @returns percentage of the Subject that the task is worth
+     * Sets the percentage of the task to pPercentage
+     * @param pPercentage new percentage of the task
      */
     @Override
     public void setPercentage(double pPercentage) {
@@ -109,7 +156,7 @@ public class Task implements ITask{
     }
 
     /**
-     * @returns true if the task has been graded, false otherwise
+     * @return true if the task has been graded, false otherwise
      */
     @Override
     public boolean getGraded() {
@@ -126,7 +173,7 @@ public class Task implements ITask{
     }
 
     /**
-     * @returns true if the task was delivered by the student, false otherwise
+     * @return true if the task was delivered by the student, false otherwise
      */
     @Override
     public boolean getDelivered() {
