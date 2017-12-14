@@ -7,7 +7,7 @@ package API.application;
  */
 public interface ITask {
     /**
-     * @returns task name
+     * @return task name
      */
     String getName();
 
@@ -18,7 +18,39 @@ public interface ITask {
     void setName( String pName );
 
     /**
-     * @returns percentage of the Subject that the task is worth
+     * @return true if the task has been completed, false otherwise
+     */
+    boolean getDone();
+
+    /**
+     * Sets the done status to pDone
+     * @param pDone new done status
+     */
+    void setDone( boolean pDone );
+
+    /**
+     * @return Task tag
+     */
+    String getTag();
+
+    /**
+     * Sets the task tag to pTag
+     * @param pTag tag to be set
+     */
+    void setTag( String pTag );
+
+    /**
+     * @return task grade
+     */
+    double getGrade();
+
+    /**
+     * Sets the task grade to pGrade
+     */
+    void setGrade( double pGrade );
+
+    /**
+     * @return percentage of the Subject that the task is worth
      */
     double getPercentage();
 
@@ -29,7 +61,7 @@ public interface ITask {
     void setPercentage( double pPercentage );
 
     /**
-     * @returns true if the task has been graded, false otherwise
+     * @return true if the task has been graded, false otherwise
      */
     boolean getGraded();
 
@@ -40,7 +72,7 @@ public interface ITask {
     void setGraded( boolean pGraded );
 
     /**
-     * @returns true if the task was delivered by the student, false otherwise
+     * @return true if the task was delivered by the student, false otherwise
      */
     boolean getDelivered();
 
