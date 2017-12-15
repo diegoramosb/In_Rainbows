@@ -1,4 +1,4 @@
-package API.data_structures;
+package api.data_structures;
 
 /**
  * Abstract Data Type for a list of generic objects

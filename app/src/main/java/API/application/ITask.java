@@ -1,4 +1,4 @@
-package API.application;
+package api.application;
 
 /**
  * @author Diego

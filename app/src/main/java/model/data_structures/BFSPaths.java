@@ -176,7 +176,7 @@ public class BFSPaths<K, V> {
 	
 	/**
 	 * Indica la posici�n de la informaci�n del v�rtice en marked, edgeTo, distTo de acuerdo a vertices
-	 * @param vertex v�rtice del cual se quiere saber su posici�n
+	 * @param key v�rtice del cual se quiere saber su posici�n
 	 * @return posici�n de la informaci�n del v�rtice en todos los arreglos
 	 * @throws NoSuchElementException si no encuentra el v�rtice, nunca deber�a lanzar excepci�n
 	 */

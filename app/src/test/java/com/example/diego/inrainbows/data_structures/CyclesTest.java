@@ -1,7 +1,7 @@
-package test.src.data_structures;
+package com.example.diego.inrainbows.data_structures;
 
 import junit.framework.TestCase;
-import model.data_structures.CC;
+
 import model.data_structures.Cycles;
 import model.data_structures.DirectedGraph;
 import model.data_structures.Vertex;

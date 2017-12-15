@@ -1,6 +1,6 @@
 
 
-package test.src.data_structures;
+package com.example.diego.inrainbows.data_structures;
 
 import java.util.NoSuchElementException;
 

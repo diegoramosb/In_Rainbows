@@ -1,6 +1,6 @@
-package API.data_structures;
+package api.data_structures;
 
-public interface IStack<E>  {
+public interface IStack<E> extends Iterable<E> {
 
 	public void push(E item);
 

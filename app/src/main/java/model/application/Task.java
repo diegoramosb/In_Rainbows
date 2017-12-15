@@ -1,6 +1,6 @@
 package model.application;
 
-import API.application.ITask;
+import api.application.ITask;
 
 /**
  * @author diego on 1/06/2017.

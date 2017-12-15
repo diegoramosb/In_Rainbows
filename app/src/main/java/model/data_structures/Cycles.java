@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.NoSuchElementException;
 
-import model.data_structuresTest.StackTest;
+import model.data_structures.Stack;
 
 
 public class Cycles<K,V> {

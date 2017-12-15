@@ -60,7 +60,7 @@ public class Pomodoro extends Thread {
          */
         @Override
         public void run() {
-            System.out.println( setInterval());
+            System.out.println( setInterval() );
         }
     }
 }

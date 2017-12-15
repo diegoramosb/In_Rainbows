@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import api.IList;
+import api.data_structures.IList;
 
 /**
  * Implementaci�n de una lista doblemente encadenada con referencias a su primer y �ltimo elemento.

@@ -1,6 +1,6 @@
 package model.data_structures;
 
-import api.IHashTable;
+import api.data_structures.IHashTable;
 
 /**
  * Implementaci�n de una tabla de hash con linear probing

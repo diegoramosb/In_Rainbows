@@ -5,7 +5,7 @@ package model.data_structures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import api.IList;
+import api.data_structures.IList;
 
 /**
  * Implementaci�n de una lista doblemente encadenada con referencias a su primer y �ltimo elemento.
@@ -14,7 +14,7 @@ import api.IList;
  * @author da.ramos, hd.castellanos
  * @param <T> Tipo de datos que va a manejar la lista.
  */
-public class Bag<T> implements IList<T>, Iterable<T>{
+public class Bag<T> implements Iterable<T>{
 
 	/**
 	 * Primer nodo de la lista.
@@ -44,7 +44,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * Retorna el tama�o de la lista.
 	 * @return Tama�o de la lista.
 	 */
-	@Override
 	public int getSize() {
 		return size;
 	}
@@ -53,7 +52,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * Indica si la lista est� vac�a.
 	 * @return true si la lista est� vac�a, false de lo contrario.
 	 */
-	@Override
 	public boolean isEmpty() {
 		return size == 0;
 	}
@@ -79,7 +77,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * Agrega un elemento en el �ltimo lugar de la lista encadenada.
 	 * @param pToAdd informaci�n que se va a agregar.
 	 */
-	@Override
 	public void addAtEnd(T pToAdd) {
 		insertAfter(last, pToAdd);
 	}
@@ -135,7 +132,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * @param pToAdd Informaci�n que se va a agregar.
 	 * @param pIndex �ndice de la lista donde se va a agregar el nodo.
 	 */
-	@Override
 	public void addAtK(T pToAdd, int pIndex) {
 		if( pIndex < size ){
 			if( pIndex == 0){
@@ -176,7 +172,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * @param pIndex �ndice del elemento.
 	 * @return Elemento ubicado en el �ndice que entra por par�metro.
 	 */
-	@Override
 	public T getElement(int pIndex) {
 		Node<T> current = null;
 		if( !isEmpty() && pIndex < size && pIndex >= 0){
@@ -210,7 +205,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * Elimina un nodo de la lista.
 	 * @param pNode elimina el nodo que se le pasa por par�metro.
 	 */
-	@Override
 	public void delete( T pNode ) {
 		int position = positionOf( pNode );
 		Node<T> toDelete = getNode( position );
@@ -245,7 +239,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	/**
 	 * Elimina un nodo de la posici�n que entra por par�metro.
 	 */
-	@Override
 	public void deleteAtK(int pIndex) {
 		delete(getElement(pIndex));
 	}
@@ -255,7 +248,6 @@ public class Bag<T> implements IList<T>, Iterable<T>{
 	 * M�todo tomado de "A practical guide to algorithms and data structures using java"
 	 * @return Posici�n del elemento ingresado por par�metro.
 	 */
-	@Override
 	public int positionOf(T pData) {
 		Node<T> current;
 		Integer pos;

@@ -1,4 +1,4 @@
-package API.application;
+package api.application;
 
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;

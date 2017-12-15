@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.NoSuchElementException;
 
-import api.IRedBlackBST;
+import api.data_structures.IRedBlackBST;
 
 /**
  * Implementaci�n de un �rbol rojo negro.

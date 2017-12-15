@@ -1,8 +1,7 @@
-package test.src.data_structures;
+package com.example.diego.inrainbows.data_structures;
 
 import junit.framework.TestCase;
 import model.data_structures.LinearProbingHash;
-import model.data_structures.SequentialSearch;
 
 public class LinearProbingHashTest extends TestCase 
 {

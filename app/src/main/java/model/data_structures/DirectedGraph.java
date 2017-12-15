@@ -2,7 +2,6 @@ package model.data_structures;
 
 import java.util.NoSuchElementException;
 
-import api.IDirectedGraph;
 
 /**
  * https://algs4.cs.princeton.edu/42digraph/Digraph.java.html
@@ -10,7 +9,7 @@ import api.IDirectedGraph;
  * @param <K>
  * @param <V>
  */
-public class DirectedGraph<K, V> implements IDirectedGraph<K, V> {
+public class DirectedGraph<K, V>{
 
 	/**
 	 * N�mero de v�rtices del grafo
@@ -189,7 +188,6 @@ public class DirectedGraph<K, V> implements IDirectedGraph<K, V> {
 	 * @param id llave del v�rtice
 	 * @param info informaci�n del v�rtice
 	 */
-	@Override
 	public void addVertex(K id, V info) {
 		if( V + 1 <= capacity ){
 			if( !containsVertex(id) ){
@@ -209,9 +207,7 @@ public class DirectedGraph<K, V> implements IDirectedGraph<K, V> {
 
 	/**
 	 * Elimina un eje
-	 * @param fromV llave del v�rtice origen
-	 * @param toV llave del v�rtice destino
-	 * @param weight peso del v�rtice
+	 * @param edge eje para eliminar
 	 */
 	public void deleteEdge( DirectedEdge<K> edge ) throws NoSuchElementException{
 		try{
@@ -236,7 +232,6 @@ public class DirectedGraph<K, V> implements IDirectedGraph<K, V> {
 	/**
 	 * Elimina un v�rtice del grafo
 	 * @param id llave del v�rtice
-	 * @param info informaci�n del v�rtice
 	 */
 	public void deleteVertex(K id) throws NoSuchElementException{
 		if( containsVertex(id) ){
@@ -341,10 +336,6 @@ public class DirectedGraph<K, V> implements IDirectedGraph<K, V> {
 		congestion =+ sizeOfEdgesFrom(key);
 		congestion =+ sizeOfEdgesTo(key);
 		return congestion;
-		
-		
-		
-		
 	}
 	
 	
