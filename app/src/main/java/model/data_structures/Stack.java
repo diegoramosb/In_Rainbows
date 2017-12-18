@@ -29,7 +29,29 @@ public class Stack<E> implements IStack<E>, Comparable<Stack<E>>{
 	@NonNull
 	@Override
 	public Iterator<E> iterator() {
-		return null;
+		return new ListIterator<E>(firstE);
+	}
+
+	private class ListIterator<E> implements Iterator<E>{
+		private Node<E> current;
+
+		public ListIterator(Node<E> first) {
+			current = first;
+		}
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public E next() {
+			if( !hasNext() )
+				throw new NoSuchElementException();
+			E element = current.element;
+			current = current.next;
+			return element;
+		}
+
 	}
 
 	/**
