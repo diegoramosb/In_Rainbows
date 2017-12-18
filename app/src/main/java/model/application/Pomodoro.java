@@ -26,7 +26,7 @@ public class Pomodoro extends Thread {
      */
     public Pomodoro( int pInterval ){
         interval = pInterval;
-        timer = new Timer(true);
+        timer = new Timer();
     }
 
     /**
@@ -39,7 +39,7 @@ public class Pomodoro extends Thread {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("current: " + setInterval());
+                System.out.println(setInterval());
             }
         }, 0, period*1000);
     }

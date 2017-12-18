@@ -22,7 +22,6 @@ public class TestPomodoro{
     @Test
     public void testPomodoro(){
         setup1();
-        System.out.println("hello?");
         pomodoro.start();
     }
 }
