@@ -26,6 +26,7 @@ public class Pomodoro extends Thread {
      */
     public Pomodoro( int pInterval ){
         interval = pInterval;
+        timer = new Timer(true);
     }
 
     /**
@@ -33,34 +34,23 @@ public class Pomodoro extends Thread {
      */
     @Override
     public void run(){
-        int delay = 1000;
-        int period = 1000;
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new Task(), delay, period );
+        System.out.println("running");
+        long period = 1;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("current: " + setInterval());
+            }
+        }, 0, period*1000);
     }
 
     /**
      * Decreases the time left by a second and stops the timer when the time is up.
      * @return Time left in the timer
      */
-    public int setInterval(){
+    private int setInterval(){
         if( interval == 1 )
             timer.cancel();
         return --interval;
-    }
-
-    /**
-     * Task class for the timer
-     */
-    private class Task extends TimerTask{
-
-        /**
-         * Calls the setInterval method, which decreases the time interval.
-         * It also prints the time left.
-         */
-        @Override
-        public void run() {
-            System.out.println( setInterval() );
-        }
     }
 }

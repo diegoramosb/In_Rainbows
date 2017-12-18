@@ -16,12 +16,13 @@ public class TestPomodoro{
     Pomodoro pomodoro;
 
     public void setup1(){
-        pomodoro = new Pomodoro(5);
+        pomodoro = new Pomodoro(50);
     }
 
     @Test
     public void testPomodoro(){
         setup1();
+        System.out.println("hello?");
         pomodoro.start();
     }
 }
