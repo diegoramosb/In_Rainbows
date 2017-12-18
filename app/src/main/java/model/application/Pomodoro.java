@@ -10,38 +10,21 @@ import java.util.TimerTask;
 
 public class Pomodoro extends Thread {
 
-    /**
-     * Timer
-     */
-    private Timer timer;
+    int interval;
 
-    /**
-     * Duration of timer
-     */
-    private int interval;
+    Timer timer;
 
-    /**
-     * Creates a new pomodoro that lasts pInterval seconds
-     * @param pInterval Duration of pomodoro in seconds
-     */
-    public Pomodoro( int pInterval ){
-        interval = pInterval;
-        timer = new Timer();
+    public void set(int pSeconds){
+        interval = pSeconds;
     }
 
-    /**
-     * Creates a new timer and runs it
-     */
-    @Override
     public void run(){
         System.out.println("running");
-        long period = 1;
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println(setInterval());
-            }
-        }, 0, period*1000);
+        int period = 1000;
+
+        timer = new Timer();
+
+        timer.scheduleAtFixedRate(new task(),0, period);
     }
 
     /**
@@ -52,5 +35,12 @@ public class Pomodoro extends Thread {
         if( interval == 1 )
             timer.cancel();
         return --interval;
+    }
+
+    private class task extends TimerTask{
+        @Override
+        public void run() {
+            System.out.println(setInterval());
+        }
     }
 }
