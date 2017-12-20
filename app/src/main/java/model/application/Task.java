@@ -223,4 +223,28 @@ public class Task implements ITask{
         if (!(percentage > 0)) throw new AssertionError("Percentage must be a positive value");
         if (!(percentage >= 0)) throw new AssertionError("Percentage cannot be a negative value");
     }
+
+    /**
+     * Indicates if the task is equal to another object
+     * @param o Object to be compared to the task
+     * @return true if the object is equal to the task, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        return name.equals(task.name);
+    }
+
+    /**
+     * Task has code
+     * @return task hash code using its name
+     */
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
