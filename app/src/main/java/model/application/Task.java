@@ -49,11 +49,29 @@ public class Task implements ITask{
      * @param pPercentage final grade percentage of the task.
      * @throws IllegalArgumentException if any parameter is not valid
      */
-    public Task(String pName, double pPercentage) throws IllegalArgumentException {
+    public Task(String pName, double pPercentage) {
         name = pName;
         percentage = pPercentage;
         //All the other properties set by default
         tag = "";
+        done = false;
+        grade = -1.0; //Grade set to -1 when task has not been graded
+        delivered = false;
+        graded = false;
+        assertTask();
+    }
+
+    /**
+     * Creates a new task setting all properties but name, tag and percentage to their default values
+     * @param pName task name.
+     * @param pTag task tag.
+     * @param pPercentage final grade percentage of the task.
+     */
+    public Task(String pName, String pTag, double pPercentage) {
+        name = pName;
+        percentage = pPercentage;
+        //All the other properties set by default
+        tag = pTag;
         done = false;
         grade = -1.0; //Grade set to -1 when task has not been graded
         delivered = false;
@@ -70,9 +88,8 @@ public class Task implements ITask{
      * @param pDone task done status
      * @param pDelivered task delivered status
      * @param pGraded task graded status
-     * @throws IllegalArgumentException if pName, pTag, pPercentage or pGrade are not valid parameters
      */
-    public Task( String pName, String pTag, double pPercentage, double pGrade, boolean pDone, boolean pDelivered, boolean pGraded ) throws IllegalArgumentException{
+    public Task( String pName, String pTag, double pPercentage, double pGrade, boolean pDone, boolean pDelivered, boolean pGraded ) {
         name = pName;
         tag = pTag ;
         grade = pGrade;
@@ -88,11 +105,15 @@ public class Task implements ITask{
      */
     public String toString()
     {
-        //shows "Grade: 5.0" if task has been graded or "Not graded yet if it hasn't"
-        String gradeString = ((graded)? "Grade: " : "Not graded yet") + ((grade != -1)? "" : grade);
+        //shows "grade: 5.0" if task has been graded or "not graded yet" if it hasn't
+        String gradeString = ((graded && delivered)? " grade: " : " not graded yet,") + ((grade >=0 )? grade + "," : "");
         //Shows "not delivered yet" if it has not been delivered or Delivered, + gradeString if it has
-        String deliveredString = (delivered)? "Delivered, "  + gradeString : "Not delivered yet";
-        return name + ", " + deliveredString + ", " + percentage + "%, ";
+        String deliveredString = (delivered) ? (" delivered," + gradeString) : " not delivered yet,";
+        String doneString = (done)? "done" : "not done yet";
+        String tagString = !tag.equals("") ? " " + tag + "," : "";
+
+        //Shows "name, tag, delivered, grade: 5.0, 100%"
+        return String.format("%s,%s %s,%s %s", name, tagString, doneString, (done) ? deliveredString : "", percentage + "%");
     }
 
     /**
@@ -217,11 +238,15 @@ public class Task implements ITask{
      * Verifies the task fields
      * @throws AssertionError if any field is not valid
      */
-    public void assertTask()throws AssertionError{
-        if (name == null || !name.equals("")) throw new AssertionError("Name not valid");
-        if (tag == null || !tag.equals("")) throw new AssertionError("Tag not valid");
+    private void assertTask()throws AssertionError{
+        if (name == null || name.equals("")) throw new AssertionError("Name not valid");
+        if (tag == null) throw new AssertionError("Tag not valid");
         if (!(percentage > 0)) throw new AssertionError("Percentage must be a positive value");
         if (!(percentage >= 0)) throw new AssertionError("Percentage cannot be a negative value");
+        if (graded) {
+            if (!(grade >= 0))
+                throw new AssertionError("If the task is grade, its grade cannot be negative");
+        }
     }
 
     /**
