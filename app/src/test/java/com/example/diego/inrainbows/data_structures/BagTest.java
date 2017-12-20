@@ -1,11 +1,12 @@
-
-
 package com.example.diego.inrainbows.data_structures;
+
+
+
 
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
-import model.data_structures.DoublyLinkedList;
+import model.data_structures.Bag;
 
 
 /**
@@ -13,22 +14,27 @@ import model.data_structures.DoublyLinkedList;
  * @author da.ramos,hd.castellanos
  *
  */
-public class DoublyLinkedListTest extends TestCase {
+public class BagTest extends TestCase {
 
 	/**
 	 * Atributo que permite probar la clase DoubleLinkedList
 	 */
-	private DoublyLinkedList<Double> list;
+	private Bag<Double> list;
 
 	/**
 	 * Crea un escenario con la nueva lista y los 3 nodos
 	 */
 	public void setup1(){
 		try{
-			list = new DoublyLinkedList<>();
+			list = new Bag<>();
 		} catch( Exception e){
 			fail( "No deber�a lanzar excepci�n" );
 		}
+	}
+
+	public void setUp() throws Exception {
+		super.setUp();
+		list = new Bag<>();
 	}
 
 	/**
@@ -47,7 +53,7 @@ public class DoublyLinkedListTest extends TestCase {
 
 		for( int i = 0; i < 100; i++){
 			int range =  5 ;     
-			list.addAtEnd(new Double((Math.random() * range)));
+			list.addAtEnd(Math.random() * range);
 		}
 		assertEquals("El tama�o no es el esperado", 100, list.getSize());
 	}
@@ -58,27 +64,10 @@ public class DoublyLinkedListTest extends TestCase {
 	public void testIsEmpty(){
 		setup1();
 		assertTrue("La lista deber�a estar vac�a", list.isEmpty());
-		list.addAtEnd(new Double(3.4));
+		list.addAtEnd(3.4);
 		assertFalse("La lista no deber�a estar vac�a", list.isEmpty());
 	}
 	
-	/**
-	 * Prueba el m�todo isOrdered() de la clase DoubleLinkedList.
-	 */
-	public void testIsOrdered(){
-		setup1();
-		int range =  10 ;     
-		for( int i = 0; i < 100; i++){
-			list.addAtEnd(new Double((Math.random() * range)));
-		}
-		assertFalse("La lista no deber�a estar ordenada", list.isOrdered());
-		setup1();
-		for( int i = 0; i < 100; i++){
-			list.addAtEnd(new Double(i + 0.5));
-		}
-		assertTrue("La lista deber�a estar ordenada", list.isOrdered());
-	}
-
 	/**
 	 * Prueba el metodo addAtEnd() de la clase DoubleLinkedList
 	 */
@@ -86,10 +75,10 @@ public class DoublyLinkedListTest extends TestCase {
 		setup1();
 
 		int range = 4;
-		Double random = new Double( Math.random() * range);
+		Double random = Math.random() * range;
 		list.addAtEnd(random);
 		assertEquals("El �limo nodo no es el esperado", random, list.getLast());
-		random = new Double( Math.random() * range);
+		random = Math.random() * range;
 		list.addAtEnd(random);
 		assertEquals( "El �ltimo nodo no es el esperado", random, list.getLast());
 	}
@@ -103,7 +92,7 @@ public class DoublyLinkedListTest extends TestCase {
 		setup1();
 
 		try{
-			Double toAdd = new Double( 5.555 );
+			Double toAdd = 5.555;
 			list.addAtK(toAdd, 2);
 			fail( "No deber�a agregar el nodo" );
 		} catch( NoSuchElementException e){
@@ -118,7 +107,7 @@ public class DoublyLinkedListTest extends TestCase {
 		} catch( NoSuchElementException e){
 			assertEquals( "No se agreg� el nodo", 2, list.getSize() );
 		}
-		list = new DoublyLinkedList<Double>();
+		list = new Bag<>();
 		list.addAtEnd(5.2);
 		list.addAtEnd(443.3);
 		list.addAtK(53.2, 2);
@@ -127,13 +116,13 @@ public class DoublyLinkedListTest extends TestCase {
 		assertEquals( "El tercer elemento no es el esperado", 53.2, list.getLast() );
 
 
-		list = new DoublyLinkedList<Double>();
+		list = new Bag<>();
 		list.addAtEnd(2.3);
 		list.addAtK(1.2, 1);
 		assertEquals( "El primer elemento no es el esperado", 2.3, list.getFirst() );
 		assertEquals( "El segundo elemento no es el esperado", 1.2, list.getElement(1) );
 
-		list = new DoublyLinkedList<Double>();
+		list = new Bag<>();
 		list.addAtEnd(1.5);
 		list.addAtEnd(3.36);
 		list.addAtK(2.35, 0);
@@ -262,7 +251,7 @@ public class DoublyLinkedListTest extends TestCase {
 	}
 	
 	/**
-	 * Prueba el m�todo replace de DoubleLinkedList
+	 * Prueba el metodo replace de DoubleLinkedList
 	 */
 	public void testReplace(){
 		setup1();
@@ -280,18 +269,5 @@ public class DoublyLinkedListTest extends TestCase {
 		assertEquals("El nodo no es el esperado", 5.555, list.getFirst());
 		assertEquals("El nodo no es el esperado", 1.111, list.getElement(60));
 		assertEquals("El nodo no es el esperado", 4.444, list.getLast());
-	}
-	
-	/**
-	 * Prueba el m�todo mergeSort() de DoubleLinkedList.
-	 */
-	public void testMergeSort(){
-		setup1();
-		int range =  10 ;     
-		for( int i = 0; i < 1000; i++){
-			list.addAtEnd(new Double((Math.random() * range)));
-		}
-		list.mergeSort();
-		assertTrue("La lista no est� ordenada", list.isOrdered());
-	}
+	}	
 }

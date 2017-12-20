@@ -1,7 +1,6 @@
 package com.example.diego.inrainbows.data_structures;
 
 import junit.framework.TestCase;
-
 import model.data_structures.SeparateChainingHash;
 
 public class SeparateChainigHashTest extends TestCase {
