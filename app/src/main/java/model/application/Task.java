@@ -44,19 +44,47 @@ public class Task implements ITask{
     private boolean graded;
 
     /**
-     * Creates a new task.
+     * Creates a new task setting all properties but name and percentage to their default values
      * @param pName task name.
      * @param pPercentage final grade percentage of the task.
+     * @throws IllegalArgumentException if any parameter is not valid
      */
-    public Task(String pName, double pPercentage){
-        name = pName;
+    public Task(String pName, double pPercentage) throws IllegalArgumentException {
+        if( pName != "" && pName != null) name = pName;
+        else throw new IllegalArgumentException("Task name cannot be null or empty");
+        if( pPercentage >= 0 ) percentage = pPercentage;
+        else throw new IllegalArgumentException("Percentage must be a positive value");
+        //All the other properties set by default
         tag = "";
         done = false;
-        percentage = pPercentage;
         grade = -1.0; //Grade set to -1 when task has not been graded
-        //Sets delivered and graded to false by default
         delivered = false;
         graded = false;
+    }
+
+    /**
+     * Creates a new task setting all properties to the values given by parameters
+     * @param pName task name
+     * @param pTag task tag
+     * @param pPercentage task percentage
+     * @param pGrade task grade
+     * @param pDone task done status
+     * @param pDelivered task delivered status
+     * @param pGraded task graded status
+     * @throws IllegalArgumentException if pName, pTag, pPercentage or pGrade are not valid parameters
+     */
+    public Task( String pName, String pTag, double pPercentage, double pGrade, boolean pDone, boolean pDelivered, boolean pGraded ) throws IllegalArgumentException{
+        if( pName != "" && pName != null) name = pName;
+        else throw new IllegalArgumentException("Task name cannot be null or empty");
+        if( pTag != "" && pTag != null) tag = pTag ;
+        else throw new IllegalArgumentException("Task tag cannot be null or empty");
+        if( pGrade >= 0 ) grade = pGrade;
+        else throw new IllegalArgumentException("Grade must be a positive value");
+        if( pPercentage >= 0 ) percentage = pPercentage;
+        else throw new IllegalArgumentException("Percentage must be a positive value");
+        done = pDone;
+        delivered = pDelivered;
+        graded = pGraded;
     }
 
     /**
