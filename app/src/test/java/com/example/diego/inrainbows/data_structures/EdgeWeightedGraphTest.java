@@ -3,7 +3,8 @@ package com.example.diego.inrainbows.data_structures;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
-
+import model.data_structures.Bag;
+import model.data_structures.DirectedEdge;
 import model.data_structures.Edge;
 import model.data_structures.EdgeWeightedGraph;
 import model.data_structures.Vertex;

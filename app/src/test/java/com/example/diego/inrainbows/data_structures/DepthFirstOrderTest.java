@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import model.data_structures.Bag;
 import model.data_structures.DepthFirstOrder;
 import model.data_structures.DirectedGraph;
+import model.data_structures.Queue;
+import model.data_structures.Stack;
 import model.data_structures.Vertex;
 
 public class DepthFirstOrderTest extends TestCase
