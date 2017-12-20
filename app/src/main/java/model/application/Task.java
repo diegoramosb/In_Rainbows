@@ -50,16 +50,15 @@ public class Task implements ITask{
      * @throws IllegalArgumentException if any parameter is not valid
      */
     public Task(String pName, double pPercentage) throws IllegalArgumentException {
-        if( pName != "" && pName != null) name = pName;
-        else throw new IllegalArgumentException("Task name cannot be null or empty");
-        if( pPercentage >= 0 ) percentage = pPercentage;
-        else throw new IllegalArgumentException("Percentage must be a positive value");
+        name = pName;
+        percentage = pPercentage;
         //All the other properties set by default
         tag = "";
         done = false;
         grade = -1.0; //Grade set to -1 when task has not been graded
         delivered = false;
         graded = false;
+        assertTask();
     }
 
     /**
@@ -74,17 +73,14 @@ public class Task implements ITask{
      * @throws IllegalArgumentException if pName, pTag, pPercentage or pGrade are not valid parameters
      */
     public Task( String pName, String pTag, double pPercentage, double pGrade, boolean pDone, boolean pDelivered, boolean pGraded ) throws IllegalArgumentException{
-        if( pName != "" && pName != null) name = pName;
-        else throw new IllegalArgumentException("Task name cannot be null or empty");
-        if( pTag != "" && pTag != null) tag = pTag ;
-        else throw new IllegalArgumentException("Task tag cannot be null or empty");
-        if( pGrade >= 0 ) grade = pGrade;
-        else throw new IllegalArgumentException("Grade cannot be a negative value");
-        if( pPercentage > 0 ) percentage = pPercentage;
-        else throw new IllegalArgumentException("Percentage must be a positive value");
+        name = pName;
+        tag = pTag ;
+        grade = pGrade;
+        percentage = pPercentage;
         done = pDone;
         delivered = pDelivered;
         graded = pGraded;
+        assertTask();
     }
 
     /**
@@ -215,5 +211,16 @@ public class Task implements ITask{
     @Override
     public void setDelivered(boolean pDelivered) {
         delivered = pDelivered;
+    }
+
+    /**
+     * Verifies the task fields
+     * @throws AssertionError if any field is not valid
+     */
+    public void assertTask()throws AssertionError{
+        if (name == null || !name.equals("")) throw new AssertionError("Name not valid");
+        if (tag == null || !tag.equals("")) throw new AssertionError("Tag not valid");
+        if (!(percentage > 0)) throw new AssertionError("Percentage must be a positive value");
+        if (!(percentage >= 0)) throw new AssertionError("Percentage cannot be a negative value");
     }
 }
