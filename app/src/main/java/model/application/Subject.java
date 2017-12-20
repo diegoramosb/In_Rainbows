@@ -1,6 +1,7 @@
 package model.application;
 
 import api.application.ISubject;
+import model.data_structures.Bag;
 import model.data_structures.LinearProbingHash;
 
 /**
@@ -37,7 +38,7 @@ public class Subject implements ISubject {
     /**
      * Actual studied hours on this day
      */
-    public double studiedHoursDay;
+    private double studiedHoursDay;
 
     /**
      * Actual studied hours this week
@@ -59,72 +60,41 @@ public class Subject implements ISubject {
      * @param pName Subject name
      * @param pCredits Amount of credits subject is worth
      * @param pClassHours Weekly hours of class of this subject
-     * @throws IllegalArgumentException If any argument is invalid
      */
-    public Subject(String pName, int pCredits, double pClassHours ) throws IllegalArgumentException {
-        if( pName != "" && pName != " " && pName != null) name = pName;
-        else throw new IllegalArgumentException("Subject name not valid.");
-        if( pCredits > 0.0 ) credits = pCredits;
-        else throw new IllegalArgumentException("A subject must have at least 1 credit.");
-        if( pClassHours > 0.0 ) classHours = pClassHours;
-        else throw new IllegalArgumentException("A subject must have at least 1 weekly hour of class.");
+    public Subject(String pName, int pCredits, double pClassHours ){
+        name = pName;
+        credits = pCredits;
+        classHours = pClassHours;
         studiedHoursDay = 0;
         studiedHoursWeek = 0;
         studiedHoursSemester = 0;
         totalHours = pCredits * 3;
         extraHours = totalHours - classHours;
         tasks = new LinearProbingHash<>(10);
+        assertSubject();
     }
 
+    public Subject( String pName, int pCredits, double pTotalHours, double pClassHours, double pExtraHours, double pStudiedHoursDay, double pStudiedHoursWeek, double pStudiedHoursSemester, Iterable<Task> pTasks ) throws IllegalArgumentException{
+        name = pName;
+        credits = pCredits;
+        classHours = pClassHours;
+        studiedHoursDay = pStudiedHoursDay;
+        studiedHoursWeek = pStudiedHoursWeek;
+        studiedHoursSemester = pStudiedHoursSemester;
+        totalHours = pTotalHours;
+        extraHours = pExtraHours;
+        tasks = new LinearProbingHash<>(10);
+        for(Task currentTask : pTasks){
+            tasks.put(currentTask.hashCode(), currentTask);
+        }
+        assertSubject();
+    }
     /**
-     * Retorna la suma de los porcentajes de las notas entregadas.
-     * @return Suma de los porcentajes de las notas entregadas.
+     * @return Subject info as a String
      */
-    public double darSumaPorcentajesNotasEntregadas(){
-//        Nodo actual = primerHijo;
-//        double rta = 0;
-//
-//        while(actual!=null){
-//            if( ((Task)actual).darEntregada() == true ) {
-//                rta = rta + ((Task) actual).darPorcentajeNotaFinal();
-//            }
-//            actual = actual.darSiguiente();
-//        }
-//        return rta;
-        return 0.0;
-    }
-
-    /**
-     * Retorna la nota actual de la materia. El cálculo se hace así: Si la suma de las notas
-     * entregadas es 100 se calcula calificacionActual * (porcentaje / 100). Sino, se calcula
-     * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
-     * @return ITask actual de la materia (solo de las notas entregadas)
-     */
-    public double calcularNota(){
-        double rta = 0;
-//
-//        if( darSumaPorcentajesNotasEntregadas() >= 100 ){
-//            Nodo actual = primerHijo;
-//            while( actual != null ) {
-//                rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal()/100.0);
-//                actual = actual.darSiguiente();
-//            }
-//        }
-//        else {
-//            Nodo actual = primerHijo;
-//            while (actual != null) {
-//                if(((Task)actual).darEntregada() == true) {
-//                    rta += ((Task) actual).darCalificacion() * (((Task) actual).darPorcentajeNotaFinal() / darSumaPorcentajesNotasEntregadas());
-//                }
-//                actual = actual.darSiguiente();
-//            }
-//        }
-        return rta;
-    }
-
     public String toString(){
-        //TODO pensar en un toString para materia.
-        return name + ", " + credits + " c, ";
+        //Shows "Name, 3 credits, 5.0, 50% graded"
+        return name + ", " + credits + " credits, " + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded";
     }
 
     /**
@@ -296,7 +266,7 @@ public class Subject implements ISubject {
      * @param pStudiedHours hours to increase
      */
     @Override
-    public void increaseStdudiedHoursSemester(double pStudiedHours) {
+    public void increaseStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester += pStudiedHours;
     }
 
@@ -313,7 +283,13 @@ public class Subject implements ISubject {
      */
     @Override
     public Iterable<Task> getGradedTasks() {
-        return null;
+        Bag<Task> ans = new Bag<>();
+        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
+            Task currentTask = tasks.get(currentKey); //Gets the current task
+            if( currentTask.getGraded() )
+                ans.addAtEnd(currentTask); //Adds the current task to the answer if it was graded
+        }
+        return ans;
     }
 
     /**
@@ -321,7 +297,13 @@ public class Subject implements ISubject {
      */
     @Override
     public Iterable<Task> getNonGradedTasks() {
-        return null;
+        Bag<Task> ans = new Bag<>();
+        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
+            Task currentTask = tasks.get(currentKey); //Gets the current task
+            if( !currentTask.getGraded() )
+                ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't graded
+        }
+        return ans;
     }
 
     /**
@@ -329,7 +311,13 @@ public class Subject implements ISubject {
      */
     @Override
     public Iterable<Task> getDeliveredTasks() {
-        return null;
+        Bag<Task> ans = new Bag<>();
+        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
+            Task currentTask = tasks.get(currentKey); //Gets the current task
+            if( currentTask.getDelivered() )
+                ans.addAtEnd(currentTask); //Adds the current task to the answer if it was delivered
+        }
+        return ans;
     }
 
     /**
@@ -337,7 +325,13 @@ public class Subject implements ISubject {
      */
     @Override
     public Iterable<Task> getNonDeliveredTasks() {
-        return null;
+        Bag<Task> ans = new Bag<>();
+        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
+            Task currentTask = tasks.get(currentKey); //Gets the current task
+            if( !currentTask.getDelivered() )
+                ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't delivered
+        }
+        return ans;
     }
 
     /**
@@ -356,7 +350,7 @@ public class Subject implements ISubject {
      */
     @Override
     public void addTask(Task pTask) {
-
+        tasks.put(pTask.hashCode(), pTask);
     }
 
     /**
@@ -366,7 +360,7 @@ public class Subject implements ISubject {
      */
     @Override
     public void deleteTask(String pTaskName) {
-
+        tasks.delete(pTaskName.hashCode());
     }
 
     /**
@@ -376,7 +370,7 @@ public class Subject implements ISubject {
      */
     @Override
     public void markAsDelivered(String pTaskName) {
-
+        tasks.get(pTaskName.hashCode()).setDelivered(true);
     }
 
     /**
@@ -387,28 +381,27 @@ public class Subject implements ISubject {
      */
     @Override
     public void setDelivered(String pTaskName, boolean pDelivered) {
-
+        tasks.get(pTaskName.hashCode()).setDelivered(pDelivered);
     }
 
     /**
      * Marks the task with name pTaskName to graded
-     *
      * @param pTaskName name of the task
      */
     @Override
     public void markAsGraded(String pTaskName) {
-
+        tasks.get(pTaskName.hashCode()).setGraded(true);
     }
 
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
      *
      * @param pTaskName  name of the task
-     * @param pDelivered new GradedStatus
+     * @param pGraded new GradedStatus
      */
     @Override
-    public void setGraded(String pTaskName, boolean pDelivered) {
-
+    public void setGraded(String pTaskName, boolean pGraded) {
+        tasks.get(pTaskName.hashCode()).setGraded(pGraded);
     }
 
     /**
@@ -416,14 +409,52 @@ public class Subject implements ISubject {
      */
     @Override
     public double getGradedTasksPercentage() {
-        return 0;
+        double ans = 0;
+        //Adds the percentage of all graded tasks to the answer
+        for( Task currentTask : getGradedTasks() ){
+            ans += currentTask.getPercentage();
+        }
+        return ans;
     }
 
     /**
      * @return current subject grade
      */
+    /**
+     * Retorna la nota actual de la materia. El cálculo se hace así: Si la suma de las notas
+     * entregadas es 100 se calcula calificacionActual * (porcentaje / 100). Sino, se calcula
+     * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
+     * @return ITask actual de la materia (solo de las notas entregadas)
+     */
     @Override
     public double getCurrentGrade() {
-        return 0;
+        double ans = 0;
+        double gradedPercentage = getGradedTasksPercentage();
+        Iterable<Task> gradedTasks = getGradedTasks();
+        if( gradedPercentage >= 100.0 ){
+            for( Task currentTask : gradedTasks )
+                ans += (currentTask.getGrade() * currentTask.getPercentage()) / 100.0;
+        }
+        else{
+            for( Task currentTask : gradedTasks )
+                ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
+        }
+        return ans;
+    }
+
+    /**
+     * Verifies the subject fields
+     * @throws AssertionError if any field has a non-valid value
+     */
+    private void assertSubject() throws AssertionError{
+        if (name == null || !name.equals("")) throw new AssertionError("Name not valid");
+        if (!(credits > 0)) throw new AssertionError("Credits must be a positive value");
+        if (!(totalHours > 0)) throw new AssertionError("Total hours must be a positive value");
+        if (!(classHours > 0)) throw new AssertionError("Class hours must be a positive value");
+        if (!(extraHours > 0)) throw new AssertionError("Extra hours must be a positive value");
+        if (!(studiedHoursDay >= 0)) throw new AssertionError("Studied hours in day cannot be a negative value");
+        if (!(studiedHoursWeek >= 0)) throw new AssertionError("Studied hours in week cannot be a negative value");
+        if (!(studiedHoursSemester >= 0)) throw new AssertionError("Studied hours in semester cannot be a negative value");
+        if (tasks == null) throw new AssertionError("Tasks cannot be null");
     }
 }
