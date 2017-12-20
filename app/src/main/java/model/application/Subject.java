@@ -1,10 +1,13 @@
 package model.application;
 
+import api.application.ISubject;
+import model.data_structures.LinearProbingHash;
+
 /**
  * Created by diego on 31/05/2017.
  * This class represents a subject
  */
-public class Subject {
+public class Subject implements ISubject {
 
     /**
      * Subject name
@@ -19,7 +22,7 @@ public class Subject {
     /**
      * Total expected weekly hours of study
      */
-    private int totalHours;
+    private double totalHours;
 
     /**
      * Weekly hours of class
@@ -47,6 +50,11 @@ public class Subject {
     private double studiedHoursSemester;
 
     /**
+     * Hash table containing tasks.
+     */
+    private LinearProbingHash<Integer, Task> tasks;
+
+    /**
      * Creates a new subject, total hours are number of credits * 3 by default, extra hours are total hours - class hours.
      * @param pName Subject name
      * @param pCredits Amount of credits subject is worth
@@ -60,25 +68,12 @@ public class Subject {
         else throw new IllegalArgumentException("A subject must have at least 1 credit.");
         if( pClassHours > 0.0 ) classHours = pClassHours;
         else throw new IllegalArgumentException("A subject must have at least 1 weekly hour of class.");
-
+        studiedHoursDay = 0;
+        studiedHoursWeek = 0;
+        studiedHoursSemester = 0;
         totalHours = pCredits * 3;
         extraHours = totalHours - classHours;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // Manejo de la lista de notas
-    //----------------------------------------------------------------------------------------------
-
-    /**
-     * Agrega una nota a la materia si no existe una con el mismo nombre.
-     * @param pNombre Nombre de la nota.
-     * @param pCalificacion Califiación de la nota.
-     * @param pPorcentajeFinal Porcentaje en la nota final de la materia.
-     * @param pEntregada true si la nota ya fue entregada, false si no ha sido entregada.
-     * @return true si la nota fue agregada correctamente, false si no.
-     */
-    public void addTask(String pNombre, double pCalificacion, double pPorcentajeFinal, boolean pEntregada ){
-
+        tasks = new LinearProbingHash<>(10);
     }
 
     /**
@@ -127,74 +122,308 @@ public class Subject {
         return rta;
     }
 
-    //----------------------------------------------------------------------------------------------
-    // Métodos simples
-    //----------------------------------------------------------------------------------------------
-
-    public double darCreditos(){
-        return credits;
-    }
-
-    public int darHorasSemanales(){
-        return totalHours;
-    }
-
-    public double darHorasClase(){
-        return classHours;
-    }
-
-    public double darHorasExtra(){
-        return extraHours;
-    }
-
-    public double darHorasEstudiadasDia(){
-        return studiedHoursDay;
-    }
-
-    public double darHorasEstudiadasSemana(){
-        return studiedHoursWeek;
-    }
-
-    public double darHorasEstudiadasSemestre(){
-        return studiedHoursSemester;
-    }
-
-    public void cambiarHorasClase( double pHorasClase ){
-        classHours = pHorasClase;
-    }
-
-    public boolean cambiarNota( String pNombre, double pCalificacion ) throws Exception {
-        boolean rta = false;
-//        Task task = (Task) buscarNodoNombre(pNombre);
-//        if( task != null) {
-//            task.cambiarCalificacion(pCalificacion);
-//            return rta = true;
-//        }
-        return rta;
-      }
-
-    public void cambiarCreditos( int pCreditos){
-        credits = pCreditos;
-    }
-
-    public void restarHorasEstudiadasDia( double pHorasARestar){
-        studiedHoursDay -= pHorasARestar;
-    }
-
-    public void sumarHorasEstudiadasDia( double pHorasASumar ){
-        studiedHoursDay += pHorasASumar;
-    }
-
-    public void sumarHorasEstudiadasSemana(){
-        studiedHoursWeek += studiedHoursDay;
-    }
-
-    public void sumarHorasEstudiadasSemestre(){
-        studiedHoursSemester += studiedHoursWeek;
-    }
-
     public String toString(){
         //TODO pensar en un toString para materia.
         return name + ", " + credits + " c, ";
+    }
+
+    /**
+     * @return Subject name
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the subject name to pName
+     *
+     * @param pName new subject name
+     */
+    @Override
+    public void setName(String pName) {
+        name = pName;
+    }
+
+    /**
+     * @return Credits the subject is worth
+     */
+    @Override
+    public double getCredits() {
+        return credits;
+    }
+
+    /**
+     * Sets the subject credits to pCredits
+     *
+     * @param pCredits new amount of credits the subject is worth.
+     */
+    @Override
+    public void setCredits(double pCredits) {
+        credits = pCredits;
+    }
+
+    /**
+     * @return Weekly hours of class of the subject
+     */
+    @Override
+    public double getClassHours() {
+        return classHours;
+    }
+
+    /**
+     * Sets weekly hours of class to pClassHours
+     *
+     * @param pClassHours new weekly hours of class
+     */
+    @Override
+    public void setClassHours(double pClassHours) {
+        classHours = pClassHours;
+    }
+
+    /**
+     * @return Total hours of study that the subject requires, by default credits * 3.
+     */
+    @Override
+    public double getTotalHours() {
+        return totalHours;
+    }
+
+    /**
+     * Sets the total hours to pTotalHours
+     * @param pTotalHours new studied hours
+     */
+    @Override
+    public void setTotalHours( double pTotalHours ){
+        totalHours = pTotalHours;
+    }
+
+    /**
+     * @return Extra hours of study that the subject requires, meaning totalHours - classHours
+     */
+    @Override
+    public double getExtraHours() {
+        return extraHours;
+    }
+
+    /**
+     * Sets extraHours to pExtraHours
+     *
+     * @param pExtraHours new extra hours of the subject
+     */
+    @Override
+    public void setExtraHours(double pExtraHours) {
+        extraHours = pExtraHours;
+    }
+
+    /**
+     * @return Studied hours for the current day
+     */
+    @Override
+    public double getStudiedHoursDay() {
+        return studiedHoursDay;
+    }
+
+    /**
+     * Sets the studied hours for the current day to pStudiedHours
+     *
+     * @param pStudiedHours new studied hours
+     */
+    @Override
+    public void setStudiedHoursDay(double pStudiedHours) {
+        studiedHoursDay = pStudiedHours;
+    }
+
+    /**
+     * Increases the studied hours of the current day by pStudiedHours
+     *
+     * @param pStudiedHours hours to increase
+     */
+    @Override
+    public void increaseStudiedHoursDay(double pStudiedHours) {
+        studiedHoursDay += pStudiedHours;
+    }
+
+    /**
+     * @return Studied hours this week in the subject
+     */
+    @Override
+    public double getStudiedHoursWeek() {
+        return studiedHoursWeek;
+    }
+
+    /**
+     * Sets the amount of studied hours this week to pStudiedHours
+     *
+     * @param pStudiedHours new amount of studied hours this week
+     */
+    @Override
+    public void setStudiedHoursWeek(double pStudiedHours) {
+        studiedHoursWeek = pStudiedHours;
+    }
+
+    /**
+     * Increases the amount of studied hours this week by pStudiedHours
+     *
+     * @param pStudiedHours hours to increase
+     */
+    @Override
+    public void increaseStudiedHoursWeek(double pStudiedHours) {
+        studiedHoursWeek += pStudiedHours;
+    }
+
+    /**
+     * @return Amount of studiedHours this semester in the subject
+     */
+    @Override
+    public double getStudiedHoursSemester() {
+        return studiedHoursSemester;
+    }
+
+    /**
+     * Sets the amount of studied hours of this subject in this semester to pStudiedHours
+     *
+     * @param pStudiedHours new amount of studied hours
+     */
+    @Override
+    public void setStudiedHoursSemester(double pStudiedHours) {
+        studiedHoursSemester = pStudiedHours;
+    }
+
+    /**
+     * Increases the amount of studied hours of this subject in this semester by pStudiedHours
+     *
+     * @param pStudiedHours hours to increase
+     */
+    @Override
+    public void increaseStdudiedHoursSemester(double pStudiedHours) {
+        studiedHoursSemester += pStudiedHours;
+    }
+
+    /**
+     * @return an iterable containing the tasks of the subject
+     */
+    @Override
+    public Iterable<Task> getAllTasks() {
+        return null;
+    }
+
+    /**
+     * @return an iterable containing only the graded tasks of the subject
+     */
+    @Override
+    public Iterable<Task> getGradedTasks() {
+        return null;
+    }
+
+    /**
+     * @return an iterable containing only the non-graded tasks of the subject
+     */
+    @Override
+    public Iterable<Task> getNonGradedTasks() {
+        return null;
+    }
+
+    /**
+     * @return an iterable containing only the delivered tasks of the subject
+     */
+    @Override
+    public Iterable<Task> getDeliveredTasks() {
+        return null;
+    }
+
+    /**
+     * @return an iterable containing only the non-delivered tasks of the subject
+     */
+    @Override
+    public Iterable<Task> getNonDeliveredTasks() {
+        return null;
+    }
+
+    /**
+     * @param pTaskName name of the task
+     * @return Task with name pTaskName
+     */
+    @Override
+    public Task getTask(String pTaskName) {
+        return null;
+    }
+
+    /**
+     * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
+     *
+     * @param pTask new task to be added
+     */
+    @Override
+    public void addTask(Task pTask) {
+
+    }
+
+    /**
+     * Deletes task with name pTaskName from the task list of the subject
+     *
+     * @param pTaskName name of the task to be deleted
+     */
+    @Override
+    public void deleteTask(String pTaskName) {
+
+    }
+
+    /**
+     * Marks the task with name pTaskName to delivered
+     *
+     * @param pTaskName name of the task
+     */
+    @Override
+    public void markAsDelivered(String pTaskName) {
+
+    }
+
+    /**
+     * Changes the delivered status of task with name pTaskName to pDelivered
+     *
+     * @param pTaskName  name of the task
+     * @param pDelivered new delivered status
+     */
+    @Override
+    public void setDelivered(String pTaskName, boolean pDelivered) {
+
+    }
+
+    /**
+     * Marks the task with name pTaskName to graded
+     *
+     * @param pTaskName name of the task
+     */
+    @Override
+    public void markAsGraded(String pTaskName) {
+
+    }
+
+    /**
+     * Changes the graded status of the task with name pTaskName to pDelivered
+     *
+     * @param pTaskName  name of the task
+     * @param pDelivered new GradedStatus
+     */
+    @Override
+    public void setGraded(String pTaskName, boolean pDelivered) {
+
+    }
+
+    /**
+     * @return percentage of tasks of the subject that have been graded
+     */
+    @Override
+    public double getGradedTasksPercentage() {
+        return 0;
+    }
+
+    /**
+     * @return current subject grade
+     */
+    @Override
+    public double getCurrentGrade() {
+        return 0;
     }
 }

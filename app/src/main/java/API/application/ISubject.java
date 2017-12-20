@@ -47,6 +47,12 @@ public interface ISubject {
     double getTotalHours();
 
     /**
+     * Sets the total hours to pTotalHours
+     * @param pTotalHours
+     */
+    void setTotalHours( double pTotalHours );
+
+    /**
      * @return Extra hours of study that the subject requires, meaning totalHours - classHours
      */
     double getExtraHours();
