@@ -54,14 +54,11 @@ public class Subject {
      * @throws IllegalArgumentException If any argument is invalid
      */
     public Subject(String pName, int pCredits, double pClassHours ) throws IllegalArgumentException {
-        if( pName != "" && pName != " " && pName != null)
-            name = pName;
+        if( pName != "" && pName != " " && pName != null) name = pName;
         else throw new IllegalArgumentException("Subject name not valid.");
-        if( pCredits > 0.0 )
-            credits = pCredits;
+        if( pCredits > 0.0 ) credits = pCredits;
         else throw new IllegalArgumentException("A subject must have at least 1 credit.");
-        if( pClassHours > 0.0 )
-            classHours = pClassHours;
+        if( pClassHours > 0.0 ) classHours = pClassHours;
         else throw new IllegalArgumentException("A subject must have at least 1 weekly hour of class.");
 
         totalHours = pCredits * 3;
