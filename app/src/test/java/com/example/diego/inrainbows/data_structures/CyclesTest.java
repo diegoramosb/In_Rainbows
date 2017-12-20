@@ -1,7 +1,7 @@
 package com.example.diego.inrainbows.data_structures;
 
 import junit.framework.TestCase;
-
+import model.data_structures.CC;
 import model.data_structures.Cycles;
 import model.data_structures.DirectedGraph;
 import model.data_structures.Vertex;
@@ -54,7 +54,12 @@ private DirectedGraph<Integer, Integer> graph;
 			assertTrue( key == 0 || key == 1 || key == 2 || key == 3 || key == 4   );
 			count++;
 		}
-		
+//		while(!cycles.longestCycles().isEmpty()){
+//			int key = cycles.longestCycles().delMax().getKey();
+//			assertTrue( key == 0 || key == 1 || key == 2 || key == 3 || key == 4   );
+//			count++;
+//		}
+
 		assertEquals(6, count);
 	}
 }

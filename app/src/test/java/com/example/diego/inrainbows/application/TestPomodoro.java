@@ -16,7 +16,7 @@ public class TestPomodoro{
     Pomodoro pomodoro;
 
     public void setup1(){
-        pomodoro = new Pomodoro(5);
+        pomodoro = new Pomodoro(50);
     }
 
     @Test
