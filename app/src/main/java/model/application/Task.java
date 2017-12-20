@@ -79,8 +79,8 @@ public class Task implements ITask{
         if( pTag != "" && pTag != null) tag = pTag ;
         else throw new IllegalArgumentException("Task tag cannot be null or empty");
         if( pGrade >= 0 ) grade = pGrade;
-        else throw new IllegalArgumentException("Grade must be a positive value");
-        if( pPercentage >= 0 ) percentage = pPercentage;
+        else throw new IllegalArgumentException("Grade cannot be a negative value");
+        if( pPercentage > 0 ) percentage = pPercentage;
         else throw new IllegalArgumentException("Percentage must be a positive value");
         done = pDone;
         delivered = pDelivered;
