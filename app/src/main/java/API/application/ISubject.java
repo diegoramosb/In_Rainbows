@@ -112,7 +112,7 @@ public interface ISubject {
      * Increases the amount of studied hours of this subject in this semester by pStudiedHours
      * @param pStudiedHours hours to increase
      */
-    void increaseStdudiedHoursSemester( double pStudiedHours );
+    void increaseStudiedHoursSemester( double pStudiedHours );
 
     /**
      * @return an iterable containing the tasks of the subject
@@ -179,9 +179,9 @@ public interface ISubject {
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
      * @param pTaskName name of the task
-     * @param pDelivered new GradedStatus
+     * @param pGraded new GradedStatus
      */
-    void setGraded( String pTaskName, boolean pDelivered );
+    void setGraded( String pTaskName, boolean pGraded );
 
 
     /**
