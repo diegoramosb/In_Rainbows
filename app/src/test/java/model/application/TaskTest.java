@@ -1,5 +1,6 @@
 package model.application;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,12 +14,22 @@ public class TaskTest {
     private Task task;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         task = new Task("a", 100);
     }
 
+    public void taskTest(){
+        try{
+            task = new Task("a", 100);
+            task = new Task("a", "a", 100);
+            task = new Task("a","a",100, 5.0, true, true, true);
+        }catch (AssertionError error){
+            fail();
+        }
+    }
+
     @Test
-    public void toStringTest() throws Exception {
+    public void toStringTest() {
         setUp();
         assertEquals("a, not done yet, 100.0%", task.toString());
         task.setTag("a");
@@ -27,65 +38,80 @@ public class TaskTest {
         assertEquals("a, a, done, not delivered yet, 100.0%", task.toString());
         task.setDelivered(true);
         assertEquals("a, a, done, delivered, not graded yet, 100.0%", task.toString());
-        task.setGraded(true);
         task.setGrade(5.0);
+        task.setGraded(true);
         assertEquals("a, a, done, delivered, grade: 5.0, 100.0%", task.toString());
     }
 
     @Test
-    public void getName() throws Exception {
+    public void setName() {
+        setUp();
+        assertEquals("a",task.getName());
+        try {
+            task.setName("");
+            fail();
+        }catch (AssertionError error){}
     }
 
     @Test
-    public void getGrade() throws Exception {
+    public void setGrade() {
+        setUp();
+        task.setGrade(5.0);
+        task.setDone(true);
+        task.setDelivered(true);
+        task.setGraded(true);
+        assertEquals(5.0, task.getGrade(), 0.0);
+        setUp();
+        try{
+            task.setGraded(true);
+            fail();
+        }catch( AssertionError error ){}
     }
 
     @Test
-    public void setGrade() throws Exception {
+    public void getDone() {
+        setUp();
+        task.setDone(true);
+        assertTrue(task.getDone());
     }
 
     @Test
-    public void setName() throws Exception {
+    public void setTag() {
+        setUp();
+        task.setTag("a");
+        assertEquals("a", task.getTag());
+        try {
+            task.setTag(null);
+            fail();
+        }catch( AssertionError error ){}
     }
 
     @Test
-    public void getDone() throws Exception {
+    public void setPercentage() {
+        setUp();
+        task.setPercentage(100);
+        assertEquals(100, task.getPercentage(), 0.0);
+        try{
+            task.setPercentage(0);
+            fail();
+        }catch( AssertionError error ){}
     }
 
     @Test
-    public void setDone() throws Exception {
-    }
-
-    @Test
-    public void getTag() throws Exception {
-    }
-
-    @Test
-    public void setTag() throws Exception {
-    }
-
-    @Test
-    public void getPercentage() throws Exception {
-    }
-
-    @Test
-    public void setPercentage() throws Exception {
-    }
-
-    @Test
-    public void getGraded() throws Exception {
-    }
-
-    @Test
-    public void setGraded() throws Exception {
-    }
-
-    @Test
-    public void getDelivered() throws Exception {
-    }
-
-    @Test
-    public void setDelivered() throws Exception {
+    public void getDelivered() {
+        setUp();
+        try {
+            task.setDone(true);
+            task.setDelivered(true);
+            assertTrue(task.getDelivered());
+        }catch (AssertionError error){
+            fail();
+        }
+        setUp();
+        try{
+            task.setDelivered(true);
+            fail();
+        }catch (AssertionError error){}
     }
 
 }

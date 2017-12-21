@@ -138,6 +138,7 @@ public class Task implements ITask{
     @Override
     public void setGrade(double pGrade) {
         grade = pGrade;
+        assertTask();
     }
 
     /**
@@ -147,6 +148,7 @@ public class Task implements ITask{
     @Override
     public void setName(String pName) {
         name = pName;
+        assertTask();
     }
 
     /**
@@ -164,6 +166,7 @@ public class Task implements ITask{
     @Override
     public void setDone(boolean pDone) {
         done = pDone;
+        assertTask();
     }
 
     /**
@@ -181,6 +184,7 @@ public class Task implements ITask{
     @Override
     public void setTag(String pTag) {
         tag = pTag;
+        assertTask();
     }
 
     /**
@@ -198,6 +202,7 @@ public class Task implements ITask{
     @Override
     public void setPercentage(double pPercentage) {
         percentage = pPercentage;
+        assertTask();
     }
 
     /**
@@ -215,6 +220,7 @@ public class Task implements ITask{
     @Override
     public void setGraded(boolean pGraded) {
         graded = pGraded;
+        assertTask();
     }
 
     /**
@@ -231,7 +237,9 @@ public class Task implements ITask{
      */
     @Override
     public void setDelivered(boolean pDelivered) {
+
         delivered = pDelivered;
+        assertTask();
     }
 
     /**
@@ -242,10 +250,14 @@ public class Task implements ITask{
         if (name == null || name.equals("")) throw new AssertionError("Name not valid");
         if (tag == null) throw new AssertionError("Tag not valid");
         if (!(percentage > 0)) throw new AssertionError("Percentage must be a positive value");
-        if (!(percentage >= 0)) throw new AssertionError("Percentage cannot be a negative value");
         if (graded) {
             if (!(grade >= 0))
-                throw new AssertionError("If the task is grade, its grade cannot be negative");
+                throw new AssertionError("If the task is graded, its grade cannot be negative");
+            if (!delivered) throw new AssertionError("If the task is graded, it should have been delivered");
+            if (!done) throw new AssertionError("If the task is graded, it should have been done");
+        }
+        if(delivered){
+            if (!done) throw new AssertionError("If the task was delivered, it should have been done");
         }
     }
 
