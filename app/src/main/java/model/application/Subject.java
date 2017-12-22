@@ -61,7 +61,7 @@ public class Subject implements ISubject {
      * @param pCredits Amount of credits subject is worth
      * @param pClassHours Weekly hours of class of this subject
      */
-    public Subject(String pName, int pCredits, double pClassHours ){
+    public Subject(String pName, int pCredits, double pClassHours){
         name = pName;
         credits = pCredits;
         classHours = pClassHours;
@@ -94,7 +94,7 @@ public class Subject implements ISubject {
      */
     public String toString(){
         //Shows "Name, 3 credits, 5.0, 50% graded"
-        return name + ", " + credits + " credits, " + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded";
+        return name + ", " + credits + " credits, " + "class hours: " + classHours + "extra: " + extraHours + "total: " + totalHours + "day: " + studiedHoursDay + "week:" + studiedHoursWeek + "semester: " + studiedHoursSemester + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
     }
 
     /**
@@ -418,9 +418,6 @@ public class Subject implements ISubject {
     }
 
     /**
-     * @return current subject grade
-     */
-    /**
      * Retorna la nota actual de la materia. El cálculo se hace así: Si la suma de las notas
      * entregadas es 100 se calcula calificacionActual * (porcentaje / 100). Sino, se calcula
      * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
@@ -447,7 +444,7 @@ public class Subject implements ISubject {
      * @throws AssertionError if any field has a non-valid value
      */
     private void assertSubject() throws AssertionError{
-        if (name == null || !name.equals("")) throw new AssertionError("Name not valid");
+        if (name == null || name.equals("")) throw new AssertionError("Name not valid");
         if (!(credits > 0)) throw new AssertionError("Credits must be a positive value");
         if (!(totalHours > 0)) throw new AssertionError("Total hours must be a positive value");
         if (!(classHours > 0)) throw new AssertionError("Class hours must be a positive value");

@@ -2,6 +2,8 @@ package model.application;
 
 import org.junit.Test;
 
+import model.data_structures.Bag;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,88 +13,135 @@ public class SubjectTest {
 
     Subject subject;
 
-    @Test
-    public void toStringTest() throws Exception {
+    public void setUp(){
+        subject = new Subject("a", 3, 3);
     }
 
     @Test
-    public void getName() throws Exception {
+    public void subjectTest(){
+        try{
+            subject = new Subject("a", 3, 3);
+            Bag<Task> tasks = new Bag<>();
+            tasks.addAtEnd(new Task("a", 100));
+            subject = new Subject("a", 3, 3, 2, 2, 2, 2, 2, tasks);
+        }catch (Exception error){
+            fail();
+        }
     }
 
     @Test
-    public void setName() throws Exception {
+    public void toStringTest() {
+        setUp();
+
+        //assertEquals("a, credits: 3, class hours: ", subject.toString());
     }
 
     @Test
-    public void getCredits() throws Exception {
+    public void setName() {
+        setUp();
+        subject.setName("b");
+        assertEquals("b", subject.getName());
     }
 
     @Test
-    public void setCredits() throws Exception {
+    public void setCredits() {
+        setUp();
+        subject.setCredits(1);
+        assertEquals(1, subject.getCredits(), 0.0);
     }
 
     @Test
-    public void getClassHours() throws Exception {
+    public void setClassHours() {
+        setUp();
+        subject.setClassHours(4.5);
+        assertEquals(4.5, subject.getClassHours(), 0.0);
     }
 
     @Test
-    public void setClassHours() throws Exception {
+    public void getTotalHours() {
+        setUp();
+        assertEquals(9, subject.getTotalHours(), 0.0);
     }
 
     @Test
-    public void getTotalHours() throws Exception {
+    public void setTotalHours() {
+        setUp();
+        subject.setTotalHours(10);
+        assertEquals(10, subject.getTotalHours(), 0.0);
     }
 
     @Test
-    public void setTotalHours() throws Exception {
+    public void getExtraHours() {
+        setUp();
+        assertEquals(6, subject.getExtraHours(), 0.0);
     }
 
     @Test
-    public void getExtraHours() throws Exception {
-    }
-
-    @Test
-    public void setExtraHours() throws Exception {
-    }
-
-    @Test
-    public void getStudiedHoursDay() throws Exception {
+    public void setExtraHours() {
+        setUp();
+        subject.setExtraHours(5);
+        assertEquals(5, subject.getExtraHours(), 0.0);
     }
 
     @Test
     public void setStudiedHoursDay() throws Exception {
+        setUp();
+        subject.setStudiedHoursDay(5.5);
+        assertEquals(5.5, subject.getStudiedHoursDay(), 0.0);
     }
 
     @Test
     public void increaseStudiedHoursDay() throws Exception {
-    }
-
-    @Test
-    public void getStudiedHoursWeek() throws Exception {
+        setUp();
+        subject.setStudiedHoursDay(5.5);
+        subject.increaseStudiedHoursDay(0.5);
+        assertEquals(6, subject.getStudiedHoursDay(), 0.0);
     }
 
     @Test
     public void setStudiedHoursWeek() throws Exception {
+        setUp();
+        subject.setStudiedHoursWeek(5.5);
+        assertEquals(5.5, subject.getStudiedHoursWeek(), 0.0);
     }
 
     @Test
     public void increaseStudiedHoursWeek() throws Exception {
-    }
-
-    @Test
-    public void getStudiedHoursSemester() throws Exception {
+        setUp();
+        subject.setStudiedHoursWeek(5.5);
+        subject.increaseStudiedHoursWeek(0.5);
+        assertEquals(6, subject.getStudiedHoursWeek(), 0.0);
     }
 
     @Test
     public void setStudiedHoursSemester() throws Exception {
+        setUp();
+        subject.setStudiedHoursSemester(5.5);
+        assertEquals(5.5, subject.getStudiedHoursSemester(), 0.0);
     }
 
     @Test
     public void increaseStudiedHoursSemester() throws Exception {
+        setUp();
+        subject.setStudiedHoursSemester(5.5);
+        subject.increaseStudiedHoursSemester(1.5);
+        assertEquals(7, subject.getStudiedHoursSemester(), 0.0);
     }
 
     @Test
     public void getAllTasks() throws Exception {
+        setUp();
+        Task task1 = new Task("a", 50);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        for( Task currentTask : subject.getAllTasks() ){
+            if( !((currentTask.equals(task1) || currentTask.equals(task1) || currentTask.equals(task1)))){
+                fail();
+            }
+        }
     }
 
     @Test
