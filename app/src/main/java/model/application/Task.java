@@ -105,15 +105,11 @@ public class Task implements ITask{
      */
     public String toString()
     {
-        //shows "grade: 5.0" if task has been graded or "not graded yet" if it hasn't
-        String gradeString = ((graded && delivered)? " grade: " : " not graded yet,") + ((grade >=0 )? grade + "," : "");
         //Shows "not delivered yet" if it has not been delivered or Delivered, + gradeString if it has
-        String deliveredString = (delivered) ? (" delivered," + gradeString) : " not delivered yet,";
+        String deliveredString = (delivered) ? "delivered" : "not delivered yet";
         String doneString = (done)? "done" : "not done yet";
-        String tagString = !tag.equals("") ? " " + tag + "," : "";
 
-        //Shows "name, tag, delivered, grade: 5.0, 100%"
-        return String.format("%s,%s %s,%s %s", name, tagString, doneString, (done) ? deliveredString : "", percentage + "%");
+        return String.format("%s, %s, %s, %s, %s, %s", name, tag, doneString, deliveredString, grade, percentage + "%");
     }
 
     /**
