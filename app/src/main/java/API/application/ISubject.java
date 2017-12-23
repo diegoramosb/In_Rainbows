@@ -1,5 +1,7 @@
 package api.application;
 
+import java.util.NoSuchElementException;
+
 import model.application.Task;
 
 /**
@@ -116,34 +118,41 @@ public interface ISubject {
 
     /**
      * @return an iterable containing the tasks of the subject
+     * @throws NoSuchElementException if there are no tasks
      */
-    Iterable<Task> getAllTasks();
+    Iterable<Task> getAllTasks() throws NoSuchElementException;
 
     /**
      * @return an iterable containing only the graded tasks of the subject
+     * @throws NoSuchElementException if there are no graded tasks
      */
-    Iterable<Task> getGradedTasks();
+    Iterable<Task> getGradedTasks() throws NoSuchElementException;
 
     /**
      * @return an iterable containing only the non-graded tasks of the subject
+     * @throws NoSuchElementException if all tasks are graded
      */
-    Iterable<Task> getNonGradedTasks();
+    Iterable<Task> getNonGradedTasks() throws NoSuchElementException;
 
     /**
      * @return an iterable containing only the delivered tasks of the subject
+     * @throws NoSuchElementException if there are not delivered tasks
      */
-    Iterable<Task> getDeliveredTasks();
+    Iterable<Task> getDeliveredTasks() throws NoSuchElementException;
 
     /**
      * @return an iterable containing only the non-delivered tasks of the subject
+     * @throws NoSuchElementException if all tasks are delivered
      */
-    Iterable<Task> getNonDeliveredTasks();
+    Iterable<Task> getNonDeliveredTasks() throws NoSuchElementException;
 
     /**
      * @param pTaskName name of the task
      * @return Task with name pTaskName
+     * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    Task getTask( String pTaskName );
+    Task getTask( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
@@ -154,34 +163,39 @@ public interface ISubject {
     /**
      * Deletes task with name pTaskName from the task list of the subject
      * @param pTaskName name of the task to be deleted
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
-    void deleteTask( String pTaskName );
+    void deleteTask( String pTaskName ) throws NoSuchElementException;
 
     /**
      * Marks the task with name pTaskName to delivered
      * @param pTaskName name of the task
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
-    void markAsDelivered( String pTaskName );
+    void markAsDelivered( String pTaskName ) throws NoSuchElementException;
 
     /**
      * Changes the delivered status of task with name pTaskName to pDelivered
      * @param pTaskName name of the task
      * @param pDelivered new delivered status
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
-    void setDelivered( String pTaskName, boolean pDelivered );
+    void setDelivered( String pTaskName, boolean pDelivered ) throws NoSuchElementException;
 
     /**
      * Marks the task with name pTaskName to graded
      * @param pTaskName name of the task
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
-    void markAsGraded( String pTaskName );
+    void markAsGraded( String pTaskName ) throws NoSuchElementException;
 
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
      * @param pTaskName name of the task
      * @param pGraded new GradedStatus
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
-    void setGraded( String pTaskName, boolean pGraded );
+    void setGraded( String pTaskName, boolean pGraded ) throws NoSuchElementException;
 
 
     /**

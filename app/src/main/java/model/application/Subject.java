@@ -1,5 +1,7 @@
 package model.application;
 
+import java.util.NoSuchElementException;
+
 import api.application.ISubject;
 import model.data_structures.Bag;
 import model.data_structures.LinearProbingHash;
@@ -272,80 +274,111 @@ public class Subject implements ISubject {
 
     /**
      * @return an iterable containing the tasks of the subject
+     * @throws NoSuchElementException if there are no tasks
      */
     @Override
-    public Iterable<Task> getAllTasks() {
-        return null;
+    public Iterable<Task> getAllTasks() throws NoSuchElementException {
+        if( tasks.isEmpty() )
+            throw new NoSuchElementException("The subject has no tasks");
+        Bag<Task> ans = new Bag<>();
+        for (Integer currentKey : tasks.keys()) { //Iterates over the hash table keys
+            Task currentTask = tasks.get(currentKey); //Gets the current task
+            ans.addAtEnd(currentTask); //Adds the current task to the answer
+        }
+        return ans;
     }
 
     /**
      * @return an iterable containing only the graded tasks of the subject
+     * @throws NoSuchElementException if there are no graded tasks
      */
     @Override
-    public Iterable<Task> getGradedTasks() {
+    public Iterable<Task> getGradedTasks() throws NoSuchElementException {
         Bag<Task> ans = new Bag<>();
         for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
             Task currentTask = tasks.get(currentKey); //Gets the current task
             if( currentTask.getGraded() )
                 ans.addAtEnd(currentTask); //Adds the current task to the answer if it was graded
         }
+        if( ans.isEmpty() )
+            throw new NoSuchElementException("The subject does not have any graded tasks");
         return ans;
     }
 
     /**
      * @return an iterable containing only the non-graded tasks of the subject
+     * @throws NoSuchElementException if all tasks are graded
      */
     @Override
-    public Iterable<Task> getNonGradedTasks() {
+    public Iterable<Task> getNonGradedTasks() throws NoSuchElementException {
         Bag<Task> ans = new Bag<>();
         for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
             Task currentTask = tasks.get(currentKey); //Gets the current task
             if( !currentTask.getGraded() )
                 ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't graded
         }
+        if( ans.isEmpty() )
+            throw new NoSuchElementException("All tasks in the subject are graded");
         return ans;
     }
 
     /**
      * @return an iterable containing only the delivered tasks of the subject
+     * @throws NoSuchElementException if there are not delivered tasks
      */
     @Override
-    public Iterable<Task> getDeliveredTasks() {
+    public Iterable<Task> getDeliveredTasks() throws NoSuchElementException {
         Bag<Task> ans = new Bag<>();
         for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
             Task currentTask = tasks.get(currentKey); //Gets the current task
             if( currentTask.getDelivered() )
                 ans.addAtEnd(currentTask); //Adds the current task to the answer if it was delivered
         }
+        if( ans.isEmpty() )
+            throw new NoSuchElementException("The subject has no delivered tasks");
         return ans;
     }
 
     /**
      * @return an iterable containing only the non-delivered tasks of the subject
+     * @throws NoSuchElementException if all tasks are delivered
      */
     @Override
-    public Iterable<Task> getNonDeliveredTasks() {
+    public Iterable<Task> getNonDeliveredTasks() throws NoSuchElementException {
         Bag<Task> ans = new Bag<>();
         for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
             Task currentTask = tasks.get(currentKey); //Gets the current task
             if( !currentTask.getDelivered() )
                 ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't delivered
         }
+        if( ans.isEmpty() )
+            throw new NoSuchElementException("All tasks have been delivered");
         return ans;
     }
 
     /**
      * @param pTaskName name of the task
      * @return Task with name pTaskName
+     * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public Task getTask(String pTaskName) {
-        return null;
+    public Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            Task ans = tasks.get(pTaskName.hashCode());
+            if( ans != null ){
+                return ans;
+            }
+            else{
+                throw new NoSuchElementException("Task not found");
+            }
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("The given name is not valid");
+        }
     }
 
     /**
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
-     *
      * @param pTask new task to be added
      */
     @Override
@@ -355,52 +388,52 @@ public class Subject implements ISubject {
 
     /**
      * Deletes task with name pTaskName from the task list of the subject
-     *
      * @param pTaskName name of the task to be deleted
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
     @Override
-    public void deleteTask(String pTaskName) {
+    public void deleteTask(String pTaskName) throws NoSuchElementException {
         tasks.delete(pTaskName.hashCode());
     }
 
     /**
      * Marks the task with name pTaskName to delivered
-     *
      * @param pTaskName name of the task
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
     @Override
-    public void markAsDelivered(String pTaskName) {
+    public void markAsDelivered(String pTaskName) throws NoSuchElementException {
         tasks.get(pTaskName.hashCode()).setDelivered(true);
     }
 
     /**
      * Changes the delivered status of task with name pTaskName to pDelivered
-     *
-     * @param pTaskName  name of the task
+     * @param pTaskName name of the task
      * @param pDelivered new delivered status
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
     @Override
-    public void setDelivered(String pTaskName, boolean pDelivered) {
+    public void setDelivered(String pTaskName, boolean pDelivered) throws NoSuchElementException {
         tasks.get(pTaskName.hashCode()).setDelivered(pDelivered);
     }
 
     /**
      * Marks the task with name pTaskName to graded
      * @param pTaskName name of the task
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
     @Override
-    public void markAsGraded(String pTaskName) {
+    public void markAsGraded(String pTaskName) throws NoSuchElementException {
         tasks.get(pTaskName.hashCode()).setGraded(true);
     }
-
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
-     *
-     * @param pTaskName  name of the task
+     * @param pTaskName name of the task
      * @param pGraded new GradedStatus
+     * @throws NoSuchElementException if there is no task with name pTaskName
      */
     @Override
-    public void setGraded(String pTaskName, boolean pGraded) {
+    public void setGraded(String pTaskName, boolean pGraded) throws NoSuchElementException {
         tasks.get(pTaskName.hashCode()).setGraded(pGraded);
     }
 

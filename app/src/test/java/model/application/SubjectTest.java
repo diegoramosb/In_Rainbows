@@ -84,14 +84,14 @@ public class SubjectTest {
     }
 
     @Test
-    public void setStudiedHoursDay() throws Exception {
+    public void setStudiedHoursDay() {
         setUp();
         subject.setStudiedHoursDay(5.5);
         assertEquals(5.5, subject.getStudiedHoursDay(), 0.0);
     }
 
     @Test
-    public void increaseStudiedHoursDay() throws Exception {
+    public void increaseStudiedHoursDay() {
         setUp();
         subject.setStudiedHoursDay(5.5);
         subject.increaseStudiedHoursDay(0.5);
@@ -106,7 +106,7 @@ public class SubjectTest {
     }
 
     @Test
-    public void increaseStudiedHoursWeek() throws Exception {
+    public void increaseStudiedHoursWeek() {
         setUp();
         subject.setStudiedHoursWeek(5.5);
         subject.increaseStudiedHoursWeek(0.5);
@@ -114,14 +114,14 @@ public class SubjectTest {
     }
 
     @Test
-    public void setStudiedHoursSemester() throws Exception {
+    public void setStudiedHoursSemester() {
         setUp();
         subject.setStudiedHoursSemester(5.5);
         assertEquals(5.5, subject.getStudiedHoursSemester(), 0.0);
     }
 
     @Test
-    public void increaseStudiedHoursSemester() throws Exception {
+    public void increaseStudiedHoursSemester() {
         setUp();
         subject.setStudiedHoursSemester(5.5);
         subject.increaseStudiedHoursSemester(1.5);
@@ -129,7 +129,7 @@ public class SubjectTest {
     }
 
     @Test
-    public void getAllTasks() throws Exception {
+    public void getAllTasks() {
         setUp();
         Task task1 = new Task("a", 50);
         Task task2 = new Task("b", 50);
@@ -138,61 +138,121 @@ public class SubjectTest {
         subject.addTask(task2);
         subject.addTask(task3);
         for( Task currentTask : subject.getAllTasks() ){
-            if( !((currentTask.equals(task1) || currentTask.equals(task1) || currentTask.equals(task1)))){
+            if( !((currentTask.equals(task1) || currentTask.equals(task2) || currentTask.equals(task3)))){
                 fail();
             }
         }
     }
 
     @Test
-    public void getGradedTasks() throws Exception {
+    public void getGradedTasks() {
+        setUp();
+        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
+        Task task2 = new Task("b", "", 20, 5.0, true, true, true);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        for( Task currentTask : subject.getGradedTasks() ){
+            if(!(currentTask.equals(task1)||currentTask.equals(task2)))
+                fail();
+        }
     }
 
     @Test
-    public void getNonGradedTasks() throws Exception {
+    public void getNonGradedTasks() {
+        setUp();
+        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        for( Task currentTask : subject.getNonGradedTasks() ){
+            if(!(currentTask.equals(task2)||currentTask.equals(task3)))
+                fail();
+        }
     }
 
     @Test
-    public void getDeliveredTasks() throws Exception {
+    public void getDeliveredTasks() {
+        setUp();
+        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
+        Task task2 = new Task("b", "", 20, 5.0, true, true, true);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        for( Task currentTask : subject.getDeliveredTasks() ){
+            if(!(currentTask.equals(task1)||currentTask.equals(task2)))
+                fail();
+        }
     }
 
     @Test
-    public void getNonDeliveredTasks() throws Exception {
+    public void getNonDeliveredTasks() {
+        setUp();
+        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        for( Task currentTask : subject.getNonDeliveredTasks() ){
+            if(!(currentTask.equals(task2)||currentTask.equals(task3)))
+                fail();
+        }
     }
 
     @Test
-    public void getTask() throws Exception {
+    public void addTask() {
+        setUp();
+        Task task1 = new Task("a", 50);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        assertEquals(task1, subject.getTask("a"));
+        assertEquals(task2, subject.getTask("b"));
+        assertEquals(task3, subject.getTask("c"));
     }
 
     @Test
-    public void addTask() throws Exception {
+    public void deleteTask() {
+        setUp();
+        Task task1 = new Task("a", 50);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        assertEquals(task1, subject.getTask("a"));
+        assertEquals(task2, subject.getTask("b"));
+        assertEquals(task3, subject.getTask("c"));
     }
 
     @Test
-    public void deleteTask() throws Exception {
+    public void markAsDelivered() {
     }
 
     @Test
-    public void markAsDelivered() throws Exception {
+    public void setDelivered() {
     }
 
     @Test
-    public void setDelivered() throws Exception {
+    public void markAsGraded() {
     }
 
     @Test
-    public void markAsGraded() throws Exception {
+    public void setGraded() {
     }
 
     @Test
-    public void setGraded() throws Exception {
+    public void getGradedTasksPercentage() {
     }
 
     @Test
-    public void getGradedTasksPercentage() throws Exception {
-    }
-
-    @Test
-    public void getCurrentGrade() throws Exception {
+    public void getCurrentGrade() {
     }
 }
