@@ -2,6 +2,8 @@ package model.application;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import model.data_structures.Bag;
 
 import static org.junit.Assert.*;
@@ -11,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class SubjectTest {
 
-    Subject subject;
+    private Subject subject;
 
     public void setUp(){
         subject = new Subject("a", 3, 3);
@@ -205,6 +207,30 @@ public class SubjectTest {
     }
 
     @Test
+    public void containsTask(){
+        setUp();
+        setUp();
+        Task task1 = new Task("a", 50);
+        Task task2 = new Task("b", 50);
+        Task task3 = new Task("c", 50);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+        try{
+            subject.containsTask("");
+            fail();
+        }catch (IllegalArgumentException e){}
+        try{
+            assertTrue(subject.containsTask("a"));
+            assertTrue(subject.containsTask("b"));
+            assertTrue(subject.containsTask("c"));
+            assertFalse(subject.containsTask("d"));
+        }catch (IllegalArgumentException e){
+            fail();
+        }
+    }
+
+    @Test
     public void addTask() {
         setUp();
         Task task1 = new Task("a", 50);
@@ -227,25 +253,104 @@ public class SubjectTest {
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
-        assertEquals(task1, subject.getTask("a"));
-        assertEquals(task2, subject.getTask("b"));
-        assertEquals(task3, subject.getTask("c"));
-    }
-
-    @Test
-    public void markAsDelivered() {
+        try{
+            subject.deleteTask("");
+            fail();
+        }catch (IllegalArgumentException e){}
+        try{
+            subject.deleteTask("d");
+            fail();
+        }catch (NoSuchElementException e){}
+        try{
+            subject.deleteTask("a");
+            subject.deleteTask("b");
+            assertFalse(subject.containsTask("a"));
+            assertFalse(subject.containsTask("b"));
+            assertTrue(subject.containsTask("c"));
+        }catch (IllegalArgumentException e){
+            fail();
+        }catch (NoSuchElementException e){
+            fail();
+        }
     }
 
     @Test
     public void setDelivered() {
-    }
-
-    @Test
-    public void markAsGraded() {
+        setUp();
+        Task task1 = new Task("a", 50);
+        subject.addTask(task1);
+        try{
+            subject.setDelivered("b", true);
+            fail();
+        }catch (NoSuchElementException e){}
+        try{
+            subject.setDelivered("", true);
+            fail();
+        }catch (IllegalArgumentException e){}
+        try{
+            subject.markAsDone("a");
+            subject.setDelivered("a", true);
+            assertTrue(subject.getTask("a").getDelivered());
+        }catch (IllegalArgumentException e){
+            fail();
+        }catch (NoSuchElementException e){
+            fail();
+        }
     }
 
     @Test
     public void setGraded() {
+        setUp();
+        Task task1 = new Task("a", 50);
+        subject.addTask(task1);
+        try{
+            subject.setGrade("b",5.0);
+            subject.setGraded("b", true);
+            fail();
+        }catch (NoSuchElementException e){}
+        try{
+            subject.setGraded("", true);
+            fail();
+        }catch (IllegalArgumentException e){}
+        try{
+            subject.markAsDone("a");
+            subject.markAsDelivered("a");
+            subject.setGrade("a", 5.0);
+            subject.setGraded("a", true);
+            assertTrue(subject.getTask("a").getGraded());
+        }catch (IllegalArgumentException e){
+            fail();
+        }catch (NoSuchElementException e){
+            fail();
+        }
+    }
+
+    @Test
+    public void setDone(){
+        setUp();
+        Task task1 = new Task("a", 50);
+        subject.addTask(task1);
+        try{
+            subject.setDone("b", true);
+            fail();
+        }catch (NoSuchElementException e){}
+        try{
+            subject.setDone("", true);
+            fail();
+        }catch (IllegalArgumentException e){}
+        try{
+            subject.setDone("a", true);
+            assertTrue(subject.getTask("a").getDone());
+        }catch (IllegalArgumentException e){
+            fail();
+        }catch (NoSuchElementException e){
+            fail();
+        }
+    }
+
+    @Test
+    public void setGrade(){
+
     }
 
     @Test

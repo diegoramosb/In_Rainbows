@@ -189,6 +189,23 @@ public class Subject implements ISubject {
     }
 
     /**
+     * @param pTaskName Name of the task
+     * @return true if the subject contains the task with name pName
+     * @throws IllegalArgumentException if the task name is not valid
+     */
+    @Override
+    public boolean containsTask(String pTaskName) throws IllegalArgumentException {
+        try {
+            if( !pTaskName.equals("") )
+                return tasks.contains(pTaskName.hashCode());
+            else
+                throw new IllegalArgumentException("Task name not valid");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Task name not valid");
+        }
+    }
+
+    /**
      * @return Studied hours for the current day
      */
     @Override
@@ -365,13 +382,16 @@ public class Subject implements ISubject {
     @Override
     public Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         try{
-            Task ans = tasks.get(pTaskName.hashCode());
-            if( ans != null ){
-                return ans;
+            if( !pTaskName.equals("") ) {
+                Task ans = tasks.get(pTaskName.hashCode());
+                if (ans != null) {
+                    return ans;
+                } else {
+                    throw new NoSuchElementException("Task not found");
+                }
             }
-            else{
-                throw new NoSuchElementException("Task not found");
-            }
+            else
+                throw new IllegalArgumentException("Task name not valid");
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException("The given name is not valid");
         }
@@ -397,11 +417,51 @@ public class Subject implements ISubject {
         try {
             if (!pTaskName.equals(""))
                 //TODO Check HashTable.delete(). Think about throwing an exception if element to delete is not found.
-                tasks.delete(pTaskName.hashCode());
+                if( containsTask(pTaskName) )
+                    tasks.delete(pTaskName.hashCode());
+                else
+                    throw new NoSuchElementException("Task not found");
             else
                 throw new IllegalArgumentException("Task name not valid");
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Trying to delete a null task");
+        }
+    }
+
+    /**
+     * Marks the task with name pTaskName to done
+     *
+     * @param pTaskName name of the task
+     * @throws NoSuchElementException   if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
+     */
+    @Override
+    public void markAsDone(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            setDone(pTaskName,true);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
+    }
+
+    /**
+     * Changes the done status of the task with name pTaskName to pDone
+     *
+     * @param pTaskName name of the task
+     * @param pDone     new done status
+     * @throws NoSuchElementException   if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
+     */
+    @Override
+    public void setDone(String pTaskName, boolean pDone) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            getTask(pTaskName).setDone(pDone);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -471,6 +531,28 @@ public class Subject implements ISubject {
             throw new IllegalArgumentException(e.getMessage());
         }catch (NoSuchElementException e){
             throw new NoSuchElementException(e.getMessage());
+        }
+    }
+
+    /**
+     * Changes the grade of the task with name pTaskName to pGrade
+     *
+     * @param pTaskName name of the task
+     * @param pGrade    new grade
+     * @throws NoSuchElementException   if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name or grade are not valid
+     */
+    @Override
+    public void setGrade(String pTaskName, double pGrade) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            getTask(pTaskName).setGrade(pGrade);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
+        catch(AssertionError error){
+            throw new IllegalArgumentException(error.getMessage());
         }
     }
 

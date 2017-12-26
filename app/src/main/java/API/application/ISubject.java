@@ -66,6 +66,13 @@ public interface ISubject {
     void setExtraHours( double pExtraHours );
 
     /**
+     * @param pTaskName Name of the task
+     * @return true if the subject contains the task with name pName
+     * @throws IllegalArgumentException if the task name is not valid
+     */
+    boolean containsTask( String pTaskName ) throws IllegalArgumentException;
+
+    /**
      * @return Studied hours for the current day
      */
     double getStudiedHoursDay();
@@ -169,6 +176,23 @@ public interface ISubject {
     void deleteTask( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
+     * Marks the task with name pTaskName to done
+     * @param pTaskName name of the task
+     * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
+     */
+    void markAsDone( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
+
+    /**
+     * Changes the done status of the task with name pTaskName to pDone
+     * @param pTaskName name of the task
+     * @param pDone new done status
+     * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
+     */
+    void setDone( String pTaskName, boolean pDone ) throws NoSuchElementException, IllegalArgumentException;
+
+    /**
      * Marks the task with name pTaskName to delivered
      * @param pTaskName name of the task
      * @throws NoSuchElementException if there is no task with name pTaskName
@@ -201,6 +225,15 @@ public interface ISubject {
      * @throws IllegalArgumentException if the given name is not valid
      */
     void setGraded( String pTaskName, boolean pGraded ) throws NoSuchElementException, IllegalArgumentException;
+
+    /**
+     * Changes the grade of the task with name pTaskName to pGrade
+     * @param pTaskName name of the task
+     * @param pGrade new grade
+     * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name or grade are not valid
+     */
+    void setGrade(String pTaskName, double pGrade ) throws NoSuchElementException, IllegalArgumentException;
 
 
     /**
