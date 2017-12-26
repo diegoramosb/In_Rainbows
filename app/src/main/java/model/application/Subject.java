@@ -390,20 +390,36 @@ public class Subject implements ISubject {
      * Deletes task with name pTaskName from the task list of the subject
      * @param pTaskName name of the task to be deleted
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void deleteTask(String pTaskName) throws NoSuchElementException {
-        tasks.delete(pTaskName.hashCode());
+    public void deleteTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+        try {
+            if (!pTaskName.equals(""))
+                //TODO Check HashTable.delete(). Think about throwing an exception if element to delete is not found.
+                tasks.delete(pTaskName.hashCode());
+            else
+                throw new IllegalArgumentException("Task name not valid");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Trying to delete a null task");
+        }
     }
 
     /**
      * Marks the task with name pTaskName to delivered
      * @param pTaskName name of the task
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void markAsDelivered(String pTaskName) throws NoSuchElementException {
-        tasks.get(pTaskName.hashCode()).setDelivered(true);
+    public void markAsDelivered(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            setDelivered(pTaskName,true);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
     }
 
     /**
@@ -411,30 +427,51 @@ public class Subject implements ISubject {
      * @param pTaskName name of the task
      * @param pDelivered new delivered status
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void setDelivered(String pTaskName, boolean pDelivered) throws NoSuchElementException {
-        tasks.get(pTaskName.hashCode()).setDelivered(pDelivered);
+    public void setDelivered(String pTaskName, boolean pDelivered) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            getTask(pTaskName).setDelivered(pDelivered);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
     }
 
     /**
      * Marks the task with name pTaskName to graded
      * @param pTaskName name of the task
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void markAsGraded(String pTaskName) throws NoSuchElementException {
-        tasks.get(pTaskName.hashCode()).setGraded(true);
+    public void markAsGraded(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            setDelivered(pTaskName,true);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
     }
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
      * @param pTaskName name of the task
      * @param pGraded new GradedStatus
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void setGraded(String pTaskName, boolean pGraded) throws NoSuchElementException {
-        tasks.get(pTaskName.hashCode()).setGraded(pGraded);
+    public void setGraded(String pTaskName, boolean pGraded) throws NoSuchElementException, IllegalArgumentException {
+        try{
+            getTask(pTaskName).setGraded(pGraded);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(e.getMessage());
+        }
     }
 
     /**

@@ -164,38 +164,43 @@ public interface ISubject {
      * Deletes task with name pTaskName from the task list of the subject
      * @param pTaskName name of the task to be deleted
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void deleteTask( String pTaskName ) throws NoSuchElementException;
+    void deleteTask( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
      * Marks the task with name pTaskName to delivered
      * @param pTaskName name of the task
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void markAsDelivered( String pTaskName ) throws NoSuchElementException;
+    void markAsDelivered( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
      * Changes the delivered status of task with name pTaskName to pDelivered
      * @param pTaskName name of the task
      * @param pDelivered new delivered status
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void setDelivered( String pTaskName, boolean pDelivered ) throws NoSuchElementException;
+    void setDelivered( String pTaskName, boolean pDelivered ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
      * Marks the task with name pTaskName to graded
      * @param pTaskName name of the task
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void markAsGraded( String pTaskName ) throws NoSuchElementException;
+    void markAsGraded( String pTaskName ) throws NoSuchElementException, IllegalArgumentException;
 
     /**
      * Changes the graded status of the task with name pTaskName to pDelivered
      * @param pTaskName name of the task
      * @param pGraded new GradedStatus
      * @throws NoSuchElementException if there is no task with name pTaskName
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void setGraded( String pTaskName, boolean pGraded ) throws NoSuchElementException;
+    void setGraded( String pTaskName, boolean pGraded ) throws NoSuchElementException, IllegalArgumentException;
 
 
     /**
