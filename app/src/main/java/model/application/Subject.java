@@ -579,14 +579,18 @@ public class Subject implements ISubject {
     public double getCurrentGrade() {
         double ans = 0;
         double gradedPercentage = getGradedTasksPercentage();
-        Iterable<Task> gradedTasks = getGradedTasks();
-        if( gradedPercentage >= 100.0 ){
-            for( Task currentTask : gradedTasks )
-                ans += (currentTask.getGrade() * currentTask.getPercentage()) / 100.0;
-        }
-        else{
-            for( Task currentTask : gradedTasks )
-                ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
+        try {
+            Iterable<Task> gradedTasks = getGradedTasks();
+            if( gradedPercentage >= 100.0 ){
+                for( Task currentTask : gradedTasks )
+                    ans += (currentTask.getGrade() * currentTask.getPercentage()) / 100.0;
+            }
+            else{
+                for( Task currentTask : gradedTasks )
+                    ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
+            }
+        }catch (NoSuchElementException ignored){
+            return 5;
         }
         return ans;
     }

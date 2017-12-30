@@ -390,11 +390,35 @@ public class SubjectTest {
         subject.markAsGraded("b");
         subject.setGrade("c", 5.0);
         subject.markAsGraded("c");
-        
         assertEquals(70, subject.getGradedTasksPercentage(), 0.0);
     }
 
     @Test
     public void getCurrentGrade() {
+        setUp();
+        Task task1 = new Task("a", 25);
+        Task task2 = new Task("b", 20);
+        Task task3 = new Task("c", 55);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+
+        subject.markAsDone("a");
+        subject.markAsDone("b");
+        subject.markAsDone("c");
+
+        subject.markAsDelivered("a");
+        subject.markAsDelivered("b");
+        subject.markAsDelivered("c");
+        assertEquals(5, subject.getCurrentGrade(), 0.0);
+        subject.setGrade("a", 3.0);
+        subject.markAsGraded("a");
+        assertEquals(3, subject.getCurrentGrade(), 0.0);
+        subject.setGrade("b", 4);
+        subject.markAsGraded("b");
+        assertEquals(3.4, subject.getCurrentGrade(), 0.1);
+        subject.setGrade("c", 5);
+        subject.markAsGraded("c");
+        assertEquals(4.3, subject.getCurrentGrade(), 0.1);
     }
 }
