@@ -344,11 +344,54 @@ public class SubjectTest {
 
     @Test
     public void setGrade(){
-
+        setUp();
+        Task task1 = new Task("a", 50);
+        subject.addTask(task1);
+        subject.setDone("a", true);
+        subject.setDelivered("a", true);
+        try{
+            subject.setGrade("a", 5.0);
+            assertEquals(5.0, subject.getTask("a").getGrade(), 0.0);
+        }catch (IllegalArgumentException | NoSuchElementException e){
+            fail();
+        }
+        try{
+            subject.setGrade("a", 5.0);
+            assertEquals(5.0, subject.getTask("a").getGrade(), 0.0);
+        }catch (IllegalArgumentException | NoSuchElementException e){
+            fail();
+        }
     }
 
     @Test
     public void getGradedTasksPercentage() {
+        setUp();
+        Task task1 = new Task("a", 25);
+        Task task2 = new Task("b", 20);
+        Task task3 = new Task("c", 25);
+        subject.addTask(task1);
+        subject.addTask(task2);
+        subject.addTask(task3);
+
+        subject.markAsDone("a");
+        subject.markAsDone("b");
+        subject.markAsDone("c");
+
+        subject.markAsDelivered("a");
+        subject.markAsDelivered("b");
+        subject.markAsDelivered("c");
+
+        subject.setGrade("a", 5.0);
+        subject.markAsGraded("a");
+
+        assertEquals(25, subject.getGradedTasksPercentage(), 0.0);
+
+        subject.setGrade("b", 5.0);
+        subject.markAsGraded("b");
+        subject.setGrade("c", 5.0);
+        subject.markAsGraded("c");
+        
+        assertEquals(70, subject.getGradedTasksPercentage(), 0.0);
     }
 
     @Test

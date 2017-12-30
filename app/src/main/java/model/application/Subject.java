@@ -509,7 +509,7 @@ public class Subject implements ISubject {
     @Override
     public void markAsGraded(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         try{
-            setDelivered(pTaskName,true);
+            setGraded(pTaskName,true);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e.getMessage());
         }catch (NoSuchElementException e){
@@ -546,13 +546,10 @@ public class Subject implements ISubject {
     public void setGrade(String pTaskName, double pGrade) throws NoSuchElementException, IllegalArgumentException {
         try{
             getTask(pTaskName).setGrade(pGrade);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException | AssertionError e){
             throw new IllegalArgumentException(e.getMessage());
         }catch (NoSuchElementException e){
             throw new NoSuchElementException(e.getMessage());
-        }
-        catch(AssertionError error){
-            throw new IllegalArgumentException(error.getMessage());
         }
     }
 
@@ -563,9 +560,12 @@ public class Subject implements ISubject {
     public double getGradedTasksPercentage() {
         double ans = 0;
         //Adds the percentage of all graded tasks to the answer
-        for( Task currentTask : getGradedTasks() ){
-            ans += currentTask.getPercentage();
-        }
+        try {
+            for (Task currentTask : getGradedTasks()) {
+                ans += currentTask.getPercentage();
+            }
+            return ans;
+        }catch (NoSuchElementException ignored){}
         return ans;
     }
 
