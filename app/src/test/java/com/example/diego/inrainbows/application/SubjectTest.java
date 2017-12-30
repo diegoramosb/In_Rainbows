@@ -1,9 +1,11 @@
-package model.application;
+package com.example.diego.inrainbows.application;
 
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
 
+import model.application.Subject;
+import model.application.Task;
 import model.data_structures.Bag;
 
 import static org.junit.Assert.*;
@@ -267,9 +269,7 @@ public class SubjectTest {
             assertFalse(subject.containsTask("a"));
             assertFalse(subject.containsTask("b"));
             assertTrue(subject.containsTask("c"));
-        }catch (IllegalArgumentException e){
-            fail();
-        }catch (NoSuchElementException e){
+        }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
     }
@@ -291,9 +291,7 @@ public class SubjectTest {
             subject.markAsDone("a");
             subject.setDelivered("a", true);
             assertTrue(subject.getTask("a").getDelivered());
-        }catch (IllegalArgumentException e){
-            fail();
-        }catch (NoSuchElementException e){
+        }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
     }
@@ -318,9 +316,7 @@ public class SubjectTest {
             subject.setGrade("a", 5.0);
             subject.setGraded("a", true);
             assertTrue(subject.getTask("a").getGraded());
-        }catch (IllegalArgumentException e){
-            fail();
-        }catch (NoSuchElementException e){
+        }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
     }
@@ -341,9 +337,7 @@ public class SubjectTest {
         try{
             subject.setDone("a", true);
             assertTrue(subject.getTask("a").getDone());
-        }catch (IllegalArgumentException e){
-            fail();
-        }catch (NoSuchElementException e){
+        }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
     }

@@ -1,8 +1,9 @@
-package model.application;
+package com.example.diego.inrainbows.application;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import model.application.Task;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +19,7 @@ public class TaskTest {
         task = new Task("a", 100);
     }
 
+    @Test
     public void taskTest(){
         try{
             task = new Task("a", 100);

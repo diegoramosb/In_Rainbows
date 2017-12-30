@@ -5,13 +5,11 @@ import org.junit.Test;
 
 import model.application.Pomodoro;
 
-import static org.junit.Assert.*;
-
 /**
  * @author diego on 15/12/2017.
  */
 
-public class TestPomodoro{
+public class PomodoroTest {
 
     Pomodoro pomodoro;
 
