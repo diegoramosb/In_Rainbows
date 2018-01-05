@@ -3,21 +3,19 @@ package model.application;
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;
 
-import java.util.Calendar;
-
 import api.application.ISemester;
 
 /**
- * Created by diego on 1/08/2017.
+ * @author diego on 1/08/2017.
  */
 
 public class Semester implements ISemester{
 
-    private Calendar startDate;
+    private DateTime startDate;
 
-    private Calendar endDate;
+    private DateTime endDate;
 
-    private Calendar currentDate;
+    private DateTime currentDate;
 
     private int currentWeek;
 
@@ -29,20 +27,22 @@ public class Semester implements ISemester{
 
     private double credits;
 
-    public Semester(String pName, int pAnioInicio, int pMesInicio, int pDiaInicio, int pMesFin, int pDiaFin, int pSemanaActual){
+    public Semester(String pName, int pStartYear, int pStartMonth, int pDiaInicio, int pEndMonth, int pEndDay, DateTime pCurrentDateTime) {
 
-        currentDate = Calendar.getInstance();
-        currentDate.setFirstDayOfWeek(Calendar.MONDAY);
-        actualizarSemana();
+        currentDate = new DateTime();
+        //actualizarSemana();
 
-        startDate.set(pAnioInicio + 1900, pMesInicio, pDiaInicio);
-        startDate.setFirstDayOfWeek(Calendar.MONDAY);
-        startWeek = startDate.getWeekYear();
+        startDate = new DateTime();
+//        startDate.year() = new DateTime.Property();
 
-
-        endDate.set( pAnioInicio + 1900, pMesInicio, pDiaInicio);
-        endDate.setFirstDayOfWeek(Calendar.MONDAY);
-        endWeek = endDate.getWeekYear();
+//        startDate.set(pStartYear + 1900, pStartMonth, pDiaInicio);
+//        startDate.setFirstDayOfWeek(Calendar.MONDAY);
+//        startWeek = startDate.getWeekYear();
+//
+//
+//        endDate.set( pStartYear + 1900, pStartMonth, pDiaInicio);
+//        endDate.setFirstDayOfWeek(Calendar.MONDAY);
+//        endWeek = endDate.getWeekYear();
 
 //        while( actual != null ){
 //            credits += ((Subject) actual).darCreditos();
@@ -51,25 +51,25 @@ public class Semester implements ISemester{
 
     }
 
-    public Calendar darFechaActual(){
-        return currentDate;
-    }
-
-    public Calendar darFechaIncio(){
-        return startDate;
-    }
-
-    public Calendar darFechaFin(){
-        return endDate;
-    }
-
-    public int darSemanaActual(){
-        return currentWeek;
-    }
-
-    public void actualizarSemana(){
-        currentWeek = (currentDate.getWeekYear()) - startWeek + 1;
-    }
+//    public Calendar darFechaActual(){
+//        return currentDate;
+//    }
+//
+//    public Calendar darFechaIncio(){
+//        return startDate;
+//    }
+//
+//    public Calendar darFechaFin(){
+//        return endDate;
+//    }
+//
+//    public int darSemanaActual(){
+//        return currentWeek;
+//    }
+//
+//    public void actualizarSemana(){
+//        currentWeek = (currentDate.getWeekYear()) - startWeek + 1;
+//    }
 
     public void calcularPromedioSemestre(){
 //        Nodo actual = darPrimerHijo();
@@ -82,7 +82,7 @@ public class Semester implements ISemester{
     }
 
     public void VerificarInvariante(){
-        assert( startDate.before(endDate) ) : "La fecha de inicio debe ser anterior a la fecha de fin.";
+//        assert( startDate.before(endDate) ) : "La fecha de inicio debe ser anterior a la fecha de fin.";
         assert( startWeek < endWeek) : "La semana de incio debe ser anterior a la semana de fin.";
     }
 
