@@ -2,9 +2,10 @@ package model.application;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Interval;
+import org.joda.time.Days;
 import org.joda.time.MutableDateTime;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.Weeks;
 
 import api.application.ISemester;
@@ -23,9 +24,7 @@ public class Semester implements ISemester{
 
     private Period currentWeek;
 
-    private int endWeek;
-
-    private int startWeek;
+//    private static Weeks weeks;
 
     private double gpa;
 
@@ -34,11 +33,12 @@ public class Semester implements ISemester{
     public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) {
 
         currentDate = new MutableDateTime(DateTimeZone.forID("America/Bogota")); //Immutable timezone temporarily
-        //actualizarSemana();
-
         startDate = new DateTime(pStartYear, pStartMonth, pStartDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
-
         endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+//        weeks = new Weeks();
+        currentWeek = new Period(startDate.toInstant(), endDate.toInstant());
+        gpa = 0;
+        credits = 0;
     }
 
 //    public Calendar darFechaActual(){
@@ -73,7 +73,7 @@ public class Semester implements ISemester{
 
     public void VerificarInvariante(){
 //        assert( startDate.before(endDate) ) : "La fecha de inicio debe ser anterior a la fecha de fin.";
-        assert( startWeek < endWeek) : "La semana de incio debe ser anterior a la semana de fin.";
+        //assert( startWeek < endWeek) : "La semana de incio debe ser anterior a la semana de fin.";
     }
 
     /**
@@ -141,7 +141,8 @@ public class Semester implements ISemester{
      */
     @Override
     public Weeks getWeeks() {
-        return 0;
+//        return weeks;
+        return null;
     }
 
     /**
@@ -149,6 +150,7 @@ public class Semester implements ISemester{
      */
     @Override
     public int getCurrentWeekNumber() {
+//        return weeks.getWeeks();
         return 0;
     }
 
@@ -157,7 +159,7 @@ public class Semester implements ISemester{
      */
     @Override
     public double getCurrentGPA() {
-        return 0;
+        return gpa;
     }
 
     /**
@@ -167,7 +169,7 @@ public class Semester implements ISemester{
      */
     @Override
     public void setGpa(double pGPA) {
-
+        gpa = pGPA;
     }
 
     /**
@@ -175,7 +177,7 @@ public class Semester implements ISemester{
      */
     @Override
     public double getCredits() {
-        return 0;
+        return credits;
     }
 
     /**
@@ -185,7 +187,7 @@ public class Semester implements ISemester{
      */
     @Override
     public void setCredits(double pCredits) {
-
+        credits = pCredits;
     }
 
     /**
