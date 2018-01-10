@@ -88,17 +88,21 @@ public interface ISemester {
      * @param pSubjectName subject name
      * @throws IllegalArgumentException if the given name is not valid
      */
+    boolean containsSubject(String pSubjectName) throws IllegalArgumentException;
 
     /**
      * @return an iterable with all the subjects of the semester
+     * @throws NoSuchElementException if there are no subjects
      */
-    Iterable<Subject> getSubjects();
+    Iterable<Subject> getSubjects() throws NoSuchElementException;
 
     /**
      * @param pSubjectName name of the subject
      * @return subject with name pSubjectName
+     * @throws IllegalArgumentException if the name is not valid
+     * @throws NoSuchElementException if there is no subject with the given name
      */
-    Subject getSubject( String pSubjectName );
+    Subject getSubject( String pSubjectName ) throws IllegalArgumentException, NoSuchElementException;
 
     /**
      * Adds the subject to the semester and increases its credits counter
@@ -108,7 +112,9 @@ public interface ISemester {
 
     /**
      * Removes the subject from the semester and decreases its credits counter
-     * @param pSubject Subject to be deleted
+     * @param pSubjectName name of the subject to be deleted
+     * @throws IllegalArgumentException if the given name is not valid
+     * @throws NoSuchElementException if the subject is not found
      */
-    void removeSubject( Subject pSubject );
+    void deleteSubject( String pSubjectName ) throws  NoSuchElementException, IllegalArgumentException;
 }

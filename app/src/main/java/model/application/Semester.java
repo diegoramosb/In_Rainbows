@@ -8,7 +8,11 @@ import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.Weeks;
 
+import java.util.NoSuchElementException;
+
 import api.application.ISemester;
+import model.data_structures.Bag;
+import model.data_structures.LinearProbingHash;
 
 /**
  * @author diego on 1/08/2017.
@@ -26,6 +30,7 @@ public class Semester implements ISemester{
 
 //    private static Weeks weeks;
 
+    private LinearProbingHash<Integer, Subject> subjects;
 
     public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) {
 
@@ -34,6 +39,7 @@ public class Semester implements ISemester{
         endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
 //        weeks = new Weeks();
         currentWeek = new Period(startDate.toInstant(), endDate.toInstant());
+        subjects = new LinearProbingHash<>(7);
     }
 
 //    public Calendar darFechaActual(){
@@ -226,19 +232,42 @@ public class Semester implements ISemester{
 
     /**
      * @return an iterable with all the subjects of the semester
+     * @throws NoSuchElementException if there are no subjects
      */
     @Override
-    public Iterable<Subject> getSubjects() {
-        return null;
+    public Iterable<Subject> getSubjects() throws NoSuchElementException {
+        if( subjects.isEmpty() )
+            throw new NoSuchElementException("The semester has no subjects");
+        Bag<Subject> ans = new Bag<>();
+        for (Integer currentKey : subjects.keys()) { //Iterates over the hash table keys
+            Subject currentSubject = subjects.get(currentKey); //Gets the current subject
+            ans.addAtEnd(currentSubject); //Adds the current subject to the answer
+        }
+        return ans;
     }
 
     /**
      * @param pSubjectName name of the subject
      * @return subject with name pSubjectName
+     * @throws IllegalArgumentException if the name is not valid
+     * @throws NoSuchElementException if there is no subject with the given name
      */
     @Override
     public Subject getSubject(String pSubjectName) {
-        return null;
+        try{
+            if( !pSubjectName.equals("") ) {
+                Subject ans = subjects.get(pSubjectName.hashCode());
+                if (ans != null) {
+                    return ans;
+                } else {
+                    throw new NoSuchElementException("Subject not found");
+                }
+            }
+            else
+                throw new IllegalArgumentException("Subject name not valid");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("The given name is not valid");
+        }
     }
 
     /**
@@ -248,16 +277,29 @@ public class Semester implements ISemester{
      */
     @Override
     public void addSubject(Subject pSubject) {
-
+        subjects.put(pSubject.hashCode(), pSubject);
     }
 
     /**
      * Removes the subject from the semester and decreases its credits counter
      *
-     * @param pSubject Subject to be deleted
+     * @param pSubjectName name of the subject to be deleted
+     * @throws IllegalArgumentException if the given name is not valid
+     * @throws NoSuchElementException   if the subject is not found
      */
     @Override
-    public void removeSubject(Subject pSubject) {
-
+    public void deleteSubject(String pSubjectName) throws NoSuchElementException, IllegalArgumentException {
+        try {
+            if (!pSubjectName.equals(""))
+                //TODO Check HashTable.delete(). Think about throwing an exception if element to delete is not found.
+                if( containsSubject(pSubjectName) )
+                    subjects.delete(pSubjectName.hashCode());
+                else
+                    throw new NoSuchElementException("Subject not found");
+            else
+                throw new IllegalArgumentException("Subject name not valid");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Trying to delete a null subject");
+        }
     }
 }
