@@ -590,7 +590,7 @@ public class Subject implements ISubject {
                     ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
             }
         }catch (NoSuchElementException ignored){
-            return 5;
+            return ans;
         }
         return ans;
     }
