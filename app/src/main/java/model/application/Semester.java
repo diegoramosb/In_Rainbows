@@ -1,6 +1,10 @@
 package model.application;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Interval;
+import org.joda.time.MutableDateTime;
+import org.joda.time.Period;
 import org.joda.time.Weeks;
 
 import api.application.ISemester;
@@ -15,9 +19,9 @@ public class Semester implements ISemester{
 
     private DateTime endDate;
 
-    private DateTime currentDate;
+    private MutableDateTime currentDate;
 
-    private int currentWeek;
+    private Period currentWeek;
 
     private int endWeek;
 
@@ -27,28 +31,14 @@ public class Semester implements ISemester{
 
     private double credits;
 
-    public Semester(String pName, int pStartYear, int pStartMonth, int pDiaInicio, int pEndMonth, int pEndDay, DateTime pCurrentDateTime) {
+    public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) {
 
-        currentDate = new DateTime();
+        currentDate = new MutableDateTime(DateTimeZone.forID("America/Bogota")); //Immutable timezone temporarily
         //actualizarSemana();
 
-        startDate = new DateTime();
-//        startDate.year() = new DateTime.Property();
+        startDate = new DateTime(pStartYear, pStartMonth, pStartDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
 
-//        startDate.set(pStartYear + 1900, pStartMonth, pDiaInicio);
-//        startDate.setFirstDayOfWeek(Calendar.MONDAY);
-//        startWeek = startDate.getWeekYear();
-//
-//
-//        endDate.set( pStartYear + 1900, pStartMonth, pDiaInicio);
-//        endDate.setFirstDayOfWeek(Calendar.MONDAY);
-//        endWeek = endDate.getWeekYear();
-
-//        while( actual != null ){
-//            credits += ((Subject) actual).darCreditos();
-//            actual = actual.darSiguiente();
-//        }
-
+        endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
     }
 
 //    public Calendar darFechaActual(){
@@ -90,59 +80,67 @@ public class Semester implements ISemester{
      * @return start date of the semester
      */
     @Override
-    public DateTime getStart() {
+    public DateTime getStartDate() {
         return null;
     }
 
     /**
      * Sets the start date of the semester to pStartDate
      *
-     * @param pStartDate String format of the semester start date
+     * @param pStartYear  Start year
+     * @param pStartMonth Start month
+     * @param pStartDay   Start day
      */
     @Override
-    public void setStart(String pStartDate) {
-
+    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) {
+        startDate.year().setCopy(pStartYear);
+        startDate.monthOfYear().setCopy(pStartMonth);
+        startDate.dayOfMonth().setCopy(pStartDay);
     }
 
     /**
      * @return end date of the semester
      */
     @Override
-    public DateTime getEnd() {
-        return null;
+    public DateTime getEndDate() {
+        return endDate;
     }
 
     /**
      * Sets the end date of the semester to pEndDate
      *
-     * @param pEndDate String format of the semester end date
+     * @param pEndYear  End year
+     * @param pEndMonth End month
+     * @param pEndDay   End day
      */
     @Override
-    public void setEnd(String pEndDate) {
-
+    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) {
+        endDate.year().setCopy(pEndYear);
+        endDate.monthOfYear().setCopy(pEndMonth);
+        endDate.dayOfMonth().setCopy(pEndDay);
     }
 
     /**
      * @return current dateTime
      */
     @Override
-    public DateTime getCurrentDateTime() {
-        return null;
+    public MutableDateTime getCurrentDateTime() {
+        return currentDate;
     }
 
     /**
      * @return current week
      */
     @Override
-    public Weeks getCurrentWeek() {
-        return null;
+    public Period getCurrentWeek() {
+        return currentWeek;
     }
 
     /**
      * @return number of weeks of the semester
      */
     @Override
-    public int getWeeks() {
+    public Weeks getWeeks() {
         return 0;
     }
 

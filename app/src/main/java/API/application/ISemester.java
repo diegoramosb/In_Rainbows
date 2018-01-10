@@ -1,6 +1,8 @@
 package api.application;
 
 import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
+import org.joda.time.Period;
 import org.joda.time.Weeks;
 
 import model.application.Subject;
@@ -14,39 +16,43 @@ public interface ISemester {
     /**
      * @return start date of the semester
      */
-    DateTime getStart();
+    DateTime getStartDate();
 
     /**
      * Sets the start date of the semester to pStartDate
-     * @param pStartDate String format of the semester start date
+     * @param pStartYear Start year
+     * @param pStartMonth Start month
+     * @param pStartDay Start day
      */
-    void setStart(String pStartDate);
+    void setStartDate(int pStartYear, int pStartMonth, int pStartDay);
 
     /**
      * @return end date of the semester
      */
-    DateTime getEnd();
+    DateTime getEndDate();
 
     /**
      * Sets the end date of the semester to pEndDate
-     * @param pEndDate String format of the semester end date
+     * @param pEndYear End year
+     * @param pEndMonth End month
+     * @param pEndDay End day
      */
-    void setEnd( String pEndDate );
+    void setEndDate( int pEndYear, int pEndMonth, int pEndDay );
 
     /**
      * @return current dateTime
      */
-    DateTime getCurrentDateTime();
+    MutableDateTime getCurrentDateTime();
 
     /**
      * @return current week
      */
-    Weeks getCurrentWeek();
+    Period getCurrentWeek();
 
     /**
      * @return number of weeks of the semester
      */
-    int getWeeks();
+    Weeks getWeeks();
 
     /**
      * @return number of the current week
