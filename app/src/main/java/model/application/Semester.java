@@ -26,9 +26,6 @@ public class Semester implements ISemester{
 
 //    private static Weeks weeks;
 
-    private double gpa;
-
-    private double credits;
 
     public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) {
 
@@ -37,8 +34,6 @@ public class Semester implements ISemester{
         endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
 //        weeks = new Weeks();
         currentWeek = new Period(startDate.toInstant(), endDate.toInstant());
-        gpa = 0;
-        credits = 0;
     }
 
 //    public Calendar darFechaActual(){
@@ -159,36 +154,75 @@ public class Semester implements ISemester{
      */
     @Override
     public double getCurrentGPA() {
-        return gpa;
+
+        double ans = 0;
+        int credits = 0;
+        try{
+            double sum = 0;
+            for( Integer currentKey : subjects.keys() ){
+                Subject currentSubject = subjects.get(currentKey);
+                sum += (currentSubject.getCurrentGrade()*currentSubject.getCredits());
+                credits += currentSubject.getCredits();
+            }
+            ans = sum / credits;
+        }catch (NoSuchElementException e){
+            return ans;
+        }
+        return ans;
     }
 
-    /**
-     * Sets the current semester GPA to pGPA
-     *
-     * @param pGPA GPA to be set
-     */
-    @Override
-    public void setGpa(double pGPA) {
-        gpa = pGPA;
-    }
+//    /**
+//     * Sets the current semester GPA to pGPA
+//     * @param pGPA GPA to be set
+//     */
+//    @Override
+//    public void setGpa(double pGPA) {
+//        gpa = pGPA;
+//    }
 
     /**
      * @return number of credits of the semester
      */
     @Override
     public double getCredits() {
+        int credits = 0;
+        try{
+            for( Integer currentKey : subjects.keys() ){
+                Subject currentSubject = subjects.get(currentKey);
+                credits += currentSubject.getCredits();
+            }
+        }catch (NoSuchElementException e){
+            return credits;
+        }
         return credits;
     }
 
     /**
-     * Sets the number of credits of the semester to pCredits
-     *
-     * @param pCredits credits to be set
+     * @param pSubjectName subject name
+     * @return true if the semester contains the subject with the given name
+     * @throws IllegalArgumentException if the given name is not valid
      */
     @Override
-    public void setCredits(double pCredits) {
-        credits = pCredits;
+    public boolean containsSubject(String pSubjectName) throws IllegalArgumentException {
+        try {
+            if( !pSubjectName.equals("") )
+                return subjects.contains(pSubjectName.hashCode());
+            else
+                throw new IllegalArgumentException("Task name not valid");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Task name not valid");
+        }
     }
+
+//    /**
+//     * Sets the number of credits of the semester to pCredits
+//     *
+//     * @param pCredits credits to be set
+//     */
+//    @Override
+//    public void setCredits(double pCredits) {
+//        credits = pCredits;
+//    }
 
     /**
      * @return an iterable with all the subjects of the semester

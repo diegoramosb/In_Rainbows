@@ -5,6 +5,8 @@ import org.joda.time.MutableDateTime;
 import org.joda.time.Period;
 import org.joda.time.Weeks;
 
+import java.util.NoSuchElementException;
+
 import model.application.Subject;
 
 /**
@@ -64,22 +66,28 @@ public interface ISemester {
      */
     double getCurrentGPA();
 
-    /**
-     * Sets the current semester GPA to pGPA
-     * @param pGPA GPA to be set
-     */
-    void setGpa( double pGPA );
+//    /**
+//     * Sets the current semester GPA to pGPA
+//     * @param pGPA GPA to be set
+//     */
+//    void setGpa( double pGPA );
 
     /**
      * @return number of credits of the semester
      */
     double getCredits();
 
+//    /**
+//     * Sets the number of credits of the semester to pCredits
+//     * @param pCredits credits to be set
+//     */
+//    void setCredits( double pCredits );
+
     /**
-     * Sets the number of credits of the semester to pCredits
-     * @param pCredits credits to be set
+     * @return true if the semester contains the subject with the given name
+     * @param pSubjectName subject name
+     * @throws IllegalArgumentException if the given name is not valid
      */
-    void setCredits( double pCredits );
 
     /**
      * @return an iterable with all the subjects of the semester
