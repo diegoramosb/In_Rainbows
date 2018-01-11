@@ -2,10 +2,9 @@ package model.application;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Days;
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
 import org.joda.time.Period;
-import org.joda.time.PeriodType;
 import org.joda.time.Weeks;
 
 import java.util.NoSuchElementException;
@@ -32,47 +31,40 @@ public class Semester implements ISemester{
 
     private LinearProbingHash<Integer, Subject> subjects;
 
-    public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) {
+    /**
+     * Creates a new Semester object
+     * @param pStartYear Start year
+     * @param pStartMonth Start month of year (from 1 to 12)
+     * @param pStartDay Start day of month (from 1 to 31)
+     * @param pEndYear End year
+     * @param pEndMonth End month of year (from 1 to 12)
+     * @param pEndDay End day of month (from 1 to 31)
+     * @throws IllegalArgumentException If dates that are not valid are given as parameters
+     */
+    public Semester(int pStartYear, int pStartMonth, int pStartDay, int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException {
 
         currentDate = new MutableDateTime(DateTimeZone.forID("America/Bogota")); //Immutable timezone temporarily
-        startDate = new DateTime(pStartYear, pStartMonth, pStartDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
-        endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+        //Joda-Time verifies that dates are valid. When it throws an IllegalFieldValueException the constructor throws an IllegalArgumentException.
+        try {
+            startDate = new DateTime(pStartYear, pStartMonth, pStartDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+        }
+        catch (IllegalFieldValueException e){
+            throw new IllegalArgumentException("Start date not valid.");
+        }
+        try {
+            endDate = new DateTime(pEndYear, pEndMonth, pEndDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+        }
+        catch (IllegalFieldValueException e){
+            throw new IllegalArgumentException("End date not valid.");
+        }
+
 //        weeks = new Weeks();
         currentWeek = new Period(startDate.toInstant(), endDate.toInstant());
-        subjects = new LinearProbingHash<>(7);
+        subjects = new LinearProbingHash<>(10); //Size set as 10 by default
     }
 
-//    public Calendar darFechaActual(){
-//        return currentDate;
-//    }
-//
-//    public Calendar darFechaIncio(){
-//        return startDate;
-//    }
-//
-//    public Calendar darFechaFin(){
-//        return endDate;
-//    }
-//
-//    public int darSemanaActual(){
-//        return currentWeek;
-//    }
-//
-//    public void actualizarSemana(){
-//        currentWeek = (currentDate.getWeekYear()) - startWeek + 1;
-//    }
-
-    public void calcularPromedioSemestre(){
-//        Nodo actual = darPrimerHijo();
-//        double sumaNotas = 0;
-//        while( actual != null ){
-//            sumaNotas += ((Subject) actual ).calcularNota();
-//            actual = actual.darSiguiente();
-//        }
-//        gpa = sumaNotas / credits;
-    }
-
-    public void VerificarInvariante(){
+    private void assertSemester(){
+        assert(startDate.isBefore(endDate.toInstant())) : "Start date must be before end date";
 //        assert( startDate.before(endDate) ) : "La fecha de inicio debe ser anterior a la fecha de fin.";
         //assert( startWeek < endWeek) : "La semana de incio debe ser anterior a la semana de fin.";
     }
@@ -93,10 +85,14 @@ public class Semester implements ISemester{
      * @param pStartDay   Start day
      */
     @Override
-    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) {
-        startDate.year().setCopy(pStartYear);
-        startDate.monthOfYear().setCopy(pStartMonth);
-        startDate.dayOfMonth().setCopy(pStartDay);
+    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) throws IllegalArgumentException{
+        try {
+            startDate.year().setCopy(pStartYear);
+            startDate.monthOfYear().setCopy(pStartMonth);
+            startDate.dayOfMonth().setCopy(pStartDay);
+        }catch (IllegalFieldValueException e){
+            throw new IllegalArgumentException("Date not valid");
+        }
     }
 
     /**
@@ -115,10 +111,14 @@ public class Semester implements ISemester{
      * @param pEndDay   End day
      */
     @Override
-    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) {
-        endDate.year().setCopy(pEndYear);
-        endDate.monthOfYear().setCopy(pEndMonth);
-        endDate.dayOfMonth().setCopy(pEndDay);
+    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException{
+        try {
+            endDate.year().setCopy(pEndYear);
+            endDate.monthOfYear().setCopy(pEndMonth);
+            endDate.dayOfMonth().setCopy(pEndDay);
+        }catch (IllegalArgumentException e){
+            throw  new IllegalArgumentException("Date not valid");
+        }
     }
 
     /**
