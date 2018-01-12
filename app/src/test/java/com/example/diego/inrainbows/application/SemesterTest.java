@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.application.Semester;
+import model.application.Subject;
+import model.application.Task;
+import model.data_structures.LinearProbingHash;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +21,25 @@ public class SemesterTest {
     @Before
     public void setUp() {
         semester = new Semester(2018, 1, 22, 2018, 5, 12);
+    }
+
+    public void setUp2(){
+        setUp();
+
+        Subject subject1 = new Subject("a", 3, 4);
+        Task task11 = new Task("a", "", 20, 5.0, true, true, true);
+        Task task12 = new Task("b", "", 20, 5.0, true, true, true);
+        Task task13 = new Task("c", "", 60, 5.0, true, true, true);
+        subject1.addTask(task11);
+        subject1.addTask(task12);
+        subject1.addTask(task13);
+        semester.addSubject(subject1);
+
+
+        Subject subject2 = new Subject("a", 1, 1);
+        Task task21 = new Task("a", "", 20, 4, true, true, true);
+        subject2.addTask(task21);
+        semester.addSubject(subject2);
     }
 
     @Test
@@ -83,6 +105,7 @@ public class SemesterTest {
 
     @Test
     public void getCurrentWeek() {
+        //TODO Finish dates stuff
         try {
             setUp();
             System.out.println(semester.getCurrentWeek());
@@ -101,10 +124,14 @@ public class SemesterTest {
 
     @Test
     public void getCurrentGPA() {
+        setUp2();
+        assertEquals(4.75, semester.getCurrentGPA(), 0.001);
     }
 
     @Test
     public void getCredits() {
+        setUp2();
+        assertEquals(4, semester.getCredits(), 0.0);
     }
 
     @Test
