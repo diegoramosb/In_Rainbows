@@ -1,6 +1,7 @@
 package model.application;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
@@ -59,14 +60,16 @@ public class Semester implements ISemester{
         }
 
 //        weeks = new Weeks();
-        currentWeek = new Period(startDate.toInstant(), endDate.toInstant());
+
+        setCurrentWeek();
         subjects = new LinearProbingHash<>(10); //Size set as 10 by default
+
+        assertSemester();
     }
 
     private void assertSemester(){
-        assert(startDate.isBefore(endDate.toInstant())) : "Start date must be before end date";
-//        assert( startDate.before(endDate) ) : "La fecha de inicio debe ser anterior a la fecha de fin.";
-        //assert( startWeek < endWeek) : "La semana de incio debe ser anterior a la semana de fin.";
+        if (!startDate.isBefore(endDate.toInstant()))
+            throw new AssertionError("Start date must be before end date");
     }
 
     /**
@@ -74,7 +77,7 @@ public class Semester implements ISemester{
      */
     @Override
     public DateTime getStartDate() {
-        return null;
+        return startDate;
     }
 
     /**
@@ -87,12 +90,13 @@ public class Semester implements ISemester{
     @Override
     public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) throws IllegalArgumentException{
         try {
-            startDate.year().setCopy(pStartYear);
-            startDate.monthOfYear().setCopy(pStartMonth);
-            startDate.dayOfMonth().setCopy(pStartDay);
+              MutableDateTime startDateCopy = startDate.toMutableDateTime();
+              startDateCopy.setDate(pStartYear, pStartMonth, pStartDay);
+              startDate = startDateCopy.toDateTime();
         }catch (IllegalFieldValueException e){
             throw new IllegalArgumentException("Date not valid");
         }
+        assertSemester();
     }
 
     /**
@@ -113,12 +117,13 @@ public class Semester implements ISemester{
     @Override
     public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException{
         try {
-            endDate.year().setCopy(pEndYear);
-            endDate.monthOfYear().setCopy(pEndMonth);
-            endDate.dayOfMonth().setCopy(pEndDay);
+            MutableDateTime endDateCopy = endDate.toMutableDateTime();
+            endDateCopy.setDate(pEndYear, pEndMonth, pEndDay);
+            endDate = endDateCopy.toDateTime();
         }catch (IllegalArgumentException e){
             throw  new IllegalArgumentException("Date not valid");
         }
+        assertSemester();
     }
 
     /**
@@ -135,6 +140,22 @@ public class Semester implements ISemester{
     @Override
     public Period getCurrentWeek() {
         return currentWeek;
+    }
+
+    /**
+     * Sets the current week according to the current dateTime.
+     */
+    @Override
+    public void setCurrentWeek() {
+        MutableDateTime startOfCurrentWeek = currentDate.toMutableDateTime(); //Creates a mutable copy of currentDate
+        startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
+        startOfCurrentWeek.setMillisOfDay(0); //Sets the hour of the copy to 00:00:00
+
+        MutableDateTime endOfCurrentWeek = currentDate.toMutableDateTime();
+        endOfCurrentWeek.addDays(7 - endOfCurrentWeek.getDayOfWeek()); //Finds the last day of the week by adding 7 minus the current day of the week
+        endOfCurrentWeek.setMillisOfDay(DateTimeConstants.MILLIS_PER_DAY - 1); //Sets the hour of the copy to 23:59:59
+
+        currentWeek = new Period(startOfCurrentWeek, endOfCurrentWeek); //Creates a period of 6D23H59M59.999S (a week)
     }
 
     /**
