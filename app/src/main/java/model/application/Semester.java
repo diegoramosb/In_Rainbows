@@ -323,4 +323,29 @@ public class Semester implements ISemester{
             throw new IllegalArgumentException("Trying to delete a null subject");
         }
     }
+
+    /**
+     * Changes the name of a subject
+     *
+     * @param pCurrentName current subject name
+     * @param pNewName     new subject name
+     * @throws NoSuchElementException   if the subject is not found
+     * @throws IllegalArgumentException if any name is not valid
+     */
+    @Override
+    public void setSubjectName(String pCurrentName, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+        if( !pCurrentName.equals("") && !pCurrentName.equals("") ){
+            if (subjects.contains(pCurrentName.hashCode())) {
+                //Makes a copy of the subject and deletes it
+                int oldHash = pCurrentName.hashCode();
+                Subject temp = subjects.get(oldHash);
+                subjects.delete(oldHash);
+                //Changes the the copy name and puts it in the subject with the new hashCode
+                temp.setName(pNewName);
+                subjects.put(pNewName.hashCode(), temp);
+            } else
+                throw new NoSuchElementException("Subject not found.");
+        }else
+            throw new IllegalArgumentException("Name not valid");
+    }
 }

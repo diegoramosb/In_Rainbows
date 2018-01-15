@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import model.application.Semester;
 import model.application.Subject;
 import model.application.Task;
@@ -136,6 +138,18 @@ public class SemesterTest {
 
     @Test
     public void containsSubject() {
+        setUp2();
+        try{
+            semester.getSubject("b");
+            fail();
+        }catch (NoSuchElementException e){}
+        try{
+            assertTrue(semester.containsSubject("a"));
+            semester.setSubjectName("a", "b");
+            assertTrue(semester.containsSubject("b"));
+        }catch (NoSuchElementException e){
+            fail();
+        }
     }
 
     @Test

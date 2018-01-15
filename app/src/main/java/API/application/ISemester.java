@@ -122,4 +122,13 @@ public interface ISemester {
      * @throws NoSuchElementException if the subject is not found
      */
     void deleteSubject( String pSubjectName ) throws  NoSuchElementException, IllegalArgumentException;
+
+    /**
+     * Changes the name of a subject
+     * @param pCurrentName current subject name
+     * @param pNewName new subject name
+     * @throws NoSuchElementException if the subject is not found
+     * @throws IllegalArgumentException if any name is not valid
+     */
+    void setSubjectName( String pCurrentName, String pNewName ) throws NoSuchElementException, IllegalArgumentException;
 }
