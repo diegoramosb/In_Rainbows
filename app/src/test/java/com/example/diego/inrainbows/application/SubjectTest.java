@@ -211,7 +211,6 @@ public class SubjectTest {
     @Test
     public void containsTask(){
         setUp();
-        setUp();
         Task task1 = new Task("a", 50);
         Task task2 = new Task("b", 50);
         Task task3 = new Task("c", 50);
@@ -228,6 +227,12 @@ public class SubjectTest {
             assertTrue(subject.containsTask("c"));
             assertFalse(subject.containsTask("d"));
         }catch (IllegalArgumentException e){
+            fail();
+        }
+        subject.setTaskName("a", "e");
+        try{
+            assertTrue(subject.containsTask("e"));
+        }catch (NoSuchElementException e){
             fail();
         }
     }

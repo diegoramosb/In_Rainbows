@@ -124,6 +124,15 @@ public interface ISubject {
     void increaseStudiedHoursSemester( double pStudiedHours );
 
     /**
+     * Changes the task name
+     * @param pCurrentName current task name
+     * @param pNewName new task name
+     * @throws NoSuchElementException if the task is not found
+     * @throws IllegalArgumentException if either name is not valid
+     */
+    void setTaskName(String pCurrentName, String pNewName) throws NoSuchElementException, IllegalArgumentException;
+
+    /**
      * @return an iterable containing the tasks of the subject
      * @throws NoSuchElementException if there are no tasks
      */

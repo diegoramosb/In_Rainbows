@@ -94,7 +94,7 @@ public class Subject implements ISubject {
     /**
      * @return Subject info as a String
      */
-    public String toString(){
+    public String toString() {
         //Shows "Name, 3 credits, 5.0, 50% graded"
         return name + ", " + credits + " credits, " + "class hours: " + classHours + "extra: " + extraHours + "total: " + totalHours + "day: " + studiedHoursDay + "week:" + studiedHoursWeek + "semester: " + studiedHoursSemester + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
     }
@@ -287,6 +287,31 @@ public class Subject implements ISubject {
     @Override
     public void increaseStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester += pStudiedHours;
+    }
+
+    /**
+     * Changes the task name
+     *
+     * @param pCurrentName current task name
+     * @param pNewName     new task name
+     * @throws NoSuchElementException   if the task is not found
+     * @throws IllegalArgumentException if either name is not valid
+     */
+    @Override
+    public void setTaskName(String pCurrentName, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+        if( !pCurrentName.equals("") && !pCurrentName.equals("") ){
+            if (tasks.contains(pCurrentName.hashCode())) {
+                //Makes a copy of the task and deletes it
+                int oldHash = pCurrentName.hashCode();
+                Task temp = tasks.get(oldHash);
+                tasks.delete(oldHash);
+                //Changese the copy name and puts it in the task with the new hashCode
+                temp.setName(pNewName);
+                tasks.put(pNewName.hashCode(), temp);
+            } else
+                throw new NoSuchElementException("Task not found.");
+        }else
+            throw new IllegalArgumentException("Name not valid");
     }
 
     /**
@@ -609,5 +634,20 @@ public class Subject implements ISubject {
         if (!(studiedHoursWeek >= 0)) throw new AssertionError("Studied hours in week cannot be a negative value");
         if (!(studiedHoursSemester >= 0)) throw new AssertionError("Studied hours in semester cannot be a negative value");
         if (tasks == null) throw new AssertionError("Tasks cannot be null");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Subject subject = (Subject) o;
+
+        return name.equals(subject.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
