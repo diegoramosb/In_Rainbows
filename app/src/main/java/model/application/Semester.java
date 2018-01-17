@@ -267,6 +267,10 @@ public class Semester implements ISemester{
         return ans;
     }
 
+    public int getSubjectAmount(){
+        return subjects.size();
+    }
+
     /**
      * @param pSubjectName name of the subject
      * @return subject with name pSubjectName

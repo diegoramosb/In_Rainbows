@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import model.application.Semester;
 import model.application.Subject;
 import model.application.Task;
-import model.data_structures.LinearProbingHash;
 
 import static org.junit.Assert.*;
 
@@ -154,18 +153,39 @@ public class SemesterTest {
 
     @Test
     public void getSubjects() {
+        setUp2();
+        for( Subject currentSubject : semester.getSubjects() ){
+            assertEquals("a", currentSubject.getName());
+        }
     }
 
     @Test
-    public void getSubject() {
+    public void getSubjectAmount(){
+        setUp2();
+        assertEquals(1, semester.getSubjectAmount());
     }
 
     @Test
     public void addSubject() {
+        setUp2();
+        assertEquals(1, semester.getSubjectAmount());
+        semester.addSubject(new Subject("b", 3 ,3));
+        assertTrue(semester.containsSubject("b"));
     }
 
     @Test
     public void deleteSubject() {
+        setUp2();
+        try{
+            semester.deleteSubject("b");
+            fail();
+        }catch (NoSuchElementException e){}
+        try {
+            semester.deleteSubject("a");
+            assertFalse(semester.containsSubject("a"));
+        }catch (NoSuchElementException e){
+            fail();
+        }
     }
 
 }
