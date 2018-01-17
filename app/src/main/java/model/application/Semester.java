@@ -145,7 +145,7 @@ public class Semester implements ISemester{
     /**
      * Sets the current week according to the current dateTime.
      */
-    public void setCurrentWeek() {
+    private void setCurrentWeek() {
         MutableDateTime startOfCurrentWeek = currentDate.toMutableDateTime(); //Creates a mutable copy of currentDate
         startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
         startOfCurrentWeek.setMillisOfDay(0); //Sets the hour of the copy to 00:00:00
