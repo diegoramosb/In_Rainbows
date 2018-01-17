@@ -96,7 +96,7 @@ public class Subject implements ISubject {
      */
     public String toString() {
         //Shows "Name, 3 credits, 5.0, 50% graded"
-        return name + ", " + credits + " credits, " + "class hours: " + classHours + "extra: " + extraHours + "total: " + totalHours + "day: " + studiedHoursDay + "week:" + studiedHoursWeek + "semester: " + studiedHoursSemester + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
+        return name + ", " + credits + " credits, " + "class hours: " + classHours + " extra: " + extraHours + " total: " + totalHours + " day: " + studiedHoursDay + " week:" + studiedHoursWeek + " semester: " + studiedHoursSemester + " grade:" + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
     }
 
     /**
