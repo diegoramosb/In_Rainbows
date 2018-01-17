@@ -1,6 +1,5 @@
 package com.example.diego.inrainbows.application;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -121,6 +120,13 @@ public class SemesterTest {
 
     @Test
     public void getCurrentWeekNumber() {
+        //This test's values have to be changed according to current date
+        semester = new Semester(2018, 1, 15, 2018, 5, 2);
+        assertEquals(1, semester.getCurrentWeekNumber());
+        semester = new Semester(2018, 1, 10, 2018, 5, 2);
+        assertEquals(2, semester.getCurrentWeekNumber());
+        setUp();
+        assertEquals(0, semester.getCurrentWeekNumber() );
     }
 
     @Test

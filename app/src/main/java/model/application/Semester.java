@@ -145,7 +145,6 @@ public class Semester implements ISemester{
     /**
      * Sets the current week according to the current dateTime.
      */
-    @Override
     public void setCurrentWeek() {
         MutableDateTime startOfCurrentWeek = currentDate.toMutableDateTime(); //Creates a mutable copy of currentDate
         startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
@@ -172,8 +171,14 @@ public class Semester implements ISemester{
      */
     @Override
     public int getCurrentWeekNumber() {
-//        return weeks.getWeeks();
-        return 0;
+        if( currentDate.isAfter(startDate) ){
+            MutableDateTime mutableStartDate = startDate.toMutableDateTime();
+            mutableStartDate.addDays(1 - mutableStartDate.getDayOfWeek());
+            Long weeksBetween = (currentDate.getMillis() - mutableStartDate.getMillis())/DateTimeConstants.MILLIS_PER_WEEK;
+            return weeksBetween.intValue() + 1;
+        }else
+            //TODO Find a way to make the method return negative numbers if the start date hasn't arrived yet.
+            return 0;
     }
 
     /**
