@@ -52,11 +52,6 @@ public interface ISemester {
     Period getCurrentWeek();
 
     /**
-     * Sets the current week according to the current dateTime.
-     */
-    void setCurrentWeek();
-
-    /**
      * @return number of weeks of the semester
      */
     Weeks getWeeks();
