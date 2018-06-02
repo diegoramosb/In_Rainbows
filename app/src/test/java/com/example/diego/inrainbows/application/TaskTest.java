@@ -105,7 +105,7 @@ public class TaskTest {
         try {
             task.setDone(true);
             task.setDelivered(true);
-            assertTrue(task.getDelivered());
+            assertTrue(task.isDelivered());
         }catch (AssertionError error){
             fail();
         }

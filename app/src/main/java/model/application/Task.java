@@ -1,12 +1,10 @@
 package model.application;
 
-import api.application.ITask;
-
 /**
  * @author diego on 1/06/2017.
  */
 
-public class Task implements ITask{
+public class Task {
 
     /**
      * Task name.
@@ -115,7 +113,6 @@ public class Task implements ITask{
     /**
      * @return task name
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -123,7 +120,6 @@ public class Task implements ITask{
     /**
      * @return task grade
      */
-    @Override
     public double getGrade() {
         return grade;
     }
@@ -131,7 +127,6 @@ public class Task implements ITask{
     /**
      * Sets the task grade to pGrade
      */
-    @Override
     public void setGrade(double pGrade) {
         grade = pGrade;
         assertTask();
@@ -141,7 +136,6 @@ public class Task implements ITask{
      * Sets the task name to pName
      * @param pName new task name
      */
-    @Override
     public void setName(String pName) {
         name = pName;
         assertTask();
@@ -150,7 +144,6 @@ public class Task implements ITask{
     /**
      * @return true if the task has been completed, false otherwise
      */
-    @Override
     public boolean getDone() {
         return done;
     }
@@ -159,7 +152,6 @@ public class Task implements ITask{
      * Sets the done status to pDone
      * @param pDone new done status
      */
-    @Override
     public void setDone(boolean pDone) {
         done = pDone;
         assertTask();
@@ -168,7 +160,6 @@ public class Task implements ITask{
     /**
      * @return Task tag
      */
-    @Override
     public String getTag() {
         return tag;
     }
@@ -177,7 +168,6 @@ public class Task implements ITask{
      * Sets the task tag to pTag
      * @param pTag tag to be set
      */
-    @Override
     public void setTag(String pTag) {
         tag = pTag;
         assertTask();
@@ -186,7 +176,6 @@ public class Task implements ITask{
     /**
      * @return percentage of the Subject that the task is worth
      */
-    @Override
     public double getPercentage() {
         return percentage;
     }
@@ -195,7 +184,6 @@ public class Task implements ITask{
      * Sets the percentage of the task to pPercentage
      * @param pPercentage new percentage of the task
      */
-    @Override
     public void setPercentage(double pPercentage) {
         percentage = pPercentage;
         assertTask();
@@ -204,8 +192,7 @@ public class Task implements ITask{
     /**
      * @return true if the task has been graded, false otherwise
      */
-    @Override
-    public boolean getGraded() {
+    public boolean isGraded() {
         return graded;
     }
 
@@ -213,7 +200,6 @@ public class Task implements ITask{
      * Changes the graded status of the task
      * @param pGraded new graded status
      */
-    @Override
     public void setGraded(boolean pGraded) {
         graded = pGraded;
         assertTask();
@@ -222,8 +208,7 @@ public class Task implements ITask{
     /**
      * @return true if the task was delivered by the student, false otherwise
      */
-    @Override
-    public boolean getDelivered() {
+    public boolean isDelivered() {
         return delivered;
     }
 
@@ -231,7 +216,6 @@ public class Task implements ITask{
      * Changes the delivered status of this task to pDelivered
      * @param pDelivered new delivered status
      */
-    @Override
     public void setDelivered(boolean pDelivered) {
 
         delivered = pDelivered;
@@ -262,7 +246,6 @@ public class Task implements ITask{
      * @param o Object to be compared to the task
      * @return true if the object is equal to the task, false otherwise
      */
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -276,7 +259,6 @@ public class Task implements ITask{
      * Task has code
      * @return task hash code using its name
      */
-    @Override
     public int hashCode() {
         return name.hashCode();
     }

@@ -1,16 +1,14 @@
 package model.application;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
-
-import api.application.ISubject;
-import model.data_structures.Bag;
-import model.data_structures.LinearProbingHash;
 
 /**
  * Created by diego on 31/05/2017.
  * This class represents a subject
  */
-public class Subject implements ISubject {
+public class Subject {
 
     /**
      * Subject name
@@ -55,7 +53,7 @@ public class Subject implements ISubject {
     /**
      * Hash table containing tasks.
      */
-    private LinearProbingHash<Integer, Task> tasks;
+    private List<Task> tasks;
 
     /**
      * Creates a new subject, total hours are number of credits * 3 by default, extra hours are total hours - class hours.
@@ -72,7 +70,7 @@ public class Subject implements ISubject {
         studiedHoursSemester = 0;
         totalHours = pCredits * 3;
         extraHours = totalHours - classHours;
-        tasks = new LinearProbingHash<>(10);
+        tasks = new ArrayList<>();
         assertSubject();
     }
 
@@ -85,9 +83,9 @@ public class Subject implements ISubject {
         studiedHoursSemester = pStudiedHoursSemester;
         totalHours = pTotalHours;
         extraHours = pExtraHours;
-        tasks = new LinearProbingHash<>(10);
+        tasks = new ArrayList<>();
         for(Task currentTask : pTasks){
-            tasks.put(currentTask.hashCode(), currentTask);
+            tasks.add(currentTask);
         }
         assertSubject();
     }
@@ -102,7 +100,6 @@ public class Subject implements ISubject {
     /**
      * @return Subject name
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -112,7 +109,6 @@ public class Subject implements ISubject {
      *
      * @param pName new subject name
      */
-    @Override
     public void setName(String pName) {
         name = pName;
     }
@@ -120,7 +116,6 @@ public class Subject implements ISubject {
     /**
      * @return Credits the subject is worth
      */
-    @Override
     public double getCredits() {
         return credits;
     }
@@ -130,7 +125,6 @@ public class Subject implements ISubject {
      *
      * @param pCredits new amount of credits the subject is worth.
      */
-    @Override
     public void setCredits(double pCredits) {
         credits = pCredits;
     }
@@ -138,7 +132,6 @@ public class Subject implements ISubject {
     /**
      * @return Weekly hours of class of the subject
      */
-    @Override
     public double getClassHours() {
         return classHours;
     }
@@ -148,7 +141,6 @@ public class Subject implements ISubject {
      *
      * @param pClassHours new weekly hours of class
      */
-    @Override
     public void setClassHours(double pClassHours) {
         classHours = pClassHours;
     }
@@ -156,7 +148,6 @@ public class Subject implements ISubject {
     /**
      * @return Total hours of study that the subject requires, by default credits * 3.
      */
-    @Override
     public double getTotalHours() {
         return totalHours;
     }
@@ -165,7 +156,6 @@ public class Subject implements ISubject {
      * Sets the total hours to pTotalHours
      * @param pTotalHours new studied hours
      */
-    @Override
     public void setTotalHours( double pTotalHours ){
         totalHours = pTotalHours;
     }
@@ -173,7 +163,6 @@ public class Subject implements ISubject {
     /**
      * @return Extra hours of study that the subject requires, meaning totalHours - classHours
      */
-    @Override
     public double getExtraHours() {
         return extraHours;
     }
@@ -183,32 +172,22 @@ public class Subject implements ISubject {
      *
      * @param pExtraHours new extra hours of the subject
      */
-    @Override
     public void setExtraHours(double pExtraHours) {
         extraHours = pExtraHours;
     }
 
     /**
-     * @param pTaskName Name of the task
+     * @param task task
      * @return true if the subject contains the task with name pName
      * @throws IllegalArgumentException if the task name is not valid
      */
-    @Override
-    public boolean containsTask(String pTaskName) throws IllegalArgumentException {
-        try {
-            if( !pTaskName.equals("") )
-                return tasks.contains(pTaskName.hashCode());
-            else
-                throw new IllegalArgumentException("Task name not valid");
-        }catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Task name not valid");
-        }
+    public boolean containsTask(Task task) throws IllegalArgumentException {
+        return tasks.contains(task);
     }
 
     /**
      * @return Studied hours for the current day
      */
-    @Override
     public double getStudiedHoursDay() {
         return studiedHoursDay;
     }
@@ -218,7 +197,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours new studied hours
      */
-    @Override
     public void setStudiedHoursDay(double pStudiedHours) {
         studiedHoursDay = pStudiedHours;
     }
@@ -228,7 +206,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours hours to increase
      */
-    @Override
     public void increaseStudiedHoursDay(double pStudiedHours) {
         studiedHoursDay += pStudiedHours;
     }
@@ -236,7 +213,6 @@ public class Subject implements ISubject {
     /**
      * @return Studied hours this week in the subject
      */
-    @Override
     public double getStudiedHoursWeek() {
         return studiedHoursWeek;
     }
@@ -246,7 +222,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours new amount of studied hours this week
      */
-    @Override
     public void setStudiedHoursWeek(double pStudiedHours) {
         studiedHoursWeek = pStudiedHours;
     }
@@ -256,7 +231,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours hours to increase
      */
-    @Override
     public void increaseStudiedHoursWeek(double pStudiedHours) {
         studiedHoursWeek += pStudiedHours;
     }
@@ -264,7 +238,6 @@ public class Subject implements ISubject {
     /**
      * @return Amount of studiedHours this semester in the subject
      */
-    @Override
     public double getStudiedHoursSemester() {
         return studiedHoursSemester;
     }
@@ -274,7 +247,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours new amount of studied hours
      */
-    @Override
     public void setStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester = pStudiedHours;
     }
@@ -284,7 +256,6 @@ public class Subject implements ISubject {
      *
      * @param pStudiedHours hours to increase
      */
-    @Override
     public void increaseStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester += pStudiedHours;
     }
@@ -292,22 +263,17 @@ public class Subject implements ISubject {
     /**
      * Changes the task name
      *
-     * @param pCurrentName current task name
+     * @param task current task
      * @param pNewName     new task name
      * @throws NoSuchElementException   if the task is not found
      * @throws IllegalArgumentException if either name is not valid
      */
-    @Override
-    public void setTaskName(String pCurrentName, String pNewName) throws NoSuchElementException, IllegalArgumentException {
-        if( !pCurrentName.equals("") && !pCurrentName.equals("") ){
-            if (tasks.contains(pCurrentName.hashCode())) {
-                //Makes a copy of the task and deletes it
-                int oldHash = pCurrentName.hashCode();
-                Task temp = tasks.get(oldHash);
-                tasks.delete(oldHash);
-                //Changese the copy name and puts it in the task with the new hashCode
-                temp.setName(pNewName);
-                tasks.put(pNewName.hashCode(), temp);
+    public void setTaskName(Task task, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+        if( !pNewName.equals("") && pNewName != null ){
+            if (tasks.contains(task)) {
+                tasks.remove(task);
+                task.setName(pNewName);
+                tasks.add(task);
             } else
                 throw new NoSuchElementException("Task not found.");
         }else
@@ -318,84 +284,89 @@ public class Subject implements ISubject {
      * @return an iterable containing the tasks of the subject
      * @throws NoSuchElementException if there are no tasks
      */
-    @Override
     public Iterable<Task> getAllTasks() throws NoSuchElementException {
-        if( tasks.isEmpty() )
-            throw new NoSuchElementException("The subject has no tasks");
-        Bag<Task> ans = new Bag<>();
-        for (Integer currentKey : tasks.keys()) { //Iterates over the hash table keys
-            Task currentTask = tasks.get(currentKey); //Gets the current task
-            ans.addAtEnd(currentTask); //Adds the current task to the answer
+        if(!tasks.isEmpty()){
+            return tasks;
         }
-        return ans;
+        else{
+            throw new NoSuchElementException("The subject doesn't have any tasks");
+        }
     }
 
     /**
      * @return an iterable containing only the graded tasks of the subject
      * @throws NoSuchElementException if there are no graded tasks
      */
-    @Override
     public Iterable<Task> getGradedTasks() throws NoSuchElementException {
-        Bag<Task> ans = new Bag<>();
-        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
-            Task currentTask = tasks.get(currentKey); //Gets the current task
-            if( currentTask.getGraded() )
-                ans.addAtEnd(currentTask); //Adds the current task to the answer if it was graded
+        ArrayList<Task> gradedTasks = new ArrayList<>();
+        for( Task task : tasks ){
+            if(task.isGraded()){
+                gradedTasks.add(task);
+            }
         }
-        if( ans.isEmpty() )
-            throw new NoSuchElementException("The subject does not have any graded tasks");
-        return ans;
+        if(!gradedTasks.isEmpty()){
+            return  gradedTasks;
+        }
+        else{
+            throw new NoSuchElementException("There are no graded tasks.");
+        }
     }
 
     /**
      * @return an iterable containing only the non-graded tasks of the subject
      * @throws NoSuchElementException if all tasks are graded
      */
-    @Override
     public Iterable<Task> getNonGradedTasks() throws NoSuchElementException {
-        Bag<Task> ans = new Bag<>();
-        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
-            Task currentTask = tasks.get(currentKey); //Gets the current task
-            if( !currentTask.getGraded() )
-                ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't graded
+        ArrayList<Task> nonGradedTasks = new ArrayList<>();
+        for( Task task : tasks ){
+            if(!task.isGraded()){
+                nonGradedTasks.add(task);
+            }
         }
-        if( ans.isEmpty() )
-            throw new NoSuchElementException("All tasks in the subject are graded");
-        return ans;
+        if(!nonGradedTasks.isEmpty()){
+            return  nonGradedTasks;
+        }
+        else{
+            throw new NoSuchElementException("There are no non-graded tasks.");
+        }
     }
 
     /**
      * @return an iterable containing only the delivered tasks of the subject
      * @throws NoSuchElementException if there are not delivered tasks
      */
-    @Override
     public Iterable<Task> getDeliveredTasks() throws NoSuchElementException {
-        Bag<Task> ans = new Bag<>();
-        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
-            Task currentTask = tasks.get(currentKey); //Gets the current task
-            if( currentTask.getDelivered() )
-                ans.addAtEnd(currentTask); //Adds the current task to the answer if it was delivered
+        ArrayList<Task> deliveredTasks = new ArrayList<>();
+        for( Task task : tasks ){
+            if(task.isDelivered()){
+                deliveredTasks.add(task);
+            }
         }
-        if( ans.isEmpty() )
-            throw new NoSuchElementException("The subject has no delivered tasks");
-        return ans;
+        if(!deliveredTasks.isEmpty()){
+            return  deliveredTasks;
+        }
+        else{
+            throw new NoSuchElementException("There are no delivered tasks.");
+        }
     }
 
     /**
      * @return an iterable containing only the non-delivered tasks of the subject
      * @throws NoSuchElementException if all tasks are delivered
      */
-    @Override
     public Iterable<Task> getNonDeliveredTasks() throws NoSuchElementException {
-        Bag<Task> ans = new Bag<>();
-        for( Integer currentKey : tasks.keys() ){ //Iterates over the hash table keys
-            Task currentTask = tasks.get(currentKey); //Gets the current task
-            if( !currentTask.getDelivered() )
-                ans.addAtEnd(currentTask); //Adds the current task to the answer if it wasn't delivered
+        ArrayList<Task> nonDeliveredTasks = new ArrayList<>();
+        for( Task task : tasks ){
+            if(!task.isDelivered()){
+                nonDeliveredTasks.add(task);
+            }
         }
-        if( ans.isEmpty() )
-            throw new NoSuchElementException("All tasks have been delivered");
-        return ans;
+        if(!nonDeliveredTasks.isEmpty()){
+            return  nonDeliveredTasks;
+        }
+        else{
+            throw new NoSuchElementException("There are no non-delivered tasks.");
+        }
     }
 
     /**
@@ -404,51 +375,37 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
-        try{
-            if( !pTaskName.equals("") ) {
-                Task ans = tasks.get(pTaskName.hashCode());
-                if (ans != null) {
-                    return ans;
-                } else {
-                    throw new NoSuchElementException("Task not found");
+        if( !pTaskName.equals("") ) {
+            for(Task task : tasks) {
+                if (task.getName().equals(pTaskName)) {
+                    return task;
                 }
             }
-            else
-                throw new IllegalArgumentException("Task name not valid");
-        }catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("The given name is not valid");
+            throw new NoSuchElementException("Task not found");
         }
+        else
+            throw new IllegalArgumentException("Task name not valid");
     }
 
     /**
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
      * @param pTask new task to be added
      */
-    @Override
     public void addTask(Task pTask) {
-        tasks.put(pTask.hashCode(), pTask);
+        tasks.add(pTask);
     }
 
     /**
      * Deletes task with name pTaskName from the task list of the subject
-     * @param pTaskName name of the task to be deleted
+     * @param task the task to be deleted
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
-    public void deleteTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+    public void deleteTask(Task task) throws NoSuchElementException, IllegalArgumentException {
         try {
-            if (!pTaskName.equals(""))
-                //TODO Check HashTable.delete(). Think about throwing an exception if element to delete is not found.
-                if( containsTask(pTaskName) )
-                    tasks.delete(pTaskName.hashCode());
-                else
-                    throw new NoSuchElementException("Task not found");
-            else
-                throw new IllegalArgumentException("Task name not valid");
-        }catch (IllegalArgumentException e){
+            tasks.remove(task);
+        }catch (NullPointerException e){
             throw new IllegalArgumentException("Trying to delete a null task");
         }
     }
@@ -460,7 +417,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException   if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void markAsDone(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         try{
             setDone(pTaskName,true);
@@ -479,7 +435,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException   if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void setDone(String pTaskName, boolean pDone) throws NoSuchElementException, IllegalArgumentException {
         try{
             getTask(pTaskName).setDone(pDone);
@@ -496,7 +451,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void markAsDelivered(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         try{
             setDelivered(pTaskName,true);
@@ -514,7 +468,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void setDelivered(String pTaskName, boolean pDelivered) throws NoSuchElementException, IllegalArgumentException {
         try{
             getTask(pTaskName).setDelivered(pDelivered);
@@ -531,7 +484,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void markAsGraded(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         try{
             setGraded(pTaskName,true);
@@ -548,7 +500,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    @Override
     public void setGraded(String pTaskName, boolean pGraded) throws NoSuchElementException, IllegalArgumentException {
         try{
             getTask(pTaskName).setGraded(pGraded);
@@ -567,7 +518,6 @@ public class Subject implements ISubject {
      * @throws NoSuchElementException   if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name or grade are not valid
      */
-    @Override
     public void setGrade(String pTaskName, double pGrade) throws NoSuchElementException, IllegalArgumentException {
         try{
             getTask(pTaskName).setGrade(pGrade);
@@ -581,7 +531,6 @@ public class Subject implements ISubject {
     /**
      * @return percentage of tasks of the subject that have been graded
      */
-    @Override
     public double getGradedTasksPercentage() {
         double ans = 0;
         //Adds the percentage of all graded tasks to the answer
@@ -600,7 +549,6 @@ public class Subject implements ISubject {
      * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
      * @return ITask actual de la materia (solo de las notas entregadas)
      */
-    @Override
     public double getCurrentGrade() {
         double ans = 0;
         double gradedPercentage = getGradedTasksPercentage();

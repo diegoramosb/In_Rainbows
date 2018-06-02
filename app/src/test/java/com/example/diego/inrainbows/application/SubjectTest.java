@@ -295,7 +295,7 @@ public class SubjectTest {
         try{
             subject.markAsDone("a");
             subject.setDelivered("a", true);
-            assertTrue(subject.getTask("a").getDelivered());
+            assertTrue(subject.getTask("a").isDelivered());
         }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
@@ -320,7 +320,7 @@ public class SubjectTest {
             subject.markAsDelivered("a");
             subject.setGrade("a", 5.0);
             subject.setGraded("a", true);
-            assertTrue(subject.getTask("a").getGraded());
+            assertTrue(subject.getTask("a").isGraded());
         }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
