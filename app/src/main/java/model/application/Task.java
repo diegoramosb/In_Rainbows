@@ -246,20 +246,39 @@ public class Task {
      * @param o Object to be compared to the task
      * @return true if the object is equal to the task, false otherwise
      */
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Task task = (Task) o;
 
-        return name.equals(task.name);
+        if (done != task.done) return false;
+        if (Double.compare(task.grade, grade) != 0) return false;
+        if (Double.compare(task.percentage, percentage) != 0) return false;
+        if (delivered != task.delivered) return false;
+        if (graded != task.graded) return false;
+        if (!name.equals(task.name)) return false;
+        return tag != null ? tag.equals(task.tag) : task.tag == null;
     }
 
     /**
      * Task has code
      * @return task hash code using its name
      */
+    @Override
     public int hashCode() {
-        return name.hashCode();
+        int result;
+        long temp;
+        result = name.hashCode();
+        result = 31 * result + (tag != null ? tag.hashCode() : 0);
+        result = 31 * result + (done ? 1 : 0);
+        temp = Double.doubleToLongBits(grade);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(percentage);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (delivered ? 1 : 0);
+        result = 31 * result + (graded ? 1 : 0);
+        return result;
     }
 }

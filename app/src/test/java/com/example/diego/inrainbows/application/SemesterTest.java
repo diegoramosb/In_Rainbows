@@ -18,6 +18,10 @@ public class SemesterTest {
 
     private Semester semester;
 
+    private Subject subject1;
+
+    private Subject subject2;
+
     @Before
     public void setUp() {
         semester = new Semester(2018, 1, 22, 2018, 5, 12);
@@ -27,7 +31,7 @@ public class SemesterTest {
     public void setUp2(){
         setUp();
 
-        Subject subject1 = new Subject("a", 3, 4);
+        subject1 = new Subject("a", 3, 4);
         Task task11 = new Task("a", "", 20, 5.0, true, true, true);
         Task task12 = new Task("b", "", 20, 5.0, true, true, true);
         Task task13 = new Task("c", "", 60, 5.0, true, true, true);
@@ -37,7 +41,7 @@ public class SemesterTest {
         semester.addSubject(subject1);
 
 
-        Subject subject2 = new Subject("a", 1, 1);
+        subject2 = new Subject("a", 1, 1);
         Task task21 = new Task("a", "", 20, 4, true, true, true);
         subject2.addTask(task21);
         semester.addSubject(subject2);
@@ -47,7 +51,7 @@ public class SemesterTest {
     public void setUp3(){
         setUp();
 
-        Subject subject1 = new Subject("a", 3, 4);
+        subject1 = new Subject("a", 3, 4);
         Task task11 = new Task("a", "", 20, 5.0, true, true, true);
         Task task12 = new Task("b", "", 20, 5.0, true, true, true);
         Task task13 = new Task("c", "", 60, 5.0, true, true, true);
@@ -57,7 +61,7 @@ public class SemesterTest {
         semester.addSubject(subject1);
 
 
-        Subject subject2 = new Subject("b", 1, 1);
+        subject2 = new Subject("b", 1, 1);
         Task task21 = new Task("a", "", 20, 4, true, true, true);
         subject2.addTask(task21);
         semester.addSubject(subject2);
@@ -167,9 +171,9 @@ public class SemesterTest {
             fail();
         }catch (NoSuchElementException e){}
         try{
-            assertTrue(semester.containsSubject("a"));
-            semester.setSubjectName("a", "b");
-            assertTrue(semester.containsSubject("b"));
+            assertTrue(semester.containsSubject(subject1));
+            semester.setSubjectName(subject1, "b");
+            assertTrue(semester.containsSubject(subject2));
         }catch (NoSuchElementException e){
             fail();
         }
@@ -186,27 +190,24 @@ public class SemesterTest {
     @Test
     public void getSubjectAmount(){
         setUp2();
-        assertEquals(1, semester.getSubjectAmount());
+        assertEquals(2, semester.getSubjectAmount());
     }
 
     @Test
     public void addSubject() {
         setUp2();
-        assertEquals(1, semester.getSubjectAmount());
-        semester.addSubject(new Subject("b", 3 ,3));
-        assertTrue(semester.containsSubject("b"));
+        assertEquals(2, semester.getSubjectAmount());
+        Subject subject = new Subject("b", 3 ,3);
+        semester.addSubject(subject);
+        assertTrue(semester.containsSubject(subject));
     }
 
     @Test
     public void deleteSubject() {
         setUp2();
-        try{
-            semester.deleteSubject("b");
-            fail();
-        }catch (NoSuchElementException e){}
         try {
-            semester.deleteSubject("a");
-            assertFalse(semester.containsSubject("a"));
+            semester.deleteSubject(subject1);
+            assertFalse(semester.containsSubject(subject1));
         }catch (NoSuchElementException e){
             fail();
         }

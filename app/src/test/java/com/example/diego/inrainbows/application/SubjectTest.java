@@ -2,11 +2,12 @@ package com.example.diego.inrainbows.application;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import model.application.Subject;
 import model.application.Task;
-import model.data_structures.Bag;
 
 import static org.junit.Assert.*;
 
@@ -25,8 +26,8 @@ public class SubjectTest {
     public void subjectTest(){
         try{
             subject = new Subject("a", 3, 3);
-            Bag<Task> tasks = new Bag<>();
-            tasks.addAtEnd(new Task("a", 100));
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(new Task("a", 100));
             subject = new Subject("a", 3, 3, 2, 2, 2, 2, 2, tasks);
         }catch (Exception error){
             fail();
@@ -218,23 +219,14 @@ public class SubjectTest {
         subject.addTask(task2);
         subject.addTask(task3);
         try{
-            subject.containsTask("");
-            fail();
-        }catch (IllegalArgumentException e){}
-        try{
-            assertTrue(subject.containsTask("a"));
-            assertTrue(subject.containsTask("b"));
-            assertTrue(subject.containsTask("c"));
-            assertFalse(subject.containsTask("d"));
+            assertTrue(subject.containsTask(task1));
+            assertTrue(subject.containsTask(task2));
+            assertTrue(subject.containsTask(task3));
+            assertFalse(subject.containsTask(new Task("a", 5)));
         }catch (IllegalArgumentException e){
             fail();
         }
-        subject.setTaskName("a", "e");
-        try{
-            assertTrue(subject.containsTask("e"));
-        }catch (NoSuchElementException e){
-            fail();
-        }
+        subject.setTaskName(task1, "e");
     }
 
     @Test
@@ -261,19 +253,11 @@ public class SubjectTest {
         subject.addTask(task2);
         subject.addTask(task3);
         try{
-            subject.deleteTask("");
-            fail();
-        }catch (IllegalArgumentException e){}
-        try{
-            subject.deleteTask("d");
-            fail();
-        }catch (NoSuchElementException e){}
-        try{
-            subject.deleteTask("a");
-            subject.deleteTask("b");
-            assertFalse(subject.containsTask("a"));
-            assertFalse(subject.containsTask("b"));
-            assertTrue(subject.containsTask("c"));
+            subject.deleteTask(task1);
+            subject.deleteTask(task2);
+            assertFalse(subject.containsTask(task1));
+            assertFalse(subject.containsTask(task2));
+            assertTrue(subject.containsTask(task3));
         }catch (IllegalArgumentException | NoSuchElementException e){
             fail();
         }
@@ -415,7 +399,7 @@ public class SubjectTest {
         subject.markAsDelivered("a");
         subject.markAsDelivered("b");
         subject.markAsDelivered("c");
-        assertEquals(5, subject.getCurrentGrade(), 0.0);
+        assertEquals(0, subject.getCurrentGrade(), 0.0);
         subject.setGrade("a", 3.0);
         subject.markAsGraded("a");
         assertEquals(3, subject.getCurrentGrade(), 0.0);

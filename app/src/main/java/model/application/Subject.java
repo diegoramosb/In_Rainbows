@@ -179,9 +179,8 @@ public class Subject {
     /**
      * @param task task
      * @return true if the subject contains the task with name pName
-     * @throws IllegalArgumentException if the task name is not valid
      */
-    public boolean containsTask(Task task) throws IllegalArgumentException {
+    public boolean containsTask(Task task) {
         return tasks.contains(task);
     }
 
@@ -591,11 +590,35 @@ public class Subject {
 
         Subject subject = (Subject) o;
 
+        if (Double.compare(subject.credits, credits) != 0) return false;
+        if (Double.compare(subject.totalHours, totalHours) != 0) return false;
+        if (Double.compare(subject.classHours, classHours) != 0) return false;
+        if (Double.compare(subject.extraHours, extraHours) != 0) return false;
+        if (Double.compare(subject.studiedHoursDay, studiedHoursDay) != 0) return false;
+        if (Double.compare(subject.studiedHoursWeek, studiedHoursWeek) != 0) return false;
+        if (Double.compare(subject.studiedHoursSemester, studiedHoursSemester) != 0) return false;
         return name.equals(subject.name);
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result;
+        long temp;
+        result = name.hashCode();
+        temp = Double.doubleToLongBits(credits);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(totalHours);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(classHours);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(extraHours);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(studiedHoursDay);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(studiedHoursWeek);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(studiedHoursSemester);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
