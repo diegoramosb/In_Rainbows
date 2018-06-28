@@ -1,6 +1,7 @@
 package presenter;
 
-import android.view.View;
+
+import view.View;
 
 /**
  * @author diego on 2/06/2018.
