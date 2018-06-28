@@ -27,9 +27,11 @@ dependencies {
     api 'com.github.krtkush:LinearTimer:v2.1.1'
     api 'com.android.support:appcompat-v7:25.4.0'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
-    // https://mvnrepository.com/artifact/org.glassfish/javax.annotation
     api 'javax.inject:javax.inject:1'
     testImplementation 'junit:junit:4.12'
     api 'org.jetbrains:annotations-java5:15.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     api files('libs/joda-time-2.9.9.jar')
+    implementation 'com.android.support:design:25.4.0'
 }
