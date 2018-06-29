@@ -1,13 +1,13 @@
-package com.example.diego.inrainbows.application;
+package model;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
 
-import model.application.Semester;
-import model.application.Subject;
-import model.application.Task;
+import model.Semester;
+import model.Subject;
+import model.Task;
 
 import static org.junit.Assert.*;
 

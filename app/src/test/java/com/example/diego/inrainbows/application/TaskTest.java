@@ -1,9 +1,9 @@
-package com.example.diego.inrainbows.application;
+package model;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.application.Task;
+import model.Task;
 
 import static org.junit.Assert.*;
 
