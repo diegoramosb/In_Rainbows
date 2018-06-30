@@ -53,7 +53,7 @@ public class Subject {
     /**
      * Hash table containing tasks.
      */
-    private List<model.application.Task> tasks;
+    private List<Task> tasks;
 
     /**
      * Creates a new subject, total hours are number of credits * 3 by default, extra hours are total hours - class hours.
@@ -74,7 +74,7 @@ public class Subject {
         assertSubject();
     }
 
-    public Subject( String pName, int pCredits, double pTotalHours, double pClassHours, double pExtraHours, double pStudiedHoursDay, double pStudiedHoursWeek, double pStudiedHoursSemester, Iterable<model.application.Task> pTasks ) throws IllegalArgumentException{
+    public Subject( String pName, int pCredits, double pTotalHours, double pClassHours, double pExtraHours, double pStudiedHoursDay, double pStudiedHoursWeek, double pStudiedHoursSemester, Iterable<Task> pTasks ) throws IllegalArgumentException{
         name = pName;
         credits = pCredits;
         classHours = pClassHours;
@@ -84,7 +84,7 @@ public class Subject {
         totalHours = pTotalHours;
         extraHours = pExtraHours;
         tasks = new ArrayList<>();
-        for(model.application.Task currentTask : pTasks){
+        for(Task currentTask : pTasks){
             tasks.add(currentTask);
         }
         assertSubject();
@@ -180,7 +180,7 @@ public class Subject {
      * @param task task
      * @return true if the subject contains the task with name pName
      */
-    public boolean containsTask(model.application.Task task) {
+    public boolean containsTask(Task task) {
         return tasks.contains(task);
     }
 
@@ -267,7 +267,7 @@ public class Subject {
      * @throws NoSuchElementException   if the task is not found
      * @throws IllegalArgumentException if either name is not valid
      */
-    public void setTaskName(model.application.Task task, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+    public void setTaskName(Task task, String pNewName) throws NoSuchElementException, IllegalArgumentException {
         if( !pNewName.equals("") && pNewName != null ){
             if (tasks.contains(task)) {
                 tasks.remove(task);
@@ -283,7 +283,7 @@ public class Subject {
      * @return an iterable containing the tasks of the subject
      * @throws NoSuchElementException if there are no tasks
      */
-    public Iterable<model.application.Task> getAllTasks() throws NoSuchElementException {
+    public Iterable<Task> getAllTasks() throws NoSuchElementException {
         if(!tasks.isEmpty()){
             return tasks;
         }
@@ -296,9 +296,9 @@ public class Subject {
      * @return an iterable containing only the graded tasks of the subject
      * @throws NoSuchElementException if there are no graded tasks
      */
-    public Iterable<model.application.Task> getGradedTasks() throws NoSuchElementException {
-        ArrayList<model.application.Task> gradedTasks = new ArrayList<>();
-        for( model.application.Task task : tasks ){
+    public Iterable<Task> getGradedTasks() throws NoSuchElementException {
+        ArrayList<Task> gradedTasks = new ArrayList<>();
+        for( Task task : tasks ){
             if(task.isGraded()){
                 gradedTasks.add(task);
             }
@@ -315,9 +315,9 @@ public class Subject {
      * @return an iterable containing only the non-graded tasks of the subject
      * @throws NoSuchElementException if all tasks are graded
      */
-    public Iterable<model.application.Task> getNonGradedTasks() throws NoSuchElementException {
-        ArrayList<model.application.Task> nonGradedTasks = new ArrayList<>();
-        for( model.application.Task task : tasks ){
+    public Iterable<Task> getNonGradedTasks() throws NoSuchElementException {
+        ArrayList<Task> nonGradedTasks = new ArrayList<>();
+        for( Task task : tasks ){
             if(!task.isGraded()){
                 nonGradedTasks.add(task);
             }
@@ -334,9 +334,9 @@ public class Subject {
      * @return an iterable containing only the delivered tasks of the subject
      * @throws NoSuchElementException if there are not delivered tasks
      */
-    public Iterable<model.application.Task> getDeliveredTasks() throws NoSuchElementException {
-        ArrayList<model.application.Task> deliveredTasks = new ArrayList<>();
-        for( model.application.Task task : tasks ){
+    public Iterable<Task> getDeliveredTasks() throws NoSuchElementException {
+        ArrayList<Task> deliveredTasks = new ArrayList<>();
+        for( Task task : tasks ){
             if(task.isDelivered()){
                 deliveredTasks.add(task);
             }
@@ -353,9 +353,9 @@ public class Subject {
      * @return an iterable containing only the non-delivered tasks of the subject
      * @throws NoSuchElementException if all tasks are delivered
      */
-    public Iterable<model.application.Task> getNonDeliveredTasks() throws NoSuchElementException {
-        ArrayList<model.application.Task> nonDeliveredTasks = new ArrayList<>();
-        for( model.application.Task task : tasks ){
+    public Iterable<Task> getNonDeliveredTasks() throws NoSuchElementException {
+        ArrayList<Task> nonDeliveredTasks = new ArrayList<>();
+        for( Task task : tasks ){
             if(!task.isDelivered()){
                 nonDeliveredTasks.add(task);
             }
@@ -374,9 +374,9 @@ public class Subject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    public model.application.Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+    public Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         if( !pTaskName.equals("") ) {
-            for(model.application.Task task : tasks) {
+            for(Task task : tasks) {
                 if (task.getName().equals(pTaskName)) {
                     return task;
                 }
@@ -391,7 +391,7 @@ public class Subject {
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
      * @param pTask new task to be added
      */
-    public void addTask(model.application.Task pTask) {
+    public void addTask(Task pTask) {
         tasks.add(pTask);
     }
 
@@ -401,7 +401,7 @@ public class Subject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    public void deleteTask(model.application.Task task) throws NoSuchElementException, IllegalArgumentException {
+    public void deleteTask(Task task) throws NoSuchElementException, IllegalArgumentException {
         try {
             tasks.remove(task);
         }catch (NullPointerException e){
@@ -534,7 +534,7 @@ public class Subject {
         double ans = 0;
         //Adds the percentage of all graded tasks to the answer
         try {
-            for (model.application.Task currentTask : getGradedTasks()) {
+            for (Task currentTask : getGradedTasks()) {
                 ans += currentTask.getPercentage();
             }
             return ans;
@@ -552,13 +552,13 @@ public class Subject {
         double ans = 0;
         double gradedPercentage = getGradedTasksPercentage();
         try {
-            Iterable<model.application.Task> gradedTasks = getGradedTasks();
+            Iterable<Task> gradedTasks = getGradedTasks();
             if( gradedPercentage >= 100.0 ){
-                for( model.application.Task currentTask : gradedTasks )
+                for( Task currentTask : gradedTasks )
                     ans += (currentTask.getGrade() * currentTask.getPercentage()) / 100.0;
             }
             else{
-                for( model.application.Task currentTask : gradedTasks )
+                for( Task currentTask : gradedTasks )
                     ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
             }
         }catch (NoSuchElementException ignored){

@@ -19,6 +19,8 @@ import java.util.NoSuchElementException;
 
 public class Semester {
 
+    private Integer semesterName;
+
     private DateTime startDate;
 
     private DateTime endDate;
@@ -69,6 +71,14 @@ public class Semester {
     private void assertSemester(){
         if (!startDate.isBefore(endDate.toInstant()))
             throw new AssertionError("Start date must be before end date");
+    }
+
+    public Integer getSemesterName() {
+        return semesterName;
+    }
+
+    public void setSemesterName(Integer semsterNumber) {
+        this.semesterName = semsterNumber;
     }
 
     /**
