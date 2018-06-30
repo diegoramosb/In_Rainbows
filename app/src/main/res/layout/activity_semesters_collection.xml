@@ -10,79 +10,92 @@
         android:id="@+id/btnNewSemester"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/new_semester"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEndDate" />
 
     <ListView
         android:id="@+id/lvSemesters"
-        android:layout_width="0dp"
-        android:layout_height="178dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="368dp"
+        android:layout_height="115dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/etName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="8dp" />
 
     <TextView
         android:id="@+id/tvStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="@string/start_date"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etStartDate"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/tvEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
         android:text="@string/end_date"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etEndDate"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="@string/semester_name"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etName"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/etEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/etStartDate"
         app:layout_constraintTop_toBottomOf="@+id/etStartDate" />
 
     <EditText
         android:id="@+id/etStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/etName"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="12dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/tvStartDate"
-        app:layout_constraintTop_toBottomOf="@+id/lvSemesters" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/tvBarrier"
+        tools:layout_editor_absoluteY="228dp" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/tvBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tvStartDate,tvName,tvEndDate"
+        tools:layout_editor_absoluteX="384dp" />
 
 </android.support.constraint.ConstraintLayout>

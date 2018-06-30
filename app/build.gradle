@@ -26,7 +26,7 @@ dependencies {
     })
     api 'com.github.krtkush:LinearTimer:v2.1.1'
     api 'com.android.support:appcompat-v7:25.4.0'
-    api 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     api 'javax.inject:javax.inject:1'
     testImplementation 'junit:junit:4.12'
     api 'org.jetbrains:annotations-java5:15.0'
