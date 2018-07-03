@@ -96,7 +96,7 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         //Por ahora formato de fechas YYYY-MM-DD
         String[] startDate = editTexts.get(1).getText().toString().split("-");
         String[] endDate = editTexts.get(2).getText().toString().split("-");
-        semesterArrayAdapter.add(new Semester(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])));
+        semesterArrayAdapter.add(new Semester.SemesterBuilder(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build());
         lvSemesters.setAdapter(semesterArrayAdapter);
     }
 }

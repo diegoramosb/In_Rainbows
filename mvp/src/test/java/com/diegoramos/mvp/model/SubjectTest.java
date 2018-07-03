@@ -16,16 +16,23 @@ public class SubjectTest {
     private Subject subject;
 
     public void setUp(){
-        subject = new Subject("a", 3, 3);
+        subject = new Subject.SubjectBuilder("a", 3, 3).build();
     }
 
     @Test
     public void subjectTest(){
         try{
-            subject = new Subject("a", 3, 3);
+            subject = new Subject.SubjectBuilder("a", 3, 3).build();
             List<Task> tasks = new ArrayList<>();
-            tasks.add(new Task("a", 100));
-            subject = new Subject("a", 3, 3, 2, 2, 2, 2, 2, tasks);
+            tasks.add(new Task.TaskBuilder("a", 100).build());
+            subject = new Subject.SubjectBuilder("a", 3, 3)
+            .setExtraHours(2)
+            .setTotalHours(2)
+            .setStudiedHoursDay(2)
+            .setStudiedHoursSemester(2)
+            .setStudiedHoursWeek(2)
+            .setTasks(tasks)
+            .build();
         }catch (Exception error){
             fail();
         }
@@ -133,9 +140,9 @@ public class SubjectTest {
     @Test
     public void getAllTasks() {
         setUp();
-        Task task1 = new Task("a", 50);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -149,9 +156,21 @@ public class SubjectTest {
     @Test
     public void getGradedTasks() {
         setUp();
-        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
-        Task task2 = new Task("b", "", 20, 5.0, true, true, true);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task2 = new Task.TaskBuilder("b", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -164,9 +183,15 @@ public class SubjectTest {
     @Test
     public void getNonGradedTasks() {
         setUp();
-        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -179,9 +204,21 @@ public class SubjectTest {
     @Test
     public void getDeliveredTasks() {
         setUp();
-        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
-        Task task2 = new Task("b", "", 20, 5.0, true, true, true);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task2 = new Task.TaskBuilder("b", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -194,9 +231,15 @@ public class SubjectTest {
     @Test
     public void getNonDeliveredTasks() {
         setUp();
-        Task task1 = new Task("a", "", 20, 5.0, true, true, true);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 20)
+                .setTag("")
+                .setGrade(5.0)
+                .setDone(true)
+                .setDelivered(true)
+                .setGraded(true)
+                .build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -209,9 +252,9 @@ public class SubjectTest {
     @Test
     public void containsTask(){
         setUp();
-        Task task1 = new Task("a", 50);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -219,7 +262,7 @@ public class SubjectTest {
             assertTrue(subject.containsTask(task1));
             assertTrue(subject.containsTask(task2));
             assertTrue(subject.containsTask(task3));
-            assertFalse(subject.containsTask(new Task("a", 5)));
+            assertFalse(subject.containsTask(new Task.TaskBuilder("a", 5).build()));
         }catch (IllegalArgumentException e){
             fail();
         }
@@ -229,9 +272,9 @@ public class SubjectTest {
     @Test
     public void addTask() {
         setUp();
-        Task task1 = new Task("a", 50);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -243,9 +286,9 @@ public class SubjectTest {
     @Test
     public void deleteTask() {
         setUp();
-        Task task1 = new Task("a", 50);
-        Task task2 = new Task("b", 50);
-        Task task3 = new Task("c", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
+        Task task2 = new Task.TaskBuilder("b", 50).build();
+        Task task3 = new Task.TaskBuilder("c", 50).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -263,7 +306,7 @@ public class SubjectTest {
     @Test
     public void setDelivered() {
         setUp();
-        Task task1 = new Task("a", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
         subject.addTask(task1);
         try{
             subject.setDelivered("b", true);
@@ -285,7 +328,7 @@ public class SubjectTest {
     @Test
     public void setGraded() {
         setUp();
-        Task task1 = new Task("a", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
         subject.addTask(task1);
         try{
             subject.setGrade("b",5.0);
@@ -310,7 +353,7 @@ public class SubjectTest {
     @Test
     public void setDone(){
         setUp();
-        Task task1 = new Task("a", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
         subject.addTask(task1);
         try{
             subject.setDone("b", true);
@@ -331,7 +374,7 @@ public class SubjectTest {
     @Test
     public void setGrade(){
         setUp();
-        Task task1 = new Task("a", 50);
+        Task task1 = new Task.TaskBuilder("a", 50).build();
         subject.addTask(task1);
         subject.setDone("a", true);
         subject.setDelivered("a", true);
@@ -352,9 +395,9 @@ public class SubjectTest {
     @Test
     public void getGradedTasksPercentage() {
         setUp();
-        Task task1 = new Task("a", 25);
-        Task task2 = new Task("b", 20);
-        Task task3 = new Task("c", 25);
+        Task task1 = new Task.TaskBuilder("a", 25).build();
+        Task task2 = new Task.TaskBuilder("b", 20).build();
+        Task task3 = new Task.TaskBuilder("c", 25).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
@@ -382,9 +425,9 @@ public class SubjectTest {
     @Test
     public void getCurrentGrade() {
         setUp();
-        Task task1 = new Task("a", 25);
-        Task task2 = new Task("b", 20);
-        Task task3 = new Task("c", 55);
+        Task task1 = new Task.TaskBuilder("a", 25).build();
+        Task task2 = new Task.TaskBuilder("b", 20).build();
+        Task task3 = new Task.TaskBuilder("c", 55).build();
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);

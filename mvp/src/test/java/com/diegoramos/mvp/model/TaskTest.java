@@ -14,15 +14,21 @@ public class TaskTest {
 
     @Before
     public void setUp() {
-        task = new Task("a", 100);
+        task = new Task.TaskBuilder("a", 100).build();
     }
 
     @Test
     public void taskTest(){
         try{
-            task = new Task("a", 100);
-            task = new Task("a", "a", 100);
-            task = new Task("a","a",100, 5.0, true, true, true);
+            task = new Task.TaskBuilder("a", 100).build();
+            task = new Task.TaskBuilder("a", 100).setTag("a").build();
+            task = new Task.TaskBuilder("a",100)
+                    .setTag("a")
+                    .setGrade(5)
+                    .setDone(true)
+                    .setDelivered(true)
+                    .setGraded(true)
+                    .build();
         }catch (AssertionError error){
             fail();
         }

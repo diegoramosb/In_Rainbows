@@ -41,61 +41,15 @@ public class Task {
      */
     private boolean graded;
 
-    /**
-     * Creates a new task setting all properties but name and percentage to their default values
-     * @param pName task name.
-     * @param pPercentage final grade percentage of the task.
-     * @throws IllegalArgumentException if any parameter is not valid
-     */
-    public Task(String pName, double pPercentage) {
-        name = pName;
-        percentage = pPercentage;
-        //All the other properties set by default
-        tag = "";
-        done = false;
-        grade = -1.0; //Grade set to -1 when task has not been graded
-        delivered = false;
-        graded = false;
-        assertTask();
-    }
+    private Task(TaskBuilder builder){
+        this.name = builder.name;
+        this.percentage = builder.percentage;
 
-    /**
-     * Creates a new task setting all properties but name, tag and percentage to their default values
-     * @param pName task name.
-     * @param pTag task tag.
-     * @param pPercentage final grade percentage of the task.
-     */
-    public Task(String pName, String pTag, double pPercentage) {
-        name = pName;
-        percentage = pPercentage;
-        //All the other properties set by default
-        tag = pTag;
-        done = false;
-        grade = -1.0; //Grade set to -1 when task has not been graded
-        delivered = false;
-        graded = false;
-        assertTask();
-    }
-
-    /**
-     * Creates a new task setting all properties to the values given by parameters
-     * @param pName task name
-     * @param pTag task tag
-     * @param pPercentage task percentage
-     * @param pGrade task grade
-     * @param pDone task done status
-     * @param pDelivered task delivered status
-     * @param pGraded task graded status
-     */
-    public Task( String pName, String pTag, double pPercentage, double pGrade, boolean pDone, boolean pDelivered, boolean pGraded ) {
-        name = pName;
-        tag = pTag ;
-        grade = pGrade;
-        percentage = pPercentage;
-        done = pDone;
-        delivered = pDelivered;
-        graded = pGraded;
-        assertTask();
+        this.tag = builder.getTag();
+        this.done = builder.isDone();
+        this.grade = builder.getGrade();
+        this.delivered = builder.isDelivered();
+        this.graded = builder.graded;
     }
 
     /**
@@ -129,7 +83,6 @@ public class Task {
      */
     public void setGrade(double pGrade) {
         grade = pGrade;
-        assertTask();
     }
 
     /**
@@ -138,7 +91,6 @@ public class Task {
      */
     public void setName(String pName) {
         name = pName;
-        assertTask();
     }
 
     /**
@@ -154,7 +106,6 @@ public class Task {
      */
     public void setDone(boolean pDone) {
         done = pDone;
-        assertTask();
     }
 
     /**
@@ -170,7 +121,6 @@ public class Task {
      */
     public void setTag(String pTag) {
         tag = pTag;
-        assertTask();
     }
 
     /**
@@ -186,7 +136,6 @@ public class Task {
      */
     public void setPercentage(double pPercentage) {
         percentage = pPercentage;
-        assertTask();
     }
 
     /**
@@ -202,7 +151,6 @@ public class Task {
      */
     public void setGraded(boolean pGraded) {
         graded = pGraded;
-        assertTask();
     }
 
     /**
@@ -219,26 +167,6 @@ public class Task {
     public void setDelivered(boolean pDelivered) {
 
         delivered = pDelivered;
-        assertTask();
-    }
-
-    /**
-     * Verifies the task fields
-     * @throws AssertionError if any field is not valid
-     */
-    private void assertTask()throws AssertionError{
-        if (name == null || name.equals("")) throw new AssertionError("Name not valid");
-        if (tag == null) throw new AssertionError("Tag not valid");
-        if (!(percentage > 0)) throw new AssertionError("Percentage must be a positive value");
-        if (graded) {
-            if (!(grade >= 0))
-                throw new AssertionError("If the task is graded, its grade cannot be negative");
-            if (!delivered) throw new AssertionError("If the task is graded, it should have been delivered");
-            if (!done) throw new AssertionError("If the task is graded, it should have been done");
-        }
-        if(delivered){
-            if (!done) throw new AssertionError("If the task was delivered, it should have been done");
-        }
     }
 
     /**
@@ -280,5 +208,76 @@ public class Task {
         result = 31 * result + (delivered ? 1 : 0);
         result = 31 * result + (graded ? 1 : 0);
         return result;
+    }
+
+    public static class TaskBuilder {
+
+        private String name;
+
+        private String tag;
+
+        private boolean done;
+
+        private double grade;
+
+        private double percentage;
+
+        private boolean delivered;
+
+        private boolean graded;
+
+        public TaskBuilder(String name, double percentage){
+            this.name = name;
+            this.percentage = percentage;
+        }
+
+        public String getTag() {
+            return tag;
+        }
+
+        public TaskBuilder setTag(String tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public boolean isDone() {
+            return done;
+        }
+
+        public TaskBuilder setDone(boolean done) {
+            this.done = done;
+            return this;
+        }
+
+        public double getGrade() {
+            return grade;
+        }
+
+        public TaskBuilder setGrade(double grade) {
+            this.grade = grade;
+            return this;
+        }
+
+        public boolean isDelivered() {
+            return delivered;
+        }
+
+        public TaskBuilder setDelivered(boolean delivered) {
+            this.delivered = delivered;
+            return this;
+        }
+
+        public boolean isGraded() {
+            return graded;
+        }
+
+        public TaskBuilder setGraded(boolean graded) {
+            this.graded = graded;
+            return this;
+        }
+
+        public Task build(){
+            return new Task(this);
+        }
     }
 }

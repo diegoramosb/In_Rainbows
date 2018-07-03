@@ -56,39 +56,23 @@ public class Subject {
     private List<Task> tasks;
 
     /**
-     * Creates a new subject, total hours are number of credits * 3 by default, extra hours are total hours - class hours.
-     * @param pName Subject name
-     * @param pCredits Amount of credits subject is worth
-     * @param pClassHours Weekly hours of class of this subject
+     * Private constructor for builder.
+     * @param builder Builder.
      */
-    public Subject(String pName, int pCredits, double pClassHours){
-        name = pName;
-        credits = pCredits;
-        classHours = pClassHours;
-        studiedHoursDay = 0;
-        studiedHoursWeek = 0;
-        studiedHoursSemester = 0;
-        totalHours = pCredits * 3;
-        extraHours = totalHours - classHours;
-        tasks = new ArrayList<>();
-        assertSubject();
+    private Subject(SubjectBuilder builder){
+        this.name = builder.name;
+        this.credits = builder.credits;
+        this.classHours = builder.classHours;
+
+        this.totalHours = calculateTotalHours();
+        this.extraHours = calculateExtraHours();
+
+        this.studiedHoursDay = builder.getStudiedHoursDay();
+        this.studiedHoursWeek = builder.getStudiedHoursWeek();
+        this.studiedHoursSemester = builder.getStudiedHoursSemester();
+        this.tasks = builder.getTasks();
     }
 
-    public Subject( String pName, int pCredits, double pTotalHours, double pClassHours, double pExtraHours, double pStudiedHoursDay, double pStudiedHoursWeek, double pStudiedHoursSemester, Iterable<Task> pTasks ) throws IllegalArgumentException{
-        name = pName;
-        credits = pCredits;
-        classHours = pClassHours;
-        studiedHoursDay = pStudiedHoursDay;
-        studiedHoursWeek = pStudiedHoursWeek;
-        studiedHoursSemester = pStudiedHoursSemester;
-        totalHours = pTotalHours;
-        extraHours = pExtraHours;
-        tasks = new ArrayList<>();
-        for(Task currentTask : pTasks){
-            tasks.add(currentTask);
-        }
-        assertSubject();
-    }
     /**
      * @return Subject info as a String
      */
@@ -257,6 +241,23 @@ public class Subject {
      */
     public void increaseStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester += pStudiedHours;
+    }
+
+    /**
+     * Calculates the amount of total hours of study per week based on the number of credits.
+     *
+     * @return Total amount of studied hours per week.
+     */
+    private double calculateTotalHours() {
+        return credits * 3;
+    }
+
+    /**
+     * Calculates the amount of extra study hours per week based on the number of total hours and class hours.
+     * @return Amount of extra study hours per week.
+     */
+    private double calculateExtraHours(){
+        return totalHours - classHours;
     }
 
     /**
@@ -567,22 +568,6 @@ public class Subject {
         return ans;
     }
 
-    /**
-     * Verifies the subject fields
-     * @throws AssertionError if any field has a non-valid value
-     */
-    private void assertSubject() throws AssertionError{
-        if (name == null || name.equals("")) throw new AssertionError("Name not valid");
-        if (!(credits > 0)) throw new AssertionError("Credits must be a positive value");
-        if (!(totalHours > 0)) throw new AssertionError("Total hours must be a positive value");
-        if (!(classHours > 0)) throw new AssertionError("Class hours must be a positive value");
-        if (!(extraHours > 0)) throw new AssertionError("Extra hours must be a positive value");
-        if (!(studiedHoursDay >= 0)) throw new AssertionError("Studied hours in day cannot be a negative value");
-        if (!(studiedHoursWeek >= 0)) throw new AssertionError("Studied hours in week cannot be a negative value");
-        if (!(studiedHoursSemester >= 0)) throw new AssertionError("Studied hours in semester cannot be a negative value");
-        if (tasks == null) throw new AssertionError("Tasks cannot be null");
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -620,5 +605,90 @@ public class Subject {
         temp = Double.doubleToLongBits(studiedHoursSemester);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public static class SubjectBuilder {
+        private String name;
+
+        private double credits;
+
+        private double totalHours;
+
+        private double classHours;
+
+        private double extraHours;
+
+        private double studiedHoursDay;
+
+        private double studiedHoursWeek;
+
+        private double studiedHoursSemester;
+
+        private List<Task> tasks;
+
+        public SubjectBuilder(String name, double credits, double classHours) {
+            this.name = name;
+            this.credits = credits;
+            this.classHours = classHours;
+            tasks = new ArrayList<>();
+        }
+
+        public double getTotalHours() {
+            return totalHours;
+        }
+
+        public SubjectBuilder setTotalHours(double totalHours) {
+            this.totalHours = totalHours;
+            return this;
+        }
+
+        public double getExtraHours() {
+            return extraHours;
+        }
+
+        public SubjectBuilder setExtraHours(double extraHours) {
+            this.extraHours = extraHours;
+            return this;
+        }
+
+        public double getStudiedHoursDay() {
+            return studiedHoursDay;
+        }
+
+        public SubjectBuilder setStudiedHoursDay(double studiedHoursDay) {
+            this.studiedHoursDay = studiedHoursDay;
+            return this;
+        }
+
+        public double getStudiedHoursWeek() {
+            return studiedHoursWeek;
+        }
+
+        public SubjectBuilder setStudiedHoursWeek(double studiedHoursWeek) {
+            this.studiedHoursWeek = studiedHoursWeek;
+            return this;
+        }
+
+        public double getStudiedHoursSemester() {
+            return studiedHoursSemester;
+        }
+
+        public SubjectBuilder setStudiedHoursSemester(double studiedHoursSemester) {
+            this.studiedHoursSemester = studiedHoursSemester;
+            return this;
+        }
+
+        public List<Task> getTasks() {
+            return tasks;
+        }
+
+        public SubjectBuilder setTasks(List<Task> tasks) {
+            this.tasks = tasks;
+            return this;
+        }
+
+        public Subject build(){
+            return new Subject(this);
+        }
     }
 }
