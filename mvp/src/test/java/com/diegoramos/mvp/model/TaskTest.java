@@ -37,13 +37,13 @@ public class TaskTest {
     @Test
     public void toStringTest() {
         setUp();
-        assertEquals("a, , not done yet, not delivered yet, -1.0, 100.0%", task.toString());
+        assertEquals("a, null, not done yet, not delivered yet, 0.0, 100.0%", task.toString());
         task.setTag("a");
-        assertEquals("a, a, not done yet, not delivered yet, -1.0, 100.0%", task.toString());
+        assertEquals("a, a, not done yet, not delivered yet, 0.0, 100.0%", task.toString());
         task.setDone(true);
-        assertEquals("a, a, done, not delivered yet, -1.0, 100.0%", task.toString());
+        assertEquals("a, a, done, not delivered yet, 0.0, 100.0%", task.toString());
         task.setDelivered(true);
-        assertEquals("a, a, done, delivered, -1.0, 100.0%", task.toString());
+        assertEquals("a, a, done, delivered, 0.0, 100.0%", task.toString());
         task.setGrade(5.0);
         task.setGraded(true);
         assertEquals("a, a, done, delivered, 5.0, 100.0%", task.toString());
