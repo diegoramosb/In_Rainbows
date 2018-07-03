@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -33,6 +34,9 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
     @BindView(R.id.lvSemesters)
     ListView lvSemesters;
 
+    @BindView(R.id.btnNewSemester)
+    Button btnNewSemester;
+
     @BindViews({R.id.etName, R.id.etStartDate, R.id.etEndDate})
     List<EditText> editTexts;
 
@@ -44,10 +48,14 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_semesters_collection);
-        semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
         ButterKnife.bind(this);
+        semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     /**
      * Shows loading screen.
@@ -83,12 +91,12 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 
     }
 
-//    @OnClick(R.id.btnNewSemester)
-//    public void addSemester(EditText etName, EditText etStartDate, EditText etEndDate){
-//        //Por ahora formato de fechas YYYY-MM-DD
-//        String[] startDate = etStartDate.getText().toString().split("-");
-//        String[] endDate = etEndDate.getText().toString().split("-");
-//        semesterArrayAdapter.add(new Semester(etName.getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])));
-//        lvSemesters.setAdapter(semesterArrayAdapter);
-//    }
+    @OnClick(R.id.btnNewSemester)
+    public void addSemester(){
+        //Por ahora formato de fechas YYYY-MM-DD
+        String[] startDate = editTexts.get(1).getText().toString().split("-");
+        String[] endDate = editTexts.get(2).getText().toString().split("-");
+        semesterArrayAdapter.add(new Semester(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])));
+        lvSemesters.setAdapter(semesterArrayAdapter);
+    }
 }
