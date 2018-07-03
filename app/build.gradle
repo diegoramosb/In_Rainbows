@@ -32,6 +32,6 @@ dependencies {
     api 'org.jetbrains:annotations-java5:15.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    api files('libs/joda-time-2.9.9.jar')
     implementation 'com.android.support:design:25.4.0'
+    implementation project(path: ':mvp')
 }
