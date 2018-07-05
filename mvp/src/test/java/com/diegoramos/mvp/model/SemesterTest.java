@@ -28,21 +28,21 @@ public class SemesterTest {
         setUp();
 
         subject1 = new Subject.SubjectBuilder("a", 3, 4).build();
-        Task task11 = new Task.TaskBuilder("a", 20)
+        SubjectTask task11 = new SubjectTask.TaskBuilder("a", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        Task task12 = new Task.TaskBuilder("b", 20)
+        SubjectTask task12 = new SubjectTask.TaskBuilder("b", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        Task task13 = new Task.TaskBuilder("c", 60)
+        SubjectTask task13 = new SubjectTask.TaskBuilder("c", 60)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
@@ -57,7 +57,7 @@ public class SemesterTest {
 
 
         subject2 = new Subject.SubjectBuilder("a", 1, 1).build();
-        Task task21 = new Task.TaskBuilder("a", 20)
+        SubjectTask task21 = new SubjectTask.TaskBuilder("a", 20)
                 .setTag("")
                 .setGrade(4)
                 .setDone(true)
@@ -73,21 +73,21 @@ public class SemesterTest {
         setUp();
 
         subject1 = new Subject.SubjectBuilder("a", 3, 4).build();
-        Task task11 = new Task.TaskBuilder("a", 20)
+        SubjectTask task11 = new SubjectTask.TaskBuilder("a", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        Task task12 = new Task.TaskBuilder("b", 20)
+        SubjectTask task12 = new SubjectTask.TaskBuilder("b", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        Task task13 = new Task.TaskBuilder("c", 60)
+        SubjectTask task13 = new SubjectTask.TaskBuilder("c", 60)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
@@ -101,7 +101,7 @@ public class SemesterTest {
 
 
         subject2 = new Subject.SubjectBuilder("b", 1, 1).build();
-        Task task21 = new Task.TaskBuilder("a", 20)
+        SubjectTask task21 = new SubjectTask.TaskBuilder("a", 20)
                 .setGrade(4)
                 .setDone(true)
                 .setDelivered(true)

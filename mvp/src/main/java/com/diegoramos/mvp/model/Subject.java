@@ -53,7 +53,7 @@ public class Subject {
     /**
      * Hash table containing tasks.
      */
-    private List<Task> tasks;
+    private List<SubjectTask> tasks;
 
     /**
      * Private constructor for builder.
@@ -164,7 +164,7 @@ public class Subject {
      * @param task task
      * @return true if the subject contains the task with name pName
      */
-    public boolean containsTask(Task task) {
+    public boolean containsTask(SubjectTask task) {
         return tasks.contains(task);
     }
 
@@ -268,7 +268,7 @@ public class Subject {
      * @throws NoSuchElementException   if the task is not found
      * @throws IllegalArgumentException if either name is not valid
      */
-    public void setTaskName(Task task, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+    public void setTaskName(SubjectTask task, String pNewName) throws NoSuchElementException, IllegalArgumentException {
         if( !pNewName.equals("") && pNewName != null ){
             if (tasks.contains(task)) {
                 tasks.remove(task);
@@ -284,7 +284,7 @@ public class Subject {
      * @return an iterable containing the tasks of the subject
      * @throws NoSuchElementException if there are no tasks
      */
-    public Iterable<Task> getAllTasks() throws NoSuchElementException {
+    public Iterable<SubjectTask> getAllTasks() throws NoSuchElementException {
         if(!tasks.isEmpty()){
             return tasks;
         }
@@ -297,9 +297,9 @@ public class Subject {
      * @return an iterable containing only the graded tasks of the subject
      * @throws NoSuchElementException if there are no graded tasks
      */
-    public Iterable<Task> getGradedTasks() throws NoSuchElementException {
-        ArrayList<Task> gradedTasks = new ArrayList<>();
-        for( Task task : tasks ){
+    public Iterable<SubjectTask> getGradedTasks() throws NoSuchElementException {
+        ArrayList<SubjectTask> gradedTasks = new ArrayList<>();
+        for( SubjectTask task : tasks ){
             if(task.isGraded()){
                 gradedTasks.add(task);
             }
@@ -316,9 +316,9 @@ public class Subject {
      * @return an iterable containing only the non-graded tasks of the subject
      * @throws NoSuchElementException if all tasks are graded
      */
-    public Iterable<Task> getNonGradedTasks() throws NoSuchElementException {
-        ArrayList<Task> nonGradedTasks = new ArrayList<>();
-        for( Task task : tasks ){
+    public Iterable<SubjectTask> getNonGradedTasks() throws NoSuchElementException {
+        ArrayList<SubjectTask> nonGradedTasks = new ArrayList<>();
+        for( SubjectTask task : tasks ){
             if(!task.isGraded()){
                 nonGradedTasks.add(task);
             }
@@ -335,9 +335,9 @@ public class Subject {
      * @return an iterable containing only the delivered tasks of the subject
      * @throws NoSuchElementException if there are not delivered tasks
      */
-    public Iterable<Task> getDeliveredTasks() throws NoSuchElementException {
-        ArrayList<Task> deliveredTasks = new ArrayList<>();
-        for( Task task : tasks ){
+    public Iterable<SubjectTask> getDeliveredTasks() throws NoSuchElementException {
+        ArrayList<SubjectTask> deliveredTasks = new ArrayList<>();
+        for( SubjectTask task : tasks ){
             if(task.isDelivered()){
                 deliveredTasks.add(task);
             }
@@ -354,9 +354,9 @@ public class Subject {
      * @return an iterable containing only the non-delivered tasks of the subject
      * @throws NoSuchElementException if all tasks are delivered
      */
-    public Iterable<Task> getNonDeliveredTasks() throws NoSuchElementException {
-        ArrayList<Task> nonDeliveredTasks = new ArrayList<>();
-        for( Task task : tasks ){
+    public Iterable<SubjectTask> getNonDeliveredTasks() throws NoSuchElementException {
+        ArrayList<SubjectTask> nonDeliveredTasks = new ArrayList<>();
+        for( SubjectTask task : tasks ){
             if(!task.isDelivered()){
                 nonDeliveredTasks.add(task);
             }
@@ -375,9 +375,9 @@ public class Subject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    public Task getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
+    public SubjectTask getTask(String pTaskName) throws NoSuchElementException, IllegalArgumentException {
         if( !pTaskName.equals("") ) {
-            for(Task task : tasks) {
+            for(SubjectTask task : tasks) {
                 if (task.getName().equals(pTaskName)) {
                     return task;
                 }
@@ -392,7 +392,7 @@ public class Subject {
      * Adds a new task to the subject. It gets marked as non-delivered and non-graded by default
      * @param pTask new task to be added
      */
-    public void addTask(Task pTask) {
+    public void addTask(SubjectTask pTask) {
         tasks.add(pTask);
     }
 
@@ -402,7 +402,7 @@ public class Subject {
      * @throws NoSuchElementException if there is no task with name pTaskName
      * @throws IllegalArgumentException if the given name is not valid
      */
-    public void deleteTask(Task task) throws NoSuchElementException, IllegalArgumentException {
+    public void deleteTask(SubjectTask task) throws NoSuchElementException, IllegalArgumentException {
         try {
             tasks.remove(task);
         }catch (NullPointerException e){
@@ -535,7 +535,7 @@ public class Subject {
         double ans = 0;
         //Adds the percentage of all graded tasks to the answer
         try {
-            for (Task currentTask : getGradedTasks()) {
+            for (SubjectTask currentTask : getGradedTasks()) {
                 ans += currentTask.getPercentage();
             }
             return ans;
@@ -553,13 +553,13 @@ public class Subject {
         double ans = 0;
         double gradedPercentage = getGradedTasksPercentage();
         try {
-            Iterable<Task> gradedTasks = getGradedTasks();
+            Iterable<SubjectTask> gradedTasks = getGradedTasks();
             if( gradedPercentage >= 100.0 ){
-                for( Task currentTask : gradedTasks )
+                for( SubjectTask currentTask : gradedTasks )
                     ans += (currentTask.getGrade() * currentTask.getPercentage()) / 100.0;
             }
             else{
-                for( Task currentTask : gradedTasks )
+                for( SubjectTask currentTask : gradedTasks )
                     ans += (currentTask.getGrade() * currentTask.getPercentage()) / gradedPercentage;
             }
         }catch (NoSuchElementException ignored){
@@ -624,7 +624,7 @@ public class Subject {
 
         private double studiedHoursSemester;
 
-        private List<Task> tasks;
+        private List<SubjectTask> tasks;
 
         public SubjectBuilder(String name, double credits, double classHours) {
             this.name = name;
@@ -678,11 +678,11 @@ public class Subject {
             return this;
         }
 
-        public List<Task> getTasks() {
+        public List<SubjectTask> getTasks() {
             return tasks;
         }
 
-        public SubjectBuilder setTasks(List<Task> tasks) {
+        public SubjectBuilder setTasks(List<SubjectTask> tasks) {
             this.tasks = tasks;
             return this;
         }

@@ -10,19 +10,19 @@ import static org.junit.Assert.*;
  */
 public class TaskTest {
 
-    private Task task;
+    private SubjectTask task;
 
     @Before
     public void setUp() {
-        task = new Task.TaskBuilder("a", 100).build();
+        task = new SubjectTask.TaskBuilder("a", 100).build();
     }
 
     @Test
     public void taskTest(){
         try{
-            task = new Task.TaskBuilder("a", 100).build();
-            task = new Task.TaskBuilder("a", 100).setTag("a").build();
-            task = new Task.TaskBuilder("a",100)
+            task = new SubjectTask.TaskBuilder("a", 100).build();
+            task = new SubjectTask.TaskBuilder("a", 100).setTag("a").build();
+            task = new SubjectTask.TaskBuilder("a",100)
                     .setTag("a")
                     .setGrade(5)
                     .setDone(true)
@@ -78,7 +78,7 @@ public class TaskTest {
     public void getDone() {
         setUp();
         task.setDone(true);
-        assertTrue(task.getDone());
+        assertTrue(task.isDone());
     }
 
     @Test
