@@ -4,4 +4,8 @@
     <string name="semester_name">Name</string>
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
+
+    <string name="sample_semester_name">First semester</string>
+    <string name="sample_start_date">2018-01-20</string>
+    <string name="sample_end_date">2018-05-30</string>
 </resources>

@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.BindViews;
 import com.diegoramos.mvp.model.Semester;
@@ -49,6 +50,15 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_semesters_collection);
         ButterKnife.bind(this);
+
+        semesters = new ArrayList<>();
+
+
+
+        editTexts.get(0).setText(R.string.sample_semester_name);
+        editTexts.get(1).setText(R.string.sample_start_date);
+        editTexts.get(2).setText(R.string.sample_end_date);
+
         semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
     }
 
@@ -96,7 +106,11 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         //Por ahora formato de fechas YYYY-MM-DD
         String[] startDate = editTexts.get(1).getText().toString().split("-");
         String[] endDate = editTexts.get(2).getText().toString().split("-");
-        semesterArrayAdapter.add(new Semester.SemesterBuilder(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build());
+
+        Semester semester = new Semester.SemesterBuilder(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
+        semesterArrayAdapter.add(semester);
+
+
         lvSemesters.setAdapter(semesterArrayAdapter);
     }
 }

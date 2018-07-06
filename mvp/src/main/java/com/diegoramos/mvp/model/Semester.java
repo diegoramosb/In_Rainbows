@@ -268,6 +268,22 @@ public class Semester {
             throw new IllegalArgumentException("Name not valid");
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(semesterName)
+                .append("\n Start: ")
+                .append(startDate.getYear())
+                .append(startDate.getMonthOfYear())
+                .append(startDate.getDayOfMonth())
+                .append("\n End: ")
+                .append(endDate.getYear())
+                .append(endDate.getMonthOfYear())
+                .append(endDate.getDayOfMonth());
+
+        return sb.toString();
+    }
+
     public static class SemesterBuilder {
         private String semesterName;
 
