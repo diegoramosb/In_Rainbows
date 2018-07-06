@@ -13,12 +13,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.BindViews;
-import com.diegoramos.mvp.model.Semester;
-import com.diegoramos.mvp.presenter.SemesterPresenter;
-import com.diegoramos.mvp.view.SemesterView;
+
+import com.inrainbows.mvp.model.Semester;
+import com.inrainbows.mvp.view.SemesterView;
+import com.inrainbows.mvp.presenter.SemesterPresenter;
 import com.inrainbows.R;
 
 import butterknife.ButterKnife;
