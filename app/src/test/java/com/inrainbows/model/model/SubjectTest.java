@@ -442,15 +442,15 @@ public class SubjectTest {
         subject.markAsDelivered("a");
         subject.markAsDelivered("b");
         subject.markAsDelivered("c");
-        assertEquals(0, subject.getCurrentGrade(), 0.0);
+        assertEquals(0, subject.getCurrentGrade(), 0.000000001);
         subject.setGrade("a", 3.0);
         subject.markAsGraded("a");
-        assertEquals(3, subject.getCurrentGrade(), 0.0);
+        assertEquals(3, subject.getCurrentGrade(), 0.0000000001);
         subject.setGrade("b", 4);
         subject.markAsGraded("b");
-        assertEquals(3.4, subject.getCurrentGrade(), 0.1);
+        assertEquals(3.4, subject.getCurrentGrade(), 0.0000000001);
         subject.setGrade("c", 5);
         subject.markAsGraded("c");
-        assertEquals(4.3, subject.getCurrentGrade(), 0.1);
+        assertEquals(4.3, subject.getCurrentGrade(), 0.0000000001);
     }
 }

@@ -5,7 +5,6 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
-import org.joda.time.Period;
 import org.joda.time.Weeks;
 
 import java.util.ArrayList;
@@ -25,10 +24,6 @@ public class Semester {
 
     private DateTime endDate;
 
-    private MutableDateTime currentDate;
-
-    private Period currentWeek;
-
 //    private static Weeks weeks;
 
     private List<Subject> subjects;
@@ -38,8 +33,6 @@ public class Semester {
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
 
-        this.currentDate = builder.getCurrentDate();
-        this.currentWeek = builder.getCurrentWeek();
         this.subjects = builder.getSubjects();
     }
 
@@ -75,6 +68,10 @@ public class Semester {
         }
     }
 
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
+    }
+
     /**
      * @return end date of the semester
      */
@@ -100,18 +97,8 @@ public class Semester {
         }
     }
 
-    /**
-     * @return current dateTime
-     */
-    public MutableDateTime getCurrentDateTime() {
-        return currentDate;
-    }
-
-    /**
-     * @return current week
-     */
-    public Period getCurrentWeek() {
-        return currentWeek;
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
     }
 
     /**
@@ -120,20 +107,6 @@ public class Semester {
     public Weeks getWeeks() {
 //        return weeks;
         return null;
-    }
-
-    /**
-     * @return number of the current week
-     */
-    public int getCurrentWeekNumber() {
-        if( currentDate.isAfter(startDate) ){
-            MutableDateTime mutableStartDate = startDate.toMutableDateTime();
-            mutableStartDate.addDays(1 - mutableStartDate.getDayOfWeek());
-            Long weeksBetween = (currentDate.getMillis() - mutableStartDate.getMillis())/DateTimeConstants.MILLIS_PER_WEEK;
-            return weeksBetween.intValue() + 1;
-        }else
-            //TODO Find a way to make the method return negative numbers if the start date hasn't arrived yet.
-            return 0;
     }
 
     /**
@@ -195,6 +168,10 @@ public class Semester {
         else {
             throw new NoSuchElementException("The semester doesn't have any subjects");
         }
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 
     public int getSubjectAmount(){
@@ -273,12 +250,12 @@ public class Semester {
         StringBuilder sb = new StringBuilder();
         sb.append(semesterName)
                 .append("\n Start: ")
-                .append(startDate.getYear())
-                .append(startDate.getMonthOfYear())
+                .append(startDate.getYear()).append("-")
+                .append(startDate.getMonthOfYear()).append("-")
                 .append(startDate.getDayOfMonth())
                 .append("\n End: ")
-                .append(endDate.getYear())
-                .append(endDate.getMonthOfYear())
+                .append(endDate.getYear()).append("-")
+                .append(endDate.getMonthOfYear()).append("-")
                 .append(endDate.getDayOfMonth());
 
         return sb.toString();
@@ -291,15 +268,16 @@ public class Semester {
 
         private DateTime endDate;
 
-        private MutableDateTime currentDate;
-
-        private Period currentWeek;
-
         private List<Subject> subjects;
+
+        public SemesterBuilder(String semesterName, DateTime startDate, DateTime endDate) {
+            this.semesterName = semesterName;
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
 
         public SemesterBuilder(String semesterName, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
             this.semesterName = semesterName;
-            currentDate = new MutableDateTime(DateTimeZone.forID("America/Bogota")); //Immutable timezone temporarily
             //Joda-Time verifies that dates are valid. When it throws an IllegalFieldValueException the constructor throws an IllegalArgumentException.
             try {
                 startDate = new DateTime(startYear, startMonth, startDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
@@ -314,43 +292,7 @@ public class Semester {
                 throw new IllegalArgumentException("End date not valid.");
             }
 
-//        weeks = new Weeks();
-
-            setCurrentWeek();
             subjects = new ArrayList<>();
-        }
-
-        public MutableDateTime getCurrentDate() {
-            return currentDate;
-        }
-
-        public SemesterBuilder setCurrentDate(MutableDateTime currentDate) {
-            this.currentDate = currentDate;
-            return this;
-        }
-
-        public Period getCurrentWeek() {
-            return currentWeek;
-        }
-
-        public SemesterBuilder setCurrentWeek(Period currentWeek) {
-            this.currentWeek = currentWeek;
-            return this;
-        }
-
-        /**
-         * Sets the current week according to the current dateTime.
-         */
-        private void setCurrentWeek() {
-            MutableDateTime startOfCurrentWeek = currentDate.toMutableDateTime(); //Creates a mutable copy of currentDate
-            startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
-            startOfCurrentWeek.setMillisOfDay(0); //Sets the hour of the copy to 00:00:00
-
-            MutableDateTime endOfCurrentWeek = currentDate.toMutableDateTime();
-            endOfCurrentWeek.addDays(7 - endOfCurrentWeek.getDayOfWeek()); //Finds the last day of the week by adding 7 minus the current day of the week
-            endOfCurrentWeek.setMillisOfDay(DateTimeConstants.MILLIS_PER_DAY - 1); //Sets the hour of the copy to 23:59:59
-
-            currentWeek = new Period(startOfCurrentWeek, endOfCurrentWeek); //Creates a period of 6D23H59M59.999S (a week)
         }
 
         public List<Subject> getSubjects() {

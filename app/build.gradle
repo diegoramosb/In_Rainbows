@@ -31,11 +31,14 @@ dependencies {
     implementation 'com.android.support:design:25.4.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
-    api 'javax.inject:javax.inject:1'
     api 'org.jetbrains:annotations-java5:15.0'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    annotationProcessor "com.google.dagger:dagger-compiler:2.16"
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation "com.google.dagger:dagger:2.16"
 
     testImplementation 'junit:junit:4.12'
 

@@ -30,7 +30,7 @@ import butterknife.OnClick;
 public class SemesterCollectionActivity extends AppCompatActivity implements SemesterView {
 
     @Inject
-    private SemesterPresenter SemesterPresenter;
+    SemesterPresenter SemesterPresenter;
 
     @BindView(R.id.lvSemesters)
     ListView lvSemesters;
@@ -52,8 +52,6 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         ButterKnife.bind(this);
 
         semesters = new ArrayList<>();
-
-
 
         editTexts.get(0).setText(R.string.sample_semester_name);
         editTexts.get(1).setText(R.string.sample_start_date);

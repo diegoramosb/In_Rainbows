@@ -171,35 +171,6 @@ public class SemesterTest {
     }
 
     @Test
-    public void getCurrentDateTime() {
-        setUp();
-        assertEquals(System.currentTimeMillis(), semester.getCurrentDateTime().getMillis());
-    }
-
-    @Test
-    public void getCurrentWeek() {
-        //TODO Find a way to get start and end instants of a period.
-        try {
-            setUp();
-//            System.out.println(semester.getCurrentWeek());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    @Test
-    public void getCurrentWeekNumber() {
-        //This test's values have to be changed according to current date
-        semester = new Semester.SemesterBuilder("a", 2018, 1, 15, 2018, 5, 2).build();
-        assertEquals(1, semester.getCurrentWeekNumber());
-        semester = new Semester.SemesterBuilder("a", 2018, 1, 10, 2018, 5, 2).build();
-        assertEquals(2, semester.getCurrentWeekNumber());
-        setUp();
-        assertEquals(0, semester.getCurrentWeekNumber() );
-    }
-
-    @Test
     public void getCurrentGPA() {
         setUp3();
         assertEquals(4.75, semester.getCurrentGPA(), 0.001);
