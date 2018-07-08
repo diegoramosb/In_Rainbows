@@ -21,15 +21,15 @@ public class CalendarTest {
         this.calendar = new Calendar();
     }
 
-    @Test
-    public void getCurrentWeek() {
-        //TODO Find a way to get start and end instants of a period.
-        try {
-//            System.out.println(semester.getCurrentWeek());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void getCurrentWeek() {
+//        //TODO Find a way to get start and end instants of a period.
+//        try {
+////            System.out.println(semester.getCurrentWeek());
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
 
     @Test

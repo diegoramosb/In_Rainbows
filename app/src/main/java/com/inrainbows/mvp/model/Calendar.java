@@ -17,21 +17,21 @@ public class Calendar implements DateManager {
         return new DateTime(DateTimeZone.forID("America/Bogota")); //Immutable timezone temporarily
     }
 
-    @Override
-    public Period getCurrentWeek() {
-
-        DateTime currentDateTime = getCurrentDateTime();
-
-        MutableDateTime startOfCurrentWeek = currentDateTime.toMutableDateTime(); //Creates a mutable copy of currentDate
-        startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
-        startOfCurrentWeek.setMillisOfDay(0); //Sets the hour of the copy to 00:00:00
-
-        MutableDateTime endOfCurrentWeek = currentDateTime.toMutableDateTime();
-        endOfCurrentWeek.addDays(7 - endOfCurrentWeek.getDayOfWeek()); //Finds the last day of the week by adding 7 minus the current day of the week
-        endOfCurrentWeek.setMillisOfDay(DateTimeConstants.MILLIS_PER_DAY - 1); //Sets the hour of the copy to 23:59:59
-
-        return new Period(startOfCurrentWeek, endOfCurrentWeek); //Creates a period of 6D23H59M59.999S (a week)
-    }
+//    @Override
+//    public Period getCurrentWeek() {
+//
+//        DateTime currentDateTime = getCurrentDateTime();
+//
+//        MutableDateTime startOfCurrentWeek = currentDateTime.toMutableDateTime(); //Creates a mutable copy of currentDate
+//        startOfCurrentWeek.addDays( 1 - startOfCurrentWeek.getDayOfWeek() ); //Finds the first day of the current week by subtracting 1 minus the current day of week
+//        startOfCurrentWeek.setMillisOfDay(0); //Sets the hour of the copy to 00:00:00
+//
+//        MutableDateTime endOfCurrentWeek = currentDateTime.toMutableDateTime();
+//        endOfCurrentWeek.addDays(7 - endOfCurrentWeek.getDayOfWeek()); //Finds the last day of the week by adding 7 minus the current day of the week
+//        endOfCurrentWeek.setMillisOfDay(DateTimeConstants.MILLIS_PER_DAY - 1); //Sets the hour of the copy to 23:59:59
+//
+//        return new Period(startOfCurrentWeek, endOfCurrentWeek); //Creates a period of 6D23H59M59.999S (a week)
+//    }
 
     /**
      * @return number of the current week relative to the start of the semester

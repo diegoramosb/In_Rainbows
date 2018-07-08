@@ -11,7 +11,7 @@ import dagger.Component;
 public interface DateManager {
     DateTime getCurrentDateTime();
 
-    Period getCurrentWeek();
+//    Period getCurrentWeek();
 
     Integer getCurrentWeekNumber(Semester semester);
 }
