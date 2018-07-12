@@ -149,7 +149,7 @@ public class SubjectTest {
         subject.addTask(task1);
         subject.addTask(task2);
         subject.addTask(task3);
-        for( SubjectTask currentTask : subject.getAllTasks() ){
+        for( SubjectTask currentTask : subject.getTasks() ){
             if( !((currentTask.equals(task1) || currentTask.equals(task2) || currentTask.equals(task3)))){
                 fail();
             }

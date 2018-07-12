@@ -11,6 +11,11 @@ import java.util.NoSuchElementException;
 public class Subject {
 
     /**
+     * Subject id
+     */
+    private long id;
+
+    /**
      * Subject name
      */
     private String name;
@@ -79,6 +84,14 @@ public class Subject {
     public String toString() {
         //Shows "Name, 3 credits, 5.0, 50% graded"
         return name + ", " + credits + " credits, " + "class hours: " + classHours + " extra: " + extraHours + " total: " + totalHours + " day: " + studiedHoursDay + " week:" + studiedHoursWeek + " semester: " + studiedHoursSemester + " grade:" + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**
@@ -284,13 +297,17 @@ public class Subject {
      * @return an iterable containing the tasks of the subject
      * @throws NoSuchElementException if there are no tasks
      */
-    public Iterable<SubjectTask> getAllTasks() throws NoSuchElementException {
+    public Iterable<SubjectTask> getTasks() throws NoSuchElementException {
         if(!tasks.isEmpty()){
             return tasks;
         }
         else{
             throw new NoSuchElementException("The subject doesn't have any tasks");
         }
+    }
+
+    public void setTasks(List<SubjectTask> tasks) {
+        this.tasks = tasks;
     }
 
     /**

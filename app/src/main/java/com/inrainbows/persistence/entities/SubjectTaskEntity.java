@@ -1,60 +1,85 @@
-package com.inrainbows.mvp.model;
+package com.inrainbows.persistence.entities;
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+
+import com.inrainbows.persistence.daos.SubjectDao;
 
 /**
- * @author diego on 1/06/2017.
+ * @author diego on 12/07/2018.
  */
-
-public class SubjectTask implements Task, GradedAssignment {
-
+@Entity(tableName = "SUBJECT_TASKS",
+        foreignKeys = @ForeignKey( entity = SubjectDao.class, parentColumns = "ID", childColumns = "SUBJECT_ID", onDelete = ForeignKey.CASCADE))
+public class SubjectTaskEntity {
     /**
      * Subject task id;
      */
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID")
     private long id;
 
     /**
      * Task name.
      */
+    @ColumnInfo(name = "NAME")
     private String name;
 
     /**
      * Task tag
      */
+    @ColumnInfo(name = "TAG")
     private String tag;
 
     /**
      * Task description
      */
+    @ColumnInfo(name = "DESCRIPTION")
     private String description;
 
     /**
      * Done status of the task
      */
+    @ColumnInfo(name = "DONE")
     private boolean done;
 
     /**
      * Task grade.
      */
+    @ColumnInfo(name = "GRADE")
     private double grade;
+
 
     /**
      * Final subject grade percentage.
      */
+    @ColumnInfo(name = "PERCENTAGE")
     private double percentage;
 
     /**
      * Indicates if task has been delivered.
      */
+    @ColumnInfo(name = "DELIVERED")
     private boolean delivered;
 
     /**
      * Indicates if task has been graded.
      */
+    @ColumnInfo(name = "GRADED")
     private boolean graded;
 
-    private SubjectTask(TaskBuilder builder){
+    /**
+     * Parent subject id.
+     */
+    @ColumnInfo(name = "SUBJECT_ID")
+    private long subjectId;
+
+    public SubjectTaskEntity(SubjectTaskEntityBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.percentage = builder.percentage;
+        this.subjectId = builder.subjectId;
 
         this.tag = builder.getTag();
         this.description = builder.getDescription();
@@ -62,18 +87,6 @@ public class SubjectTask implements Task, GradedAssignment {
         this.grade = builder.getGrade();
         this.delivered = builder.isDelivered();
         this.graded = builder.graded;
-    }
-
-    /**
-     * @return a string indicating the task status
-     */
-    public String toString()
-    {
-        //Shows "not delivered yet" if it has not been delivered or Delivered, + gradeString if it has
-        String deliveredString = (delivered) ? "delivered" : "not delivered yet";
-        String doneString = (done)? "done" : "not done yet";
-
-        return String.format("%s, %s, %s, %s, %s, %s", name, tag, doneString, deliveredString, grade, percentage + "%");
     }
 
     /**
@@ -188,60 +201,15 @@ public class SubjectTask implements Task, GradedAssignment {
 
         delivered = pDelivered;
     }
-
-    @Override
-    public void markDone() {
-        done = true;
+    public long getSubjectId() {
+        return subjectId;
     }
 
-    @Override
-    public void markUndone() {
-        done = false;
+    public void setSubjectId(long subjectId) {
+        this.subjectId = subjectId;
     }
 
-    /**
-     * Indicates if the task is equal to another object
-     * @param o Object to be compared to the task
-     * @return true if the object is equal to the task, false otherwise
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SubjectTask task = (SubjectTask) o;
-
-        if (done != task.done) return false;
-        if (Double.compare(task.grade, grade) != 0) return false;
-        if (Double.compare(task.percentage, percentage) != 0) return false;
-        if (delivered != task.delivered) return false;
-        if (graded != task.graded) return false;
-        if (!name.equals(task.name)) return false;
-        return tag != null ? tag.equals(task.tag) : task.tag == null;
-    }
-
-    /**
-     * Task has code
-     * @return task hash code using its name
-     */
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
-        result = 31 * result + (tag != null ? tag.hashCode() : 0);
-        result = 31 * result + (done ? 1 : 0);
-        temp = Double.doubleToLongBits(grade);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(percentage);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (delivered ? 1 : 0);
-        result = 31 * result + (graded ? 1 : 0);
-        return result;
-    }
-
-
-    public static class TaskBuilder {
+    public static class SubjectTaskEntityBuilder {
 
         private long id;
 
@@ -261,17 +229,20 @@ public class SubjectTask implements Task, GradedAssignment {
 
         private boolean graded;
 
-        public TaskBuilder(long id, String name, double percentage){
-            this.id = id;
+        private long subjectId;
+
+        public SubjectTaskEntityBuilder(long id, String name, double percentage, long subjectId){
             this.name = name;
             this.percentage = percentage;
+            this.id = id;
+            this.subjectId = subjectId;
         }
 
         public String getTag() {
             return tag;
         }
 
-        public TaskBuilder setTag(String tag) {
+        public SubjectTaskEntityBuilder setTag(String tag) {
             this.tag = tag;
             return this;
         }
@@ -280,7 +251,7 @@ public class SubjectTask implements Task, GradedAssignment {
             return description;
         }
 
-        public TaskBuilder setDescription(String description) {
+        public SubjectTaskEntityBuilder setDescription(String description) {
             this.description = description;
             return this;
         }
@@ -289,7 +260,7 @@ public class SubjectTask implements Task, GradedAssignment {
             return done;
         }
 
-        public TaskBuilder setDone(boolean done) {
+        public SubjectTaskEntityBuilder setDone(boolean done) {
             this.done = done;
             return this;
         }
@@ -298,7 +269,7 @@ public class SubjectTask implements Task, GradedAssignment {
             return grade;
         }
 
-        public TaskBuilder setGrade(double grade) {
+        public SubjectTaskEntityBuilder setGrade(double grade) {
             this.grade = grade;
             return this;
         }
@@ -307,7 +278,7 @@ public class SubjectTask implements Task, GradedAssignment {
             return delivered;
         }
 
-        public TaskBuilder setDelivered(boolean delivered) {
+        public SubjectTaskEntityBuilder setDelivered(boolean delivered) {
             this.delivered = delivered;
             return this;
         }
@@ -316,13 +287,13 @@ public class SubjectTask implements Task, GradedAssignment {
             return graded;
         }
 
-        public TaskBuilder setGraded(boolean graded) {
+        public SubjectTaskEntityBuilder setGraded(boolean graded) {
             this.graded = graded;
             return this;
         }
 
-        public SubjectTask build(){
-            return new SubjectTask(this);
+        public SubjectTaskEntity build(){
+            return new SubjectTaskEntity(this);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.inrainbows.mvp.model;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
@@ -15,16 +14,15 @@ import java.util.NoSuchElementException;
 /**
  * @author diego on 1/08/2017.
  */
-
 public class Semester {
+
+    private long id;
 
     private String semesterName;
 
     private DateTime startDate;
 
     private DateTime endDate;
-
-//    private static Weeks weeks;
 
     private List<Subject> subjects;
 
@@ -34,6 +32,14 @@ public class Semester {
         this.endDate = builder.endDate;
 
         this.subjects = builder.getSubjects();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSemesterName() {
