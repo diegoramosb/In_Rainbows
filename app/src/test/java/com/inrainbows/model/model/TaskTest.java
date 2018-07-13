@@ -16,15 +16,15 @@ public class TaskTest {
 
     @Before
     public void setUp() {
-        task = new SubjectTask.TaskBuilder("a", 100).build();
+        task = new SubjectTask.TaskBuilder(1L,"a", 100).build();
     }
 
     @Test
     public void taskTest(){
         try{
-            task = new SubjectTask.TaskBuilder("a", 100).build();
-            task = new SubjectTask.TaskBuilder("a", 100).setTag("a").build();
-            task = new SubjectTask.TaskBuilder("a",100)
+            task = new SubjectTask.TaskBuilder(1L,"a", 100).build();
+            task = new SubjectTask.TaskBuilder(1L,"a", 100).setTag("a").build();
+            task = new SubjectTask.TaskBuilder(1L,"a",100)
                     .setTag("a")
                     .setGrade(5)
                     .setDone(true)

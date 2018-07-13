@@ -1,5 +1,8 @@
 package com.inrainbows.mvp.model;
 
+import com.inrainbows.persistence.entities.SemesterEntity;
+import com.inrainbows.persistence.entities.SubjectEntity;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
@@ -27,6 +30,7 @@ public class Semester {
     private List<Subject> subjects;
 
     private Semester(SemesterBuilder builder) {
+        this.id = builder.id;
         this.semesterName = builder.semesterName;
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
@@ -251,6 +255,18 @@ public class Semester {
             throw new IllegalArgumentException("Name not valid");
     }
 
+    public SemesterEntity toEntity(){
+        return new SemesterEntity(id, semesterName, startDate, endDate);
+    }
+
+    public List<SubjectEntity> subjectsToEntity(){
+        ArrayList<SubjectEntity> ans = new ArrayList<>();
+        for(Subject subject : subjects){
+            ans.add(new SubjectEntity.SubjectEntityBuilder(subject.getId(), subject.getName(), subject.getCredits(), subject.getClassHours(), id).build());
+        }
+        return ans;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -268,6 +284,8 @@ public class Semester {
     }
 
     public static class SemesterBuilder {
+        private long id;
+
         private String semesterName;
 
         private DateTime startDate;
@@ -276,13 +294,15 @@ public class Semester {
 
         private List<Subject> subjects;
 
-        public SemesterBuilder(String semesterName, DateTime startDate, DateTime endDate) {
+        public SemesterBuilder(long id, String semesterName, DateTime startDate, DateTime endDate) {
+            this.id = id;
             this.semesterName = semesterName;
             this.startDate = startDate;
             this.endDate = endDate;
         }
 
-        public SemesterBuilder(String semesterName, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+        public SemesterBuilder(long id, String semesterName, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+            this.id = id;
             this.semesterName = semesterName;
             //Joda-Time verifies that dates are valid. When it throws an IllegalFieldValueException the constructor throws an IllegalArgumentException.
             try {

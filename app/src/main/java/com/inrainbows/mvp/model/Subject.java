@@ -1,5 +1,8 @@
 package com.inrainbows.mvp.model;
 
+import com.inrainbows.persistence.entities.SubjectEntity;
+import com.inrainbows.persistence.entities.SubjectTaskEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -65,6 +68,7 @@ public class Subject {
      * @param builder Builder.
      */
     private Subject(SubjectBuilder builder){
+        this.id = builder.id;
         this.name = builder.name;
         this.credits = builder.credits;
         this.classHours = builder.classHours;
@@ -585,6 +589,18 @@ public class Subject {
         return ans;
     }
 
+    public SubjectEntity toEntity(long semesterId){
+        return new SubjectEntity.SubjectEntityBuilder(id, name, credits, classHours, semesterId).build();
+    }
+
+    public List<SubjectTaskEntity> subjectTasksToEntity(){
+        ArrayList<SubjectTaskEntity> ans = new ArrayList<>();
+        for(SubjectTask task : tasks){
+            ans.add(new SubjectTaskEntity.SubjectTaskEntityBuilder(task.getId(), task.getName(), task.getPercentage(), id).build());
+        }
+        return ans;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -625,6 +641,9 @@ public class Subject {
     }
 
     public static class SubjectBuilder {
+
+        private long id;
+
         private String name;
 
         private double credits;
@@ -643,7 +662,8 @@ public class Subject {
 
         private List<SubjectTask> tasks;
 
-        public SubjectBuilder(String name, double credits, double classHours) {
+        public SubjectBuilder(long id, String name, double credits, double classHours) {
+            this.id = id;
             this.name = name;
             this.credits = credits;
             this.classHours = classHours;

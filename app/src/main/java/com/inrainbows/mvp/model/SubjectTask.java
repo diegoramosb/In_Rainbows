@@ -1,5 +1,7 @@
 package com.inrainbows.mvp.model;
 
+import com.inrainbows.persistence.entities.SubjectTaskEntity;
+
 /**
  * @author diego on 1/06/2017.
  */
@@ -74,6 +76,14 @@ public class SubjectTask implements Task, GradedAssignment {
         String doneString = (done)? "done" : "not done yet";
 
         return String.format("%s, %s, %s, %s, %s, %s", name, tag, doneString, deliveredString, grade, percentage + "%");
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**
@@ -197,6 +207,17 @@ public class SubjectTask implements Task, GradedAssignment {
     @Override
     public void markUndone() {
         done = false;
+    }
+
+    public SubjectTaskEntity toEntity(long subjectId){
+        return new SubjectTaskEntity.SubjectTaskEntityBuilder(id, name, percentage, subjectId )
+                .setTag(tag)
+                .setDescription(description)
+                .setDone(done)
+                .setDelivered(delivered)
+                .setGraded(graded)
+                .setGrade(grade)
+                .build();
     }
 
     /**

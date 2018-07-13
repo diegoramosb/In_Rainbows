@@ -36,7 +36,7 @@ public class CalendarTest {
     public void getCurrentWeekNumber() {
         DateTime startDate = calendar.getCurrentDateTime();
 
-        Semester semester = new Semester.SemesterBuilder("a", startDate, startDate.plusWeeks(16)).build();
+        Semester semester = new Semester.SemesterBuilder(1L, "a", startDate, startDate.plusWeeks(16)).build();
         assertEquals(new Integer(1), calendar.getCurrentWeekNumber(semester));
 
         semester.setStartDate(startDate.minusWeeks(2));

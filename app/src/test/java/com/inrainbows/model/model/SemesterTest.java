@@ -24,29 +24,29 @@ public class SemesterTest {
 
     @Before
     public void setUp() {
-        semester = new Semester.SemesterBuilder("a",2018, 1, 22, 2018, 5, 12).build();
+        semester = new Semester.SemesterBuilder(1L,"a",2018, 1, 22, 2018, 5, 12).build();
     }
 
     @Before
     public void setUp2(){
         setUp();
 
-        subject1 = new Subject.SubjectBuilder("a", 3, 4).build();
-        SubjectTask task11 = new SubjectTask.TaskBuilder("a", 20)
+        subject1 = new Subject.SubjectBuilder(1L,"a", 3, 4).build();
+        SubjectTask task11 = new SubjectTask.TaskBuilder(1L,"a", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        SubjectTask task12 = new SubjectTask.TaskBuilder("b", 20)
+        SubjectTask task12 = new SubjectTask.TaskBuilder(1L,"b", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        SubjectTask task13 = new SubjectTask.TaskBuilder("c", 60)
+        SubjectTask task13 = new SubjectTask.TaskBuilder(1L,"c", 60)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
@@ -60,8 +60,8 @@ public class SemesterTest {
         semester.addSubject(subject1);
 
 
-        subject2 = new Subject.SubjectBuilder("a", 1, 1).build();
-        SubjectTask task21 = new SubjectTask.TaskBuilder("a", 20)
+        subject2 = new Subject.SubjectBuilder(1L,"a", 1, 1).build();
+        SubjectTask task21 = new SubjectTask.TaskBuilder(1L,"a", 20)
                 .setTag("")
                 .setGrade(4)
                 .setDone(true)
@@ -76,22 +76,22 @@ public class SemesterTest {
     public void setUp3(){
         setUp();
 
-        subject1 = new Subject.SubjectBuilder("a", 3, 4).build();
-        SubjectTask task11 = new SubjectTask.TaskBuilder("a", 20)
+        subject1 = new Subject.SubjectBuilder(1L,"a", 3, 4).build();
+        SubjectTask task11 = new SubjectTask.TaskBuilder(1L,"a", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        SubjectTask task12 = new SubjectTask.TaskBuilder("b", 20)
+        SubjectTask task12 = new SubjectTask.TaskBuilder(1L,"b", 20)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        SubjectTask task13 = new SubjectTask.TaskBuilder("c", 60)
+        SubjectTask task13 = new SubjectTask.TaskBuilder(1L,"c", 60)
                 .setTag("")
                 .setGrade(5.0)
                 .setDelivered(true)
@@ -104,8 +104,8 @@ public class SemesterTest {
         semester.addSubject(subject1);
 
 
-        subject2 = new Subject.SubjectBuilder("b", 1, 1).build();
-        SubjectTask task21 = new SubjectTask.TaskBuilder("a", 20)
+        subject2 = new Subject.SubjectBuilder(1L,"b", 1, 1).build();
+        SubjectTask task21 = new SubjectTask.TaskBuilder(1L,"a", 20)
                 .setGrade(4)
                 .setDone(true)
                 .setDelivered(true)
@@ -118,11 +118,11 @@ public class SemesterTest {
     @Test
     public void semester(){
         try{
-            semester = new Semester.SemesterBuilder("a", 2018, 2, 31, 2018, 12, 20).build();
+            semester = new Semester.SemesterBuilder(1L,"a", 2018, 2, 31, 2018, 12, 20).build();
             fail();
         }catch (IllegalArgumentException e){}
         try{
-            semester = new Semester.SemesterBuilder("a", 2018, 1, 22, 2018, 5, 12).build();
+            semester = new Semester.SemesterBuilder(1L,"a", 2018, 1, 22, 2018, 5, 12).build();
         }catch (IllegalArgumentException e){
             fail();
         }
@@ -216,7 +216,7 @@ public class SemesterTest {
     public void addSubject() {
         setUp2();
         assertEquals(2, semester.getSubjectAmount());
-        Subject subject = new Subject.SubjectBuilder("b", 3 ,3).build();
+        Subject subject = new Subject.SubjectBuilder(1L,"b", 3 ,3).build();
         semester.addSubject(subject);
         assertTrue(semester.containsSubject(subject));
     }

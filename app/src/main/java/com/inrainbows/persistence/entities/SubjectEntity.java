@@ -77,6 +77,7 @@ public class SubjectEntity {
      */
     @Ignore
     private SubjectEntity(SubjectEntityBuilder builder){
+        this.id = builder.id;
         this.name = builder.name;
         this.credits = builder.credits;
         this.classHours = builder.classHours;
@@ -191,7 +192,8 @@ public class SubjectEntity {
 
         private long semesterId;
 
-        public SubjectEntityBuilder(String name, double credits, double classHours, long semesterId) {
+        public SubjectEntityBuilder(long id, String name, double credits, double classHours, long semesterId) {
+            this.id = id;
             this.name = name;
             this.credits = credits;
             this.classHours = classHours;
@@ -241,6 +243,18 @@ public class SubjectEntity {
         public SubjectEntityBuilder setStudiedHoursSemester(double studiedHoursSemester) {
             this.studiedHoursSemester = studiedHoursSemester;
             return this;
+        }
+
+        public long getSemesterId() {
+            return semesterId;
+        }
+
+        public void setSemesterId(long semesterId) {
+            this.semesterId = semesterId;
+        }
+
+        public SubjectEntity build(){
+            return new SubjectEntity(this);
         }
     }
 }
