@@ -75,6 +75,9 @@ public class SubjectTaskEntity {
     @ColumnInfo(name = "SUBJECT_ID")
     private long subjectId;
 
+    public SubjectTaskEntity() {
+    }
+
     public SubjectTaskEntity(SubjectTaskEntityBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;

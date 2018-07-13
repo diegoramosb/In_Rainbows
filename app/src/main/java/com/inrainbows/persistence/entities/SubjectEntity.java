@@ -75,7 +75,6 @@ public class SubjectEntity {
      * Private constructor for builder.
      * @param builder Builder.
      */
-    @Ignore
     private SubjectEntity(SubjectEntityBuilder builder){
         this.id = builder.id;
         this.name = builder.name;
@@ -88,6 +87,9 @@ public class SubjectEntity {
         this.studiedHoursDay = builder.getStudiedHoursDay();
         this.studiedHoursWeek = builder.getStudiedHoursWeek();
         this.studiedHoursSemester = builder.getStudiedHoursSemester();
+    }
+
+    public SubjectEntity(){
     }
 
     public long getId() {
