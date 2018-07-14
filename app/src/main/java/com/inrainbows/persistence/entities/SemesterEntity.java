@@ -6,6 +6,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 /**
  * @author diego on 12/07/2018.
  */
@@ -20,16 +22,16 @@ public class SemesterEntity {
     private String semesterName;
 
     @ColumnInfo(name = "START_DATE")
-    private DateTime startDate;
+    private Date startDate;
 
     @ColumnInfo(name = "END_DATE")
-    private DateTime endDate;
+    private Date endDate;
 
     public SemesterEntity(long id, String semesterName, DateTime startDate, DateTime endDate) {
         this.id = id;
         this.semesterName = semesterName;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = startDate.toDate();
+        this.endDate = endDate.toDate();
     }
 
     public long getId() {
@@ -48,19 +50,19 @@ public class SemesterEntity {
         this.semesterName = semesterName;
     }
 
-    public DateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }
