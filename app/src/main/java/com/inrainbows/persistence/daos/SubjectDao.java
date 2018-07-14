@@ -18,10 +18,10 @@ import java.util.List;
 public interface SubjectDao {
 
     @Query("SELECT * FROM SUBJECTS")
-    LiveData<List<Subject>> getAllSubjects();
+    LiveData<List<SubjectEntity>> getAllSubjects();
 
     @Query("SELECT * FROM SUBJECTS WHERE ID = :id")
-    Subject getSubject(long id);
+    SubjectEntity getSubject(long id);
 
     @Insert
     void addSubject(SubjectEntity subjectEntity);

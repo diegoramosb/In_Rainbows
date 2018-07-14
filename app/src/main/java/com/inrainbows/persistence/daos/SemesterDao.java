@@ -18,10 +18,10 @@ import java.util.List;
 @Dao
 public interface SemesterDao {
     @Query("SELECT * FROM SEMESTERS")
-    LiveData<List<Semester>> getAllSemesters();
+    LiveData<List<SemesterEntity>> getAllSemesters();
 
     @Query("SELECT * FROM SEMESTERS WHERE ID = :id")
-    Semester findById(long id);
+    SemesterEntity findById(long id);
 
     @Insert
     void insertSemester(SemesterEntity entity);

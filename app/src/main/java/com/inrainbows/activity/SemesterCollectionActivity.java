@@ -105,7 +105,7 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         String[] startDate = editTexts.get(1).getText().toString().split("-");
         String[] endDate = editTexts.get(2).getText().toString().split("-");
 
-        Semester semester = new Semester.SemesterBuilder(editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
+        Semester semester = new Semester.SemesterBuilder(1L, editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
         semesterArrayAdapter.add(semester);
 
 

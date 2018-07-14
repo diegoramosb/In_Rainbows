@@ -9,6 +9,12 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        //Quitar cuando este terminado
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {

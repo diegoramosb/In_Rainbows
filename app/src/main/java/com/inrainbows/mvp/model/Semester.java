@@ -256,7 +256,7 @@ public class Semester {
     }
 
     public SemesterEntity toEntity(){
-        return new SemesterEntity(id, semesterName, startDate, endDate);
+        return new SemesterEntity(id, semesterName, startDate.toDate(), endDate.toDate());
     }
 
     public List<SubjectEntity> subjectsToEntity(){

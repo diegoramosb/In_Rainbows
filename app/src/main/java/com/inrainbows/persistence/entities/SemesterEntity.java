@@ -2,7 +2,9 @@ package com.inrainbows.persistence.entities;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import org.joda.time.DateTime;
 
@@ -18,20 +20,23 @@ public class SemesterEntity {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    @ColumnInfo(name = "SEMESTER_NAME")
+    @ColumnInfo(name = "SEMESTER_NAME", typeAffinity = ColumnInfo.TEXT)
+    @NonNull
     private String semesterName;
 
     @ColumnInfo(name = "START_DATE")
+    @NonNull
     private Date startDate;
 
     @ColumnInfo(name = "END_DATE")
+    @NonNull
     private Date endDate;
 
-    public SemesterEntity(long id, String semesterName, DateTime startDate, DateTime endDate) {
+    public SemesterEntity(long id, String semesterName, Date startDate, Date endDate) {
         this.id = id;
         this.semesterName = semesterName;
-        this.startDate = startDate.toDate();
-        this.endDate = endDate.toDate();
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public long getId() {

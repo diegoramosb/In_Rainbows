@@ -4,13 +4,16 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * @author diego on 12/07/2018.
  */
 @Entity(tableName = "SUBJECTS",
-        foreignKeys = @ForeignKey(entity = SemesterEntity.class, parentColumns = "SEMESTER_ID", childColumns = "ID", onDelete = ForeignKey.CASCADE))
+        foreignKeys = @ForeignKey(entity = SemesterEntity.class, parentColumns = "ID", childColumns = "SEMESTER_ID", onDelete = ForeignKey.CASCADE),
+        indices = @Index(value = "SEMESTER_ID"))
 public class SubjectEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -20,55 +23,59 @@ public class SubjectEntity {
     /**
      * SubjectEntity name
      */
-    @ColumnInfo(name = "NAME")
+    @ColumnInfo(name = "NAME", typeAffinity = ColumnInfo.TEXT)
+    @NonNull
     private String name;
 
     /**
      * Amount of credits the SubjectEntity is worth
      */
-    @ColumnInfo(name = "CREDITS")
+    @ColumnInfo(name = "CREDITS", typeAffinity = ColumnInfo.REAL)
+    @NonNull
     private double credits;
 
     /**
      * Total expected weekly hours of study
      */
-    @ColumnInfo(name = "TOTAL_HOURS")
+    @ColumnInfo(name = "TOTAL_HOURS", typeAffinity = ColumnInfo.REAL)
     private double totalHours;
 
     /**
      * Weekly hours of class
      */
-    @ColumnInfo(name = "CLASS_HOURS")
+    @ColumnInfo(name = "CLASS_HOURS", typeAffinity = ColumnInfo.REAL)
+    @NonNull
     private double classHours;
 
     /**
      * Extra expected hours of study (hours without counting class)
      */
-    @ColumnInfo(name = "EXTRA_HOURS")
+    @ColumnInfo(name = "EXTRA_HOURS", typeAffinity = ColumnInfo.REAL)
     private double extraHours;
 
     /**
      * Actual studied hours on this day
      */
-    @ColumnInfo(name = "STUDIED_HOURS_DAY")
+    @ColumnInfo(name = "STUDIED_HOURS_DAY", typeAffinity = ColumnInfo.REAL)
     private double studiedHoursDay;
 
     /**
      * Actual studied hours this week
      */
-    @ColumnInfo(name = "STUDIED_HOURS_WEEK")
+    @ColumnInfo(name = "STUDIED_HOURS_WEEK", typeAffinity = ColumnInfo.REAL)
     private double studiedHoursWeek;
 
     /**
      * Actual studied hours this semester
      */
-    @ColumnInfo(name = "STUDIED_HOURS_SEMESTER")
+    @ColumnInfo(name = "STUDIED_HOURS_SEMESTER", typeAffinity = ColumnInfo.REAL)
     private double studiedHoursSemester;
 
     /**
      * Parent semester Id.
      */
     @ColumnInfo(name = "SEMESTER_ID")
+    @NonNull
     private long semesterId;
 
     /**
@@ -89,7 +96,17 @@ public class SubjectEntity {
         this.studiedHoursSemester = builder.getStudiedHoursSemester();
     }
 
-    public SubjectEntity(){
+    public SubjectEntity(long id, @NonNull String name, @NonNull double credits, double totalHours, @NonNull double classHours, double extraHours, double studiedHoursDay, double studiedHoursWeek, double studiedHoursSemester, @NonNull long semesterId) {
+        this.id = id;
+        this.name = name;
+        this.credits = credits;
+        this.totalHours = totalHours;
+        this.classHours = classHours;
+        this.extraHours = extraHours;
+        this.studiedHoursDay = studiedHoursDay;
+        this.studiedHoursWeek = studiedHoursWeek;
+        this.studiedHoursSemester = studiedHoursSemester;
+        this.semesterId = semesterId;
     }
 
     public long getId() {
