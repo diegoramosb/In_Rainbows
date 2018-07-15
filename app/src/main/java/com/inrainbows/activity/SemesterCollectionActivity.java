@@ -60,7 +60,7 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 
         semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
 
-        AppDatabase db = AppDatabase.getInMemoryDatabase(getApplication());
+        AppDatabase db = AppDatabase.getDatabase(getApplication());
 
         semesterPresenter = new SemesterPresenter(this, db.semesterDao());
 

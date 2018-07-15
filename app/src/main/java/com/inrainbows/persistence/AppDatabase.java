@@ -1,10 +1,13 @@
 package com.inrainbows.persistence;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
@@ -30,14 +33,25 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract SubjectTaskDao subjectTaskDao();
 
-    public static AppDatabase getInMemoryDatabase(Context context){
-        if(INSTANCE == null){
-            INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class).allowMainThreadQueries().build();
+    public static AppDatabase getDatabase(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "in_rainbows")
+                    .allowMainThreadQueries()
+                    .build();
         }
         return INSTANCE;
     }
 
-    public void destroyInstance(){
+    public static AppDatabase getMemoryDatabase(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+                    .allowMainThreadQueries()
+                    .build();
+        }
+        return INSTANCE;
+    }
+
+    public static void destroyInstance() {
         INSTANCE = null;
     }
 }
