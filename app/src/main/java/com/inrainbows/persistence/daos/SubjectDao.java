@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.persistence.entities.SubjectEntity;
@@ -18,14 +19,23 @@ import java.util.List;
 public interface SubjectDao {
 
     @Query("SELECT * FROM SUBJECTS")
-    LiveData<List<SubjectEntity>> getAllSubjects();
+    List<SubjectEntity> getAllList();
+
+    @Query("SELECT * FROM SUBJECTS")
+    LiveData<List<SubjectEntity>> getAllLD();
+//
+//    Query("SELECT * FROM SUBJECTS WHERE SEMESTER_ID = :semesterId")
+//    List<SubjectEntity> getAllS
 
     @Query("SELECT * FROM SUBJECTS WHERE ID = :id")
-    SubjectEntity getSubject(long id);
+    SubjectEntity get(long id);
 
     @Insert
-    void addSubject(SubjectEntity subjectEntity);
+    void insert(SubjectEntity subjectEntity);
+
+    @Update
+    void update(SubjectEntity subjectEntity);
 
     @Delete
-    void deleteSubject(SubjectEntity subjectEntity);
+    void delete(SubjectEntity subjectEntity);
 }

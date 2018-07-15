@@ -38,6 +38,13 @@ public class Semester {
         this.subjects = builder.getSubjects();
     }
 
+    public Semester(SemesterEntity entity){
+        this.id = entity.getId();
+        this.semesterName = entity.getSemesterName();
+        this.startDate = new DateTime(entity.getStartDate());
+        this.endDate = new DateTime(entity.getEndDate());
+    }
+
     public long getId() {
         return id;
     }
@@ -270,12 +277,14 @@ public class Semester {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(semesterName)
-                .append("\n Start: ")
+        sb.append("ID: ")
+                .append(id)
+                .append("\n" + semesterName)
+                .append("\nStart: ")
                 .append(startDate.getYear()).append("-")
                 .append(startDate.getMonthOfYear()).append("-")
                 .append(startDate.getDayOfMonth())
-                .append("\n End: ")
+                .append("\nEnd: ")
                 .append(endDate.getYear()).append("-")
                 .append(endDate.getMonthOfYear()).append("-")
                 .append(endDate.getDayOfMonth());

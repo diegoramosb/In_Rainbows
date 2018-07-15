@@ -20,6 +20,7 @@ import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.view.SemesterView;
 import com.inrainbows.mvp.presenter.SemesterPresenter;
 import com.inrainbows.R;
+import com.inrainbows.persistence.AppDatabase;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 public class SemesterCollectionActivity extends AppCompatActivity implements SemesterView {
 
     @Inject
-    SemesterPresenter SemesterPresenter;
+    SemesterPresenter semesterPresenter;
 
     @BindView(R.id.lvSemesters)
     ListView lvSemesters;
@@ -58,6 +59,12 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
         editTexts.get(2).setText(R.string.sample_end_date);
 
         semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
+
+        AppDatabase db = AppDatabase.getInMemoryDatabase(getApplication());
+
+        semesterPresenter = new SemesterPresenter(this, db.semesterDao());
+
+        updateUI();
     }
 
     @Override
@@ -101,14 +108,25 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 
     @OnClick(R.id.btnNewSemester)
     public void addSemester(){
-        //Por ahora formato de fechas YYYY-MM-DD
+        //Expected date format: YYYY-MM-DD
         String[] startDate = editTexts.get(1).getText().toString().split("-");
         String[] endDate = editTexts.get(2).getText().toString().split("-");
 
-        Semester semester = new Semester.SemesterBuilder(1L, editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
-        semesterArrayAdapter.add(semester);
+        //ID set as 0 so that room auto generates it
+        Semester semester = new Semester.SemesterBuilder(0, editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
+//        semesterArrayAdapter.add(semester);
+//
+//        lvSemesters.setAdapter(semesterArrayAdapter);
 
+        semesterPresenter.insertSemester(semester);
+        updateUI();
+    }
 
+    public void updateUI(){
+        List<Semester> semesters = semesterPresenter.getAllSemesters();
+        for(Semester semester : semesters){
+            semesterArrayAdapter.add(semester);
+        }
         lvSemesters.setAdapter(semesterArrayAdapter);
     }
 }
