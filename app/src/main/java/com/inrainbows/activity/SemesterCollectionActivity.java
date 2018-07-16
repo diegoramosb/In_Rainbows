@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 
 import com.inrainbows.mvp.model.Semester;
+import com.inrainbows.mvp.presenter.BasePresenter;
 import com.inrainbows.mvp.view.SemesterView;
 import com.inrainbows.mvp.presenter.SemesterPresenter;
 import com.inrainbows.R;
@@ -78,6 +79,10 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
     @Override
     public void showLoading() {
 
+    }
+
+    @Override
+    public void setPresenter(BasePresenter presenter) {
     }
 
     /**

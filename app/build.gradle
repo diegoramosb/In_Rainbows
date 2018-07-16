@@ -33,7 +33,7 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api 'com.github.krtkush:LinearTimer:v2.1.1'
 
-    api 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:design:25.4.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 

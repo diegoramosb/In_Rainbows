@@ -7,7 +7,7 @@ import com.inrainbows.mvp.model.Semester;
 /**
  * @author diego on 28/06/2018.
  */
-public interface SemesterView extends com.inrainbows.mvp.view.View {
+public interface SemesterView extends BaseView {
     /**
      * Shows loading screen.
      */

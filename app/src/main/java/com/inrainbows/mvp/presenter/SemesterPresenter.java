@@ -1,21 +1,17 @@
 package com.inrainbows.mvp.presenter;
 
-import android.os.AsyncTask;
-
 import com.inrainbows.mvp.model.Semester;
-import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.view.SemesterView;
 import com.inrainbows.persistence.daos.SemesterDao;
 import com.inrainbows.persistence.entities.SemesterEntity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author diego on 28/06/2018.
  */
-public class SemesterPresenter implements Presenter<SemesterView> {
+public class SemesterPresenter implements BasePresenter<SemesterView> {
 
     private SemesterView view;
 
@@ -70,7 +66,6 @@ public class SemesterPresenter implements Presenter<SemesterView> {
 
     }
 
-    @Override
     public void attachView(SemesterView view) {
         this.view = view;
     }

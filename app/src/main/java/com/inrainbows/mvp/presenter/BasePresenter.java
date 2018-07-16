@@ -1,11 +1,11 @@
 package com.inrainbows.mvp.presenter;
 
-import com.inrainbows.mvp.view.View;
+import com.inrainbows.mvp.view.BaseView;
 
 /**
  * @author diego on 2/06/2018.
  */
-public interface Presenter<T extends View> {
+public interface BasePresenter<T extends BaseView> {
 
     void onCreate();
 
@@ -15,5 +15,5 @@ public interface Presenter<T extends View> {
 
     void onPause();
 
-    void attachView(T view);
+//    void attachView(T view);
 }
