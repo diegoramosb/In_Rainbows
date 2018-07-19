@@ -4,31 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.PopupMenu;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.presenter.MainPresenter;
 import com.inrainbows.mvp.view.MainContract;
 import com.inrainbows.persistence.AppDatabase;
-import com.inrainbows.persistence.daos.SemesterDao;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author diego on 15/07/2018.
  */
 public class MainActivity extends AppCompatActivity implements MainContract.View {
-
-    @BindView(R.id.fab_add)
-    FloatingActionButton fab;
 
     private MainContract.Presenter presenter;
 
@@ -44,21 +39,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.main_act);
         ButterKnife.bind(this);
 
-        fab.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                presenter.addSemester();
-            }
-        });
+        presenter = new MainPresenter(this);
 
-        AppDatabase db = AppDatabase.getDatabase(getApplication());
-
-        presenter = new MainPresenter(this, db.semesterDao());
-        
         drawerLayout.setStatusBarBackgroundColor(getColor(R.color.colorPrimaryDark));
-        
+
         if(navigationView != null){
             setupDrawerContent(navigationView);
+//            setNavViewSemesterName(presenter.);
         }
     }
 
@@ -88,17 +75,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()){
-                            case R.id.semesters_drawer_item:
-                                Intent intent = new Intent(MainActivity.this, EditSemesterActivity.class);
-                                startActivity(intent);
-                                break;
-                            case R.id.main_activity_drawer_item:
-                                break;
+//                            case R.id.semesters_drawer_item:
+//                                Intent intent = new Intent(MainActivity.this, EditSemesterActivity.class);
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.main_activity_drawer_item:
+//                                break;
                             default:
                                 break;
                         }
@@ -110,13 +98,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         );
     }
 
-    private void showSemestersPopupMenu(){
-        PopupMenu popup = new PopupMenu(MainActivity.this, new Button(getApplication()) /*Cambiar botón por otro anchor*/);
+     @OnClick(R.id.fab_add)
+     public void fabOnClick(){
+         presenter.showAddSemesterView();
+     }
 
-        for(Semester semester : presenter.getAllSemesters()){
-            popup.getMenu().add(semester.getSemesterName());
-        }
 
-        popup.show();
+    private void setNavViewSemesterName(String name){
+        Menu menu = navigationView.getMenu();
+        MenuItem miSemesterName = menu.findItem(R.id.semesters_drawer_item);
+        miSemesterName.setTitle(name);
     }
 }

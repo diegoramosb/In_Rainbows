@@ -31,47 +31,47 @@ import butterknife.OnClick;
  */
 public class SemesterCollectionActivity extends AppCompatActivity implements SemesterView {
 
-    @Inject
-    SemesterPresenter semesterPresenter;
-
-    @BindView(R.id.lvSemesters)
-    ListView lvSemesters;
-
-    @BindView(R.id.btnNewSemester)
-    Button btnNewSemester;
-
-    @BindViews({R.id.etName, R.id.etStartDate, R.id.etEndDate})
-    List<EditText> editTexts;
-
-    ArrayList<Semester> semesters;
-
-    ArrayAdapter<Semester> semesterArrayAdapter;
-
+//    @Inject
+//    SemesterPresenter semesterPresenter;
+//
+//    @BindView(R.id.lvSemesters)
+//    ListView lvSemesters;
+//
+//    @BindView(R.id.btnNewSemester)
+//    Button btnNewSemester;
+//
+//    @BindViews({R.id.etName, R.id.etStartDate, R.id.etEndDate})
+//    List<EditText> editTexts;
+//
+//    ArrayList<Semester> semesters;
+//
+//    ArrayAdapter<Semester> semesterArrayAdapter;
+//
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_semesters_collection);
         ButterKnife.bind(this);
 
-        semesters = new ArrayList<>();
-
-        editTexts.get(0).setText(R.string.sample_semester_name);
-        editTexts.get(1).setText(R.string.sample_start_date);
-        editTexts.get(2).setText(R.string.sample_end_date);
-
-        semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
-
-        AppDatabase db = AppDatabase.getDatabase(getApplication());
-
-        semesterPresenter = new SemesterPresenter(this, db.semesterDao());
-
-        updateUI();
+//        semesters = new ArrayList<>();
+//
+//        editTexts.get(0).setText(R.string.sample_semester_name);
+//        editTexts.get(1).setText(R.string.sample_start_date);
+//        editTexts.get(2).setText(R.string.sample_end_date);
+//
+//        semesterArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, semesters);
+//
+//        AppDatabase db = AppDatabase.getDatabase(getApplication());
+//
+//        semesterPresenter = new SemesterPresenter(this, db.semesterDao());
+//
+//        updateUI();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//    }
 
     /**
      * Shows loading screen.
@@ -110,28 +110,30 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
     public void showEmpty() {
 
     }
-
-    @OnClick(R.id.btnNewSemester)
-    public void addSemester(){
-        //Expected date format: YYYY-MM-DD
-        String[] startDate = editTexts.get(1).getText().toString().split("-");
-        String[] endDate = editTexts.get(2).getText().toString().split("-");
-
-        //ID set as 0 so that room auto generates it
-        Semester semester = new Semester.SemesterBuilder(0, editTexts.get(0).getText().toString(), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2])).build();
-//        semesterArrayAdapter.add(semester);
 //
+//    @OnClick(R.id.btnNewSemester)
+//    public void addSemester(){
+//        //Expected date format: YYYY-MM-DD
+//        String[] startDate = editTexts.get(1).getText().toString().split("-");
+//        String[] endDate = editTexts.get(2).getText().toString().split("-");
+//
+//        //ID set as 0 so that room auto generates it
+//        Semester semester = new Semester.SemesterBuilder(0, editTexts.get(0).getText().toString(),
+//                Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[2]),
+//                Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2]), true).build();
+////        semesterArrayAdapter.add(semester);
+////
+////        lvSemesters.setAdapter(semesterArrayAdapter);
+//
+//        semesterPresenter.insertSemester(semester);
+//        updateUI();
+//    }
+//
+//    public void updateUI(){
+//        List<Semester> semesters = semesterPresenter.getAllSemesters();
+//        for(Semester semester : semesters){
+//            semesterArrayAdapter.add(semester);
+//        }
 //        lvSemesters.setAdapter(semesterArrayAdapter);
-
-        semesterPresenter.insertSemester(semester);
-        updateUI();
-    }
-
-    public void updateUI(){
-        List<Semester> semesters = semesterPresenter.getAllSemesters();
-        for(Semester semester : semesters){
-            semesterArrayAdapter.add(semester);
-        }
-        lvSemesters.setAdapter(semesterArrayAdapter);
-    }
+//    }
 }

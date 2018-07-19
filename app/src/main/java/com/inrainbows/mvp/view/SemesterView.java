@@ -27,5 +27,5 @@ public interface SemesterView extends BaseView {
     /**
      * Shows an empty list.
      */
-    void showEmpty();
+//    void showEmpty();
 }

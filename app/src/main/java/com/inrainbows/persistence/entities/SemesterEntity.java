@@ -32,11 +32,16 @@ public class SemesterEntity {
     @NonNull
     private Date endDate;
 
-    public SemesterEntity(long id, String semesterName, Date startDate, Date endDate) {
+    @ColumnInfo(name = "CURRENT_SEMESTER")
+    @NonNull
+    private boolean currentSemester;
+
+    public SemesterEntity(long id, String semesterName, Date startDate, Date endDate, boolean currentSemester) {
         this.id = id;
         this.semesterName = semesterName;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.currentSemester = currentSemester;
     }
 
     public long getId() {
@@ -69,5 +74,14 @@ public class SemesterEntity {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @NonNull
+    public boolean isCurrentSemester() {
+        return currentSemester;
+    }
+
+    public void setCurrentSemester(@NonNull boolean currentSemester) {
+        this.currentSemester = currentSemester;
     }
 }

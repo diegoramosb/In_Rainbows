@@ -28,6 +28,9 @@ public interface SemesterDao {
     @Query("SELECT * FROM SEMESTERS WHERE ID = :id")
     SemesterEntity getById(long id);
 
+    @Query("SELECT * FROM SEMESTERS WHERE CURRENT_SEMESTER = 1")
+    SemesterEntity getCurrentSemester();
+
     @Insert
     void insert(SemesterEntity entity);
 

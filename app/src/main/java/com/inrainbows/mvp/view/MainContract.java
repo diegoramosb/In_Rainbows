@@ -15,13 +15,7 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter<MainContract.View>{
 
-        void addSemester();
-
-        List<Semester> getAllSemesters();
-
-        void deleteSemester();
-
-        Semester getSemester(long semesterId);
+        void showAddSemesterView();
 
     }
 

@@ -27,6 +27,8 @@ public class Semester {
 
     private DateTime endDate;
 
+    private boolean currentSemester;
+
     private List<Subject> subjects;
 
     private Semester(SemesterBuilder builder) {
@@ -43,6 +45,7 @@ public class Semester {
         this.semesterName = entity.getSemesterName();
         this.startDate = new DateTime(entity.getStartDate());
         this.endDate = new DateTime(entity.getEndDate());
+        this.currentSemester = entity.isCurrentSemester();
     }
 
     public long getId() {
@@ -118,12 +121,12 @@ public class Semester {
         this.endDate = endDate;
     }
 
-    /**
-     * @return number of weeks of the semester
-     */
-    public Weeks getWeeks() {
-//        return weeks;
-        return null;
+    public boolean isCurrentSemester() {
+        return currentSemester;
+    }
+
+    public void setCurrentSemester(boolean currentSemester) {
+        this.currentSemester = currentSemester;
     }
 
     /**
@@ -263,13 +266,14 @@ public class Semester {
     }
 
     public SemesterEntity toEntity(){
-        return new SemesterEntity(id, semesterName, startDate.toDate(), endDate.toDate());
+        return new SemesterEntity(id, semesterName, startDate.toDate(), endDate.toDate(), isCurrentSemester());
     }
 
     public List<SubjectEntity> subjectsToEntity(){
         ArrayList<SubjectEntity> ans = new ArrayList<>();
         for(Subject subject : subjects){
-            ans.add(new SubjectEntity.SubjectEntityBuilder(subject.getId(), subject.getName(), subject.getCredits(), subject.getClassHours(), id).build());
+            ans.add(new SubjectEntity.SubjectEntityBuilder(subject.getId(), subject.getName(),
+                    subject.getCredits(), subject.getClassHours(), id).build());
         }
         return ans;
     }
@@ -303,25 +307,32 @@ public class Semester {
 
         private List<Subject> subjects;
 
-        public SemesterBuilder(long id, String semesterName, DateTime startDate, DateTime endDate) {
+        private boolean currentSemester;
+
+        public SemesterBuilder(long id, String semesterName, DateTime startDate, DateTime endDate, boolean currentSemester) {
             this.id = id;
             this.semesterName = semesterName;
             this.startDate = startDate;
             this.endDate = endDate;
+            this.currentSemester = currentSemester;
         }
 
-        public SemesterBuilder(long id, String semesterName, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+        public SemesterBuilder(long id, String semesterName, int startYear, int startMonth,
+                               int startDay, int endYear, int endMonth, int endDay, boolean currentSemester) {
             this.id = id;
             this.semesterName = semesterName;
+            this.currentSemester = currentSemester;
             //Joda-Time verifies that dates are valid. When it throws an IllegalFieldValueException the constructor throws an IllegalArgumentException.
             try {
-                startDate = new DateTime(startYear, startMonth, startDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+                startDate = new DateTime(startYear, startMonth, startDay,
+                        0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
             }
             catch (IllegalFieldValueException e){
                 throw new IllegalArgumentException("Start date not valid.");
             }
             try {
-                endDate = new DateTime(endYear, endMonth, endDay, 0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
+                endDate = new DateTime(endYear, endMonth, endDay,
+                        0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
             }
             catch (IllegalFieldValueException e){
                 throw new IllegalArgumentException("End date not valid.");

@@ -24,7 +24,7 @@ public class SemesterTest {
 
     @Before
     public void setUp() {
-        semester = new Semester.SemesterBuilder(1L,"a",2018, 1, 22, 2018, 5, 12).build();
+        semester = new Semester.SemesterBuilder(1L,"a",2018, 1, 22, 2018, 5, 12, true).build();
     }
 
     @Before
@@ -118,11 +118,11 @@ public class SemesterTest {
     @Test
     public void semester(){
         try{
-            semester = new Semester.SemesterBuilder(1L,"a", 2018, 2, 31, 2018, 12, 20).build();
+            semester = new Semester.SemesterBuilder(1L,"a", 2018, 2, 31, 2018, 12, 20,true ).build();
             fail();
         }catch (IllegalArgumentException e){}
         try{
-            semester = new Semester.SemesterBuilder(1L,"a", 2018, 1, 22, 2018, 5, 12).build();
+            semester = new Semester.SemesterBuilder(1L,"a", 2018, 1, 22, 2018, 5, 12,true ).build();
         }catch (IllegalArgumentException e){
             fail();
         }
