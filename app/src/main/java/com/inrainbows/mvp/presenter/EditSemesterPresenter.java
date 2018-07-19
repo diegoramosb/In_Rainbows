@@ -1,5 +1,6 @@
 package com.inrainbows.mvp.presenter;
 
+import com.inrainbows.activity.MainActivity;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.view.EditSemesterContract;
 import com.inrainbows.persistence.daos.SemesterDao;
@@ -17,10 +18,10 @@ public class EditSemesterPresenter implements EditSemesterContract.Presenter {
 
     private EditSemesterContract.View view;
 
-    public EditSemesterPresenter(EditSemesterContract.View view, SemesterDao dao) {
+    public EditSemesterPresenter(EditSemesterContract.View view) {
         this.view = view;
         this.view.setPresenter(this);
-        this.dao = dao;
+        this.dao = view.getDb().semesterDao();
     }
 
     @Override

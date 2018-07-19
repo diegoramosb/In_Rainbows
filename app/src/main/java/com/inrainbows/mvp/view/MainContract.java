@@ -17,11 +17,16 @@ public interface MainContract {
 
         void showAddSemesterView();
 
+        void setCurrentSemesterName();
+
     }
 
     interface View extends BaseView<MainContract.Presenter>{
 
         void showAddSemester();
+
+        void setCurrentSemesterName(String name);
+
 
     }
 

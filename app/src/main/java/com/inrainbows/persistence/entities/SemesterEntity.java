@@ -14,11 +14,7 @@ import java.util.Date;
  * @author diego on 12/07/2018.
  */
 @Entity(tableName = "SEMESTERS")
-public class SemesterEntity {
-
-    @ColumnInfo(name = "ID")
-    @PrimaryKey(autoGenerate = true)
-    private long id;
+public class SemesterEntity extends BaseEntity {
 
     @ColumnInfo(name = "SEMESTER_NAME", typeAffinity = ColumnInfo.TEXT)
     @NonNull
@@ -42,14 +38,6 @@ public class SemesterEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.currentSemester = currentSemester;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getSemesterName() {

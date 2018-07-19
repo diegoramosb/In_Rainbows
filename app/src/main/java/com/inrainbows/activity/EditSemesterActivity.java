@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.inrainbows.InRainbowsApp;
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.presenter.BasePresenter;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 /**
  * @author diego on 15/07/2018.
  */
-public class EditSemesterActivity extends AppCompatActivity implements EditSemesterContract.View {
+public class EditSemesterActivity extends BaseActivity implements EditSemesterContract.View {
 
     EditSemesterContract.Presenter presenter;
 
@@ -51,9 +52,7 @@ public class EditSemesterActivity extends AppCompatActivity implements EditSemes
         setContentView(R.layout.edit_semester_act);
         ButterKnife.bind(this);
 
-        AppDatabase db = AppDatabase.getDatabase(getApplication());
-
-        this.presenter = new EditSemesterPresenter(this, db.semesterDao());
+        this.presenter = new EditSemesterPresenter(this);
 
         System.out.println(presenter.getAllSemesters());
 

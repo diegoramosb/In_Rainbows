@@ -16,26 +16,17 @@ import java.util.List;
  * @author diego on 12/07/2018.
  */
 @Dao
-public interface SubjectDao {
+public interface SubjectDao extends BaseDao<SubjectEntity> {
 
     @Query("SELECT * FROM SUBJECTS")
     List<SubjectEntity> getAllList();
 
     @Query("SELECT * FROM SUBJECTS")
     LiveData<List<SubjectEntity>> getAllLD();
-//
-//    Query("SELECT * FROM SUBJECTS WHERE SEMESTER_ID = :semesterId")
-//    List<SubjectEntity> getAllS
+
+    @Query("SELECT * FROM SUBJECTS WHERE SEMESTER_ID = :semesterId")
+    List<SubjectEntity> getAllSubjectsWithSemesterId(long semesterId);
 
     @Query("SELECT * FROM SUBJECTS WHERE ID = :id")
     SubjectEntity get(long id);
-
-    @Insert
-    void insert(SubjectEntity subjectEntity);
-
-    @Update
-    void update(SubjectEntity subjectEntity);
-
-    @Delete
-    void delete(SubjectEntity subjectEntity);
 }

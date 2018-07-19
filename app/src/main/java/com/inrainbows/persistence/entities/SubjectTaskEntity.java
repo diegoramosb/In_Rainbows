@@ -15,13 +15,7 @@ import com.inrainbows.persistence.daos.SubjectDao;
 @Entity(tableName = "SUBJECT_TASKS",
         foreignKeys = @ForeignKey( entity = SubjectEntity.class, parentColumns = "ID", childColumns = "SUBJECT_ID", onDelete = ForeignKey.CASCADE),
         indices = @Index("SUBJECT_ID"))
-public class SubjectTaskEntity {
-    /**
-     * Subject task id;
-     */
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ID")
-    private long id;
+public class SubjectTaskEntity extends BaseEntity{
 
     /**
      * Task name.
@@ -108,14 +102,6 @@ public class SubjectTaskEntity {
         this.delivered = delivered;
         this.graded = graded;
         this.subjectId = subjectId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     /**

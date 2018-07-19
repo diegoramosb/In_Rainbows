@@ -14,11 +14,7 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "SUBJECTS",
         foreignKeys = @ForeignKey(entity = SemesterEntity.class, parentColumns = "ID", childColumns = "SEMESTER_ID", onDelete = ForeignKey.CASCADE),
         indices = @Index(value = "SEMESTER_ID"))
-public class SubjectEntity {
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ID")
-    private long id;
+public class SubjectEntity extends BaseEntity{
 
     /**
      * SubjectEntity name
@@ -107,14 +103,6 @@ public class SubjectEntity {
         this.studiedHoursWeek = studiedHoursWeek;
         this.studiedHoursSemester = studiedHoursSemester;
         this.semesterId = semesterId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

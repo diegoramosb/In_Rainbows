@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.inrainbows.InRainbowsApp;
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.presenter.MainPresenter;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 /**
  * @author diego on 15/07/2018.
  */
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     private MainContract.Presenter presenter;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_act);
         ButterKnife.bind(this);
 
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         if(navigationView != null){
             setupDrawerContent(navigationView);
-//            setNavViewSemesterName(presenter.);
+            presenter.setCurrentSemesterName();
         }
     }
 
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void setupDrawerContent(NavigationView navigationView) {
 
+        presenter.setCurrentSemesterName();
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -103,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
          presenter.showAddSemesterView();
      }
 
-
-    private void setNavViewSemesterName(String name){
+    @Override
+    public void setCurrentSemesterName(String name){
         Menu menu = navigationView.getMenu();
         MenuItem miSemesterName = menu.findItem(R.id.semesters_drawer_item);
         miSemesterName.setTitle(name);

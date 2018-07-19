@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author diego on 28/06/2018.
  */
-public class SemesterCollectionActivity extends AppCompatActivity implements SemesterView {
+//public class SemesterCollectionActivity extends AppCompatActivity implements SemesterView {
 
 //    @Inject
 //    SemesterPresenter semesterPresenter;
@@ -47,11 +47,11 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 //
 //    ArrayAdapter<Semester> semesterArrayAdapter;
 //
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_semesters_collection);
-        ButterKnife.bind(this);
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_semesters_collection);
+//        ButterKnife.bind(this);
 
 //        semesters = new ArrayList<>();
 //
@@ -66,7 +66,7 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 //        semesterPresenter = new SemesterPresenter(this, db.semesterDao());
 //
 //        updateUI();
-    }
+//    }
 //
 //    @Override
 //    protected void onStop() {
@@ -76,40 +76,40 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
     /**
      * Shows loading screen.
      */
-    @Override
-    public void showLoading() {
+//    @Override
+//    public void showLoading() {
+//
+//    }
 
-    }
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-    }
+//    @Override
+//    public void setPresenter(BasePresenter presenter) {
+//    }
 
     /**
      * Shows error message.
      */
-    @Override
-    public void showError() {
-
-    }
+//    @Override
+//    public void showError() {
+//
+//    }
 
     /**
      * Shows list of semesters.
      *
      * @param semesters List of semesters to be displayed.
      */
-    @Override
-    public void showSemesters(List<Semester> semesters) {
-
-    }
+//    @Override
+//    public void showSemesters(List<Semester> semesters) {
+//
+//    }
 
     /**
      * Shows an empty list.
      */
-    @Override
-    public void showEmpty() {
-
-    }
+//    @Override
+//    public void showEmpty() {
+//
+//    }
 //
 //    @OnClick(R.id.btnNewSemester)
 //    public void addSemester(){
@@ -136,4 +136,4 @@ public class SemesterCollectionActivity extends AppCompatActivity implements Sem
 //        }
 //        lvSemesters.setAdapter(semesterArrayAdapter);
 //    }
-}
+//}

@@ -1,5 +1,6 @@
 package com.inrainbows.mvp.view;
 
+import com.inrainbows.InRainbowsApp;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.presenter.BasePresenter;
 

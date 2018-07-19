@@ -17,7 +17,7 @@ import java.util.List;
  * @author diego on 12/07/2018.
  */
 @Dao
-public interface SemesterDao {
+public interface SemesterDao extends BaseDao<SemesterEntity> {
 
     @Query("SELECT * FROM SEMESTERS")
     List<SemesterEntity> getAllList();
@@ -30,14 +30,5 @@ public interface SemesterDao {
 
     @Query("SELECT * FROM SEMESTERS WHERE CURRENT_SEMESTER = 1")
     SemesterEntity getCurrentSemester();
-
-    @Insert
-    void insert(SemesterEntity entity);
-
-    @Update
-    void update(SemesterEntity entity);
-
-    @Delete
-    void delete(SemesterEntity entity);
 
 }
