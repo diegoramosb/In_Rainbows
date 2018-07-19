@@ -22,17 +22,17 @@ public class SemesterEntity extends BaseEntity {
 
     @ColumnInfo(name = "START_DATE")
     @NonNull
-    private Date startDate;
+    private DateTime startDate;
 
     @ColumnInfo(name = "END_DATE")
     @NonNull
-    private Date endDate;
+    private DateTime endDate;
 
     @ColumnInfo(name = "CURRENT_SEMESTER")
     @NonNull
     private boolean currentSemester;
 
-    public SemesterEntity(long id, String semesterName, Date startDate, Date endDate, boolean currentSemester) {
+    public SemesterEntity(long id, String semesterName, DateTime startDate, DateTime endDate, boolean currentSemester) {
         this.id = id;
         this.semesterName = semesterName;
         this.startDate = startDate;
@@ -48,19 +48,19 @@ public class SemesterEntity extends BaseEntity {
         this.semesterName = semesterName;
     }
 
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 

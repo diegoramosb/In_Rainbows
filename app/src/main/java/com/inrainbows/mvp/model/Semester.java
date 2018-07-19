@@ -43,8 +43,8 @@ public class Semester {
     public Semester(SemesterEntity entity){
         this.id = entity.getId();
         this.semesterName = entity.getSemesterName();
-        this.startDate = new DateTime(entity.getStartDate());
-        this.endDate = new DateTime(entity.getEndDate());
+        this.startDate = entity.getStartDate();
+        this.endDate = entity.getEndDate();
         this.currentSemester = entity.isCurrentSemester();
     }
 
@@ -266,7 +266,7 @@ public class Semester {
     }
 
     public SemesterEntity toEntity(){
-        return new SemesterEntity(id, semesterName, startDate.toDate(), endDate.toDate(), isCurrentSemester());
+        return new SemesterEntity(id, semesterName, startDate, endDate, isCurrentSemester());
     }
 
     public List<SubjectEntity> subjectsToEntity(){

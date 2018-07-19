@@ -1,6 +1,5 @@
 package com.inrainbows.persistence;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -10,8 +9,6 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.inrainbows.mvp.model.Semester;
-import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.persistence.daos.SemesterDao;
 import com.inrainbows.persistence.daos.SubjectDao;
 import com.inrainbows.persistence.daos.SubjectTaskDao;
@@ -23,7 +20,7 @@ import com.inrainbows.persistence.entities.SubjectTaskEntity;
  * @author diego on 12/07/2018.
  */
 @Database(entities = {SemesterEntity.class, SubjectEntity.class, SubjectTaskEntity.class}, version = 2)
-@TypeConverters(DateConverter.class)
+@TypeConverters(DateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
