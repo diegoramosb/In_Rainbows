@@ -31,16 +31,59 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void setCurrentSemesterName() {
-        System.out.println(db.semesterDao().getAllList());
+    public void setCurrentSemester(Semester semester) {
+        Semester oldSemester = getCurrentSemester();
+        if(oldSemester != null) {
+            oldSemester.setCurrentSemester(false);
+            db.semesterDao().update(oldSemester.toEntity());
+        }
+
+        semester.setCurrentSemester(true);
+        db.semesterDao().update(semester.toEntity());
+
+        updateCurrentSemesterName();
+    }
+
+    @Override
+    public void updateCurrentSemesterName() {
+        view.setCurrentSemesterName(getCurrentSemester() != null ? getCurrentSemester().getSemesterName() : "Tap here to add semester");
+    }
+
+    public Semester getCurrentSemester() {
         SemesterEntity entity = db.semesterDao().getCurrentSemester();
-        if(entity != null) {
-            Semester currentSemester = new Semester(entity);
-            view.setCurrentSemesterName(currentSemester.getSemesterName());
+        if(entity != null){
+            return new Semester(db.semesterDao().getCurrentSemester());
         }
         else {
-            view.setCurrentSemesterName("No semester");
+            return null;
         }
+    }
+
+    @Override
+    public List<Semester> getAllSemesters() {
+        return semesterEntityListToSemester(db.semesterDao().getAllList());
+    }
+
+
+    @Override
+    public List<String> getAllSemesterNames() {
+        return semesterEntityListToNames(db.semesterDao().getAllList());
+    }
+
+    private List<Semester> semesterEntityListToSemester(List<SemesterEntity> semesterEntityList){
+        List<Semester> ans = new ArrayList<>();
+        for(SemesterEntity semesterEntity : semesterEntityList){
+            ans.add(new Semester(semesterEntity));
+        }
+        return ans;
+    }
+
+    private List<String> semesterEntityListToNames(List<SemesterEntity> semesterEntityList){
+        List<String> ans = new ArrayList<>();
+        for(SemesterEntity semesterEntity : semesterEntityList){
+            ans.add(semesterEntity.getSemesterName());
+        }
+        return ans;
     }
 
     @Override

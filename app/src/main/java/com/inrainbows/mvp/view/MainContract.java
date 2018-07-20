@@ -17,7 +17,13 @@ public interface MainContract {
 
         void showAddSemesterView();
 
-        void setCurrentSemesterName();
+        void updateCurrentSemesterName();
+
+        void setCurrentSemester(Semester semester);
+
+        List<String> getAllSemesterNames();
+
+        List<Semester> getAllSemesters();
 
     }
 

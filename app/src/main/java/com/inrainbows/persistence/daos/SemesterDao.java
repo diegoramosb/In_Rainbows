@@ -30,5 +30,4 @@ public interface SemesterDao extends BaseDao<SemesterEntity> {
 
     @Query("SELECT * FROM SEMESTERS WHERE CURRENT_SEMESTER = 1")
     SemesterEntity getCurrentSemester();
-
 }
