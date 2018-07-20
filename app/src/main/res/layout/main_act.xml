@@ -24,66 +24,104 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.AppBarLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/Toolbar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="@style/Toolbar"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-                <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Left" />
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Center" />
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Right" />
-                </android.support.design.widget.TabLayout>
-            </android.support.design.widget.AppBarLayout>
-
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/coordinatorLayout"
+            <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <FrameLayout
-                    android:id="@+id/contentFrame"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_add"
+                <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:layout_marginEnd="@dimen/fab_margin"
-                    android:src="@drawable/ic_add_white_24dp"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:fabSize="normal"
-                    app:layout_anchor="@id/contentFrame"
-                    app:layout_anchorGravity="bottom|right|end" />
-            </android.support.design.widget.CoordinatorLayout>
+                    android:text="Left" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Center" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Right" />
+            </android.support.design.widget.TabLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/contentFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add_semester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_fab_margin"
+                android:layout_marginEnd="@dimen/small_fab_margin"
+                app:fabSize="mini"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_fab_margin"
+                android:layout_marginEnd="@dimen/small_fab_margin"
+                app:fabSize="mini"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end"
+                app:srcCompat="@android:drawable/ic_dialog_map" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_fab_margin"
+                android:layout_marginEnd="@dimen/small_fab_margin"
+                app:fabSize="mini"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end"
+                app:srcCompat="@android:drawable/ic_dialog_email" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:src="@drawable/ic_add_white_24dp"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:fabSize="normal"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
 
     </LinearLayout>
 

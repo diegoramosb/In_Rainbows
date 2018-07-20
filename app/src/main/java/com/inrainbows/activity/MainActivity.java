@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,20 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+
+    @BindView(R.id.fab_add_task)
+    FloatingActionButton fabAddTask;
+
+    @BindView(R.id.fab_add_subject)
+    FloatingActionButton fabAddSubject;
+
+    @BindView(R.id.fab_add_semester)
+    FloatingActionButton fabAddSemester;
+
+    boolean isFABOpen;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +60,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         presenter = new MainPresenter(this);
 
         drawerLayout.setStatusBarBackgroundColor(getColor(R.color.colorPrimaryDark));
+
+        isFABOpen = false;
 
         update();
 
@@ -112,8 +129,43 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
 
     @OnClick(R.id.fab_add)
-    public void fabOnClick(){
+    public void fabAddOnClick(){
+        if(!isFABOpen){
+            showFABMenu();
+        }
+        else {
+            closeFABMenu();
+        }
+    }
+
+    @OnClick(R.id.fab_add_semester)
+    public void fabAddSemesterOnClick() {
         presenter.showAddSemesterView();
+    }
+
+    private void showFABMenu(){
+        isFABOpen=true;
+        fabAddTask.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        fabAddSubject.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+        fabAddSemester.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+        fabAddTask.animate().translationY(0);
+        fabAddSubject.animate().translationY(0);
+        fabAddSemester.animate().translationY(0);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(isFABOpen){
+            closeFABMenu();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     @Override

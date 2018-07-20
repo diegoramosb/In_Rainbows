@@ -41,11 +41,13 @@ public class Semester {
     }
 
     public Semester(SemesterEntity entity){
-        this.id = entity.getId();
-        this.semesterName = entity.getSemesterName();
-        this.startDate = entity.getStartDate();
-        this.endDate = entity.getEndDate();
-        this.currentSemester = entity.isCurrentSemester();
+        if(entity != null) {
+            this.id = entity.getId();
+            this.semesterName = entity.getSemesterName();
+            this.startDate = entity.getStartDate();
+            this.endDate = entity.getEndDate();
+            this.currentSemester = entity.isCurrentSemester();
+        }
     }
 
     public long getId() {
