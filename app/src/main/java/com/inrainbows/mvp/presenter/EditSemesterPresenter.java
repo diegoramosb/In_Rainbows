@@ -51,14 +51,22 @@ public class EditSemesterPresenter implements EditSemesterContract.Presenter {
 
     @Override
     public Semester getCurrentSemester() {
-        return new Semester(dao.getCurrentSemester());
+        SemesterEntity entity = dao.getCurrentSemester();
+        if(entity != null){
+            return new Semester(dao.getCurrentSemester());
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public void setCurrentSemester(Semester semester) {
         Semester oldSemester = getCurrentSemester();
-        oldSemester.setCurrentSemester(false);
-        updateSemester(oldSemester);
+        if(oldSemester != null) {
+            oldSemester.setCurrentSemester(false);
+            updateSemester(oldSemester);
+        }
 
         semester.setCurrentSemester(true);
         updateSemester(semester);

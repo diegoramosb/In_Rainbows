@@ -72,4 +72,15 @@ public class SemesterEntity extends BaseEntity {
     public void setCurrentSemester(@NonNull boolean currentSemester) {
         this.currentSemester = currentSemester;
     }
+
+    @Override
+    public String toString() {
+        return "SemesterEntity{" +
+                "id=" + id +
+                ", semesterName='" + semesterName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", currentSemester=" + currentSemester +
+                '}';
+    }
 }

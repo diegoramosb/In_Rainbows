@@ -34,7 +34,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "in_rainbows")
-                    .addMigrations(MIGRATION_1_2)
                     .allowMainThreadQueries() //Eventually remove and  do asynchronously.
                     .build();
         }

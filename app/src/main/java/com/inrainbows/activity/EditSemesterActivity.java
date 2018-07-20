@@ -54,7 +54,7 @@ public class EditSemesterActivity extends BaseActivity implements EditSemesterCo
 
         this.presenter = new EditSemesterPresenter(this);
 
-        System.out.println(presenter.getAllSemesters());
+        presenter.setCurrentSemester(presenter.getSemester(1));
 
         etSemesterName.setText(R.string.sample_semester_name);
         etStartDate.setText(R.string.sample_start_date);
@@ -67,6 +67,7 @@ public class EditSemesterActivity extends BaseActivity implements EditSemesterCo
                 new DateTime(etStartDate.getText().toString()),
                 new DateTime(etEndDate.getText().toString()),
                 presenter.getCurrentSemester() == null).build();
+        presenter.insertSemester(semester);
         showMainView();
     }
 
