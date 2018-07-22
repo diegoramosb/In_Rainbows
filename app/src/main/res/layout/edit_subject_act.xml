@@ -102,7 +102,7 @@
         android:layout_marginEnd="292dp"
         android:layout_marginStart="91dp"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="tvStartDate,tvSemesterName,tvEndDate"
+        app:constraint_referenced_ids="tvStartDate,tvName,tvEndDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

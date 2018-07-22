@@ -1,7 +1,10 @@
 package com.inrainbows.mvp.view;
 
+import android.arch.lifecycle.MutableLiveData;
+
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.presenter.BasePresenter;
+import com.inrainbows.persistence.AppDatabase;
 
 import java.util.List;
 
@@ -15,21 +18,21 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter<MainContract.View>{
 
-        void showAddSemesterView();
+        void currentSemester();
 
-        void updateCurrentSemesterName();
+        MutableLiveData<Semester> getCurrentSemester();
 
         void setCurrentSemester(Semester semester);
 
-        List<String> getAllSemesterNames();
-
         List<Semester> getAllSemesters();
+
+        void setDb(AppDatabase db);
 
     }
 
     interface View extends BaseView<MainContract.Presenter>{
 
-        void showAddSemester();
+        void showAddSemesterActivity();
 
         void setCurrentSemesterName(String name);
 

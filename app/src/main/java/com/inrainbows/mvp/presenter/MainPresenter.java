@@ -1,5 +1,9 @@
 package com.inrainbows.mvp.presenter;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.os.SystemClock;
+
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.view.BaseView;
 import com.inrainbows.mvp.view.MainContract;
@@ -9,54 +13,64 @@ import com.inrainbows.persistence.entities.SemesterEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author diego on 15/07/2018.
  */
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter extends ViewModel implements MainContract.Presenter {
 
-    MainContract.View view;
+//    MainContract.View view;
 
     AppDatabase db;
 
-    public MainPresenter(MainContract.View view) {
-        this.view = view;
-        this.view.setPresenter(this);
-        db = view.getDb();
+    private MutableLiveData<Semester> currentSemester = new MutableLiveData<>();
+
+    private MutableLiveData<Long> time = new MutableLiveData<>();
+
+//    public MainPresenter(MainContract.View view) {
+//        this.view = view;
+//        this.view.setPresenter(this);
+//        db = view.getDb();
+//    }
+
+
+    public MainPresenter() {
     }
 
     @Override
-    public void showAddSemesterView() {
-        view.showAddSemester();
+    public void setDb(AppDatabase db) {
+        this.db = db;
+        currentSemester();
+    }
+
+    @Override
+    public void currentSemester() {
+        SemesterEntity entity = db.semesterDao().getCurrentSemester();
+        if(entity != null){
+            currentSemester.postValue(new Semester(db.semesterDao().getCurrentSemester()));
+        }
     }
 
     @Override
     public void setCurrentSemester(Semester semester) {
-        Semester oldSemester = getCurrentSemester();
-        if(oldSemester != null) {
-            oldSemester.setCurrentSemester(false);
-            db.semesterDao().update(oldSemester.toEntity());
+        Semester current = currentSemester.getValue();
+        if(current != null) {
+            current.setCurrentSemester(false);
+            db.semesterDao().update(currentSemester.getValue().toEntity());
         }
 
         semester.setCurrentSemester(true);
         db.semesterDao().update(semester.toEntity());
 
-        updateCurrentSemesterName();
+        currentSemester();
     }
+
 
     @Override
-    public void updateCurrentSemesterName() {
-        view.setCurrentSemesterName(getCurrentSemester() != null ? getCurrentSemester().getSemesterName() : "Tap here to add semester");
-    }
-
-    public Semester getCurrentSemester() {
-        SemesterEntity entity = db.semesterDao().getCurrentSemester();
-        if(entity != null){
-            return new Semester(db.semesterDao().getCurrentSemester());
-        }
-        else {
-            return null;
-        }
+    public MutableLiveData<Semester> getCurrentSemester() {
+        return currentSemester;
     }
 
     @Override
@@ -64,24 +78,10 @@ public class MainPresenter implements MainContract.Presenter {
         return semesterEntityListToSemester(db.semesterDao().getAllList());
     }
 
-
-    @Override
-    public List<String> getAllSemesterNames() {
-        return semesterEntityListToNames(db.semesterDao().getAllList());
-    }
-
     private List<Semester> semesterEntityListToSemester(List<SemesterEntity> semesterEntityList){
         List<Semester> ans = new ArrayList<>();
         for(SemesterEntity semesterEntity : semesterEntityList){
             ans.add(new Semester(semesterEntity));
-        }
-        return ans;
-    }
-
-    private List<String> semesterEntityListToNames(List<SemesterEntity> semesterEntityList){
-        List<String> ans = new ArrayList<>();
-        for(SemesterEntity semesterEntity : semesterEntityList){
-            ans.add(semesterEntity.getSemesterName());
         }
         return ans;
     }

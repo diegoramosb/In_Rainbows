@@ -1,5 +1,7 @@
 package com.inrainbows.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
@@ -68,24 +71,43 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         setContentView(R.layout.main_act);
         ButterKnife.bind(this);
 
-        presenter = new MainPresenter(this);
+//        presenter = new MainPresenter(this);
+        presenter = ViewModelProviders.of(this).get(MainPresenter.class);
+        presenter.setDb(db);
 
         drawerLayout.setStatusBarBackgroundColor(getColor(R.color.colorPrimaryDark));
 
         isFABOpen = false;
 
         update();
-
+        subscribeToCurrentSemester();
     }
+
+    private void subscribeToCurrentSemester() {
+        final Observer<Semester> currentSemesterObserver = new Observer<Semester>() {
+            @Override
+            public void onChanged(@Nullable Semester semester) {
+                if (semester != null) {
+                    setCurrentSemesterName(semester.getSemesterName());
+                }
+                else {
+                    setCurrentSemesterName("Tap here to add semester");
+                }
+            }
+        };
+
+        presenter.getCurrentSemester().observe(this, currentSemesterObserver);
+    }
+
+
 
     private void update(){
         if(navigationView != null){
             setupDrawerContent(navigationView);
-            presenter.updateCurrentSemesterName();
         }
     }
 
-    public void showAddSemester(){
+    public void showAddSemesterActivity(){
         Intent intent = new Intent(this, EditSemesterActivity.class);
         startActivity(intent);
     }
@@ -112,8 +134,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private void setupDrawerContent(NavigationView navigationView) {
 
-        presenter.updateCurrentSemesterName();
-
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -129,7 +149,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                             default:
                                 break;
                         }
-//                        item.setChecked(true);
                         drawerLayout.closeDrawers();
                         return true;
                     }
@@ -148,7 +167,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void showChooseCurrentSemesterDialog(){
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Select a Group Name");
+        alertDialogBuilder.setTitle("Select a semester to set as current");
 
         final List<Semester> semesters = presenter.getAllSemesters();
         final String[] semesterNames = new String[semesters.size()];
@@ -161,12 +180,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 presenter.setCurrentSemester(semesters.get(item));
+                subscribeToCurrentSemester();
                 dialog.dismiss();// dismiss the alertbox after chose option
             }
         });
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
-
     }
 
     @OnClick(R.id.fab_add)
@@ -181,7 +200,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @OnClick(R.id.fab_add_semester)
     public void fabAddSemesterOnClick() {
-        presenter.showAddSemesterView();
+        showAddSemesterActivity();
     }
 
     private void showFABMenu(){
@@ -191,7 +210,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         layoutAddSubject.setVisibility(View.VISIBLE);
         layoutAddSemester.setVisibility(View.VISIBLE);
 
-        fabAdd.animate().rotationBy(360);
+        fabAdd.animate().rotationBy(90);
 
         layoutAddTask.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         layoutAddSubject.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
@@ -201,7 +220,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void closeFABMenu(){
         isFABOpen=false;
 
-        fabAdd.animate().rotationBy(-360);
+        fabAdd.animate().rotationBy(-90);
 
         layoutAddTask.animate().translationY(0);
         layoutAddSubject.animate().translationY(0);
