@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
@@ -47,6 +49,15 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @BindView(R.id.fab_add_semester)
     FloatingActionButton fabAddSemester;
+
+    @BindView(R.id.layout_add_task)
+    LinearLayout layoutAddTask;
+
+    @BindView(R.id.layout_add_subject)
+    LinearLayout layoutAddSubject;
+
+    @BindView(R.id.layout_add_semester)
+    LinearLayout layoutAddSemester;
 
     boolean isFABOpen;
 
@@ -127,47 +138,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
 
-
-    @OnClick(R.id.fab_add)
-    public void fabAddOnClick(){
-        if(!isFABOpen){
-            showFABMenu();
-        }
-        else {
-            closeFABMenu();
-        }
-    }
-
-    @OnClick(R.id.fab_add_semester)
-    public void fabAddSemesterOnClick() {
-        presenter.showAddSemesterView();
-    }
-
-    private void showFABMenu(){
-        isFABOpen=true;
-        fabAddTask.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        fabAddSubject.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
-        fabAddSemester.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
-    }
-
-    private void closeFABMenu(){
-        isFABOpen=false;
-        fabAddTask.animate().translationY(0);
-        fabAddSubject.animate().translationY(0);
-        fabAddSemester.animate().translationY(0);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if(isFABOpen){
-            closeFABMenu();
-        }
-        else {
-            super.onBackPressed();
-        }
-    }
-
     @Override
     public void setCurrentSemesterName(String name){
         Menu menu = navigationView.getMenu();
@@ -199,5 +169,58 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     }
 
+    @OnClick(R.id.fab_add)
+    public void fabAddOnClick(){
+        if(!isFABOpen){
+            showFABMenu();
+        }
+        else {
+            closeFABMenu();
+        }
+    }
+
+    @OnClick(R.id.fab_add_semester)
+    public void fabAddSemesterOnClick() {
+        presenter.showAddSemesterView();
+    }
+
+    private void showFABMenu(){
+        isFABOpen=true;
+
+        layoutAddTask.setVisibility(View.VISIBLE);
+        layoutAddSubject.setVisibility(View.VISIBLE);
+        layoutAddSemester.setVisibility(View.VISIBLE);
+
+        fabAdd.animate().rotationBy(360);
+
+        layoutAddTask.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        layoutAddSubject.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+        layoutAddSemester.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+
+        fabAdd.animate().rotationBy(-360);
+
+        layoutAddTask.animate().translationY(0);
+        layoutAddSubject.animate().translationY(0);
+        layoutAddSemester.animate().translationY(0);
+
+        layoutAddTask.setVisibility(View.GONE);
+        layoutAddSubject.setVisibility(View.GONE);
+        layoutAddSemester.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(isFABOpen){
+            closeFABMenu();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 
 }

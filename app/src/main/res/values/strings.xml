@@ -14,4 +14,12 @@
 
     <string name="home">Home</string>
     <string name="semesters">Semesters</string>
+    <string name="add_semester">Add semester</string>
+    <string name="add_subject">Add semester</string>
+    <string name="add_task">Add semester</string>
+
+    <string name="grade">Grade</string>
+    <string name="credits">Credits</string>
+    <string name="sample_grade">5.0</string>
+    <string name="sample_credits">20.5</string>
 </resources>

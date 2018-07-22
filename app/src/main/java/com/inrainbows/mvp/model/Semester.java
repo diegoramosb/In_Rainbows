@@ -280,6 +280,24 @@ public class Semester {
         return ans;
     }
 
+    public double totalStudiedHours() {
+        double totalStudiedHours = 0;
+        for(Subject subject : subjects) {
+            totalStudiedHours += subject.getStudiedHoursSemester();
+        }
+        return totalStudiedHours;
+    }
+
+    public double currentGrade() {
+        double credits = 0;
+        double points = 0;
+        for(Subject subject : subjects) {
+            points += (subject.getCurrentGrade() * subject.getCredits());
+            credits += subject.getCredits();
+        }
+        return (points / credits);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
