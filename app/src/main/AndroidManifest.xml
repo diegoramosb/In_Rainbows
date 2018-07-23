@@ -26,6 +26,12 @@
             android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+            android:name=".activity.EditSubjectActivity"
+            android:label="AddSubject"
+            android:parentActivityName=".activity.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
 
     </application>
 

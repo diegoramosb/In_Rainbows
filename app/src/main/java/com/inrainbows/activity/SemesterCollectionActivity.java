@@ -89,7 +89,7 @@ import butterknife.OnClick;
      * Shows error message.
      */
 //    @Override
-//    public void showError() {
+//    public void showErrorDialog() {
 //
 //    }
 

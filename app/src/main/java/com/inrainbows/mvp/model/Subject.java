@@ -19,6 +19,11 @@ public class Subject {
     private long id;
 
     /**
+     * Id of the semester that the subject belongs to
+     */
+    private long semesterId;
+
+    /**
      * Subject name
      */
     private String name;
@@ -69,6 +74,7 @@ public class Subject {
      */
     private Subject(SubjectBuilder builder){
         this.id = builder.id;
+        this.semesterId = builder.semesterId;
         this.name = builder.name;
         this.credits = builder.credits;
         this.classHours = builder.classHours;
@@ -96,6 +102,14 @@ public class Subject {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getSemesterId() {
+        return semesterId;
+    }
+
+    public void setSemesterId(long semesterId) {
+        this.semesterId = semesterId;
     }
 
     /**
@@ -601,6 +615,11 @@ public class Subject {
         return ans;
     }
 
+    public SubjectEntity toEntity() {
+        return new SubjectEntity(id, name, credits, totalHours, classHours, extraHours,
+                studiedHoursDay, studiedHoursWeek, studiedHoursSemester, semesterId);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -644,6 +663,8 @@ public class Subject {
 
         private long id;
 
+        private long semesterId;
+
         private String name;
 
         private double credits;
@@ -662,8 +683,9 @@ public class Subject {
 
         private List<SubjectTask> tasks;
 
-        public SubjectBuilder(long id, String name, double credits, double classHours) {
+        public SubjectBuilder(long id, String name, double credits, double classHours, long semesterId) {
             this.id = id;
+            this.semesterId = semesterId;
             this.name = name;
             this.credits = credits;
             this.classHours = classHours;

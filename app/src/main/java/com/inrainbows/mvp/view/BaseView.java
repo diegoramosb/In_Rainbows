@@ -13,7 +13,7 @@ public interface BaseView<T extends BasePresenter> {
 
     void setPresenter(T presenter);
 
-    void showError();
+    void showErrorDialog(int errId, int errMsgId);
 
     void showLoading();
 

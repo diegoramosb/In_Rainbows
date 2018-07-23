@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             @Override
             public void onChanged(@Nullable Semester semester) {
                 if (semester != null) {
-                    setCurrentSemesterName(semester.getSemesterName());
+                    setCurrentSemester(semester);
                 }
                 else {
                     setCurrentSemesterName("Tap here to add semester");
@@ -110,6 +110,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public void showAddSemesterActivity(){
         Intent intent = new Intent(this, EditSemesterActivity.class);
         startActivity(intent);
+        closeFABMenu();
+    }
+
+    public void showAddSubjectActivity() {
+        Intent intent = new Intent(this, EditSubjectActivity.class);
+        startActivity(intent);
+        closeFABMenu();
     }
 
     @Override
@@ -117,10 +124,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         this.presenter = presenter;
     }
 
-    @Override
-    public void showError() {
-
-    }
 
     @Override
     public void showLoading() {
@@ -158,10 +161,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
 
     @Override
-    public void setCurrentSemesterName(String name){
+    public void setCurrentSemester(Semester semester){
+        this.currentSemester = semester;
+        setCurrentSemesterName(semester.getSemesterName());
+    }
+
+
+    @Override
+    public void setCurrentSemesterName(String semesterName) {
         Menu menu = navigationView.getMenu();
         MenuItem miSemesterName = menu.findItem(R.id.semesters_drawer_item);
-        miSemesterName.setTitle(name);
+        miSemesterName.setTitle(semesterName);
     }
 
     private void showChooseCurrentSemesterDialog(){
@@ -201,6 +211,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @OnClick(R.id.fab_add_semester)
     public void fabAddSemesterOnClick() {
         showAddSemesterActivity();
+    }
+
+    @OnClick(R.id.fab_add_subject)
+    public void setFabAddSubjectOnClick() {
+        showAddSubjectActivity();
     }
 
     private void showFABMenu(){
