@@ -2,6 +2,7 @@ package com.inrainbows;
 
 import android.app.Application;
 
+import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.persistence.AppDatabase;
 
 /**
@@ -9,19 +10,18 @@ import com.inrainbows.persistence.AppDatabase;
  */
 public class InRainbowsApp extends Application {
 
-    private AppDatabase db;
-
-    public InRainbowsApp() {
-        super();
-    }
+    private Semester currentSemester;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        db = AppDatabase.getDatabase(this);
     }
 
-    public AppDatabase getDb() {
-        return db;
+    public Semester getCurrentSemester() {
+        return currentSemester;
+    }
+
+    public void setCurrentSemester(Semester currentSemester) {
+        this.currentSemester = currentSemester;
     }
 }

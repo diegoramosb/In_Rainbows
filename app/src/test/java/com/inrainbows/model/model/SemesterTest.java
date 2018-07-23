@@ -179,7 +179,7 @@ public class SemesterTest {
     @Test
     public void getCredits() {
         setUp3();
-        assertEquals(4, semester.getCredits(), 0.0);
+        assertEquals(4, semester.credits(), 0.0);
     }
 
     @Test

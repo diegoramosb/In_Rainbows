@@ -35,11 +35,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private MainContract.Presenter presenter;
 
+    private Semester currentSemester;
+
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.tvSemesterGrade)
+    TextView tvGrade;
+
+    @BindView(R.id.tvSemesterCredits)
+    TextView tvCredits;
 
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
@@ -79,7 +87,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         isFABOpen = false;
 
-        update();
+        if(navigationView != null){
+            setupDrawerContent(navigationView);
+        }
+
         subscribeToCurrentSemester();
     }
 
@@ -89,22 +100,25 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             public void onChanged(@Nullable Semester semester) {
                 if (semester != null) {
                     setCurrentSemester(semester);
+                    updateUI();
                 }
                 else {
                     setCurrentSemesterName("Tap here to add semester");
                 }
             }
         };
-
+        if(currentSemester == null){
+            currentSemesterObserver.onChanged(presenter.getCurrentSemester().getValue());
+        }
         presenter.getCurrentSemester().observe(this, currentSemesterObserver);
     }
 
 
 
-    private void update(){
-        if(navigationView != null){
-            setupDrawerContent(navigationView);
-        }
+    private void updateUI(){
+        setCurrentSemesterName(currentSemester.getSemesterName());
+        tvGrade.setText(currentSemester.currentGrade()+"");
+        tvCredits.setText(currentSemester.credits()+"");
     }
 
     public void showAddSemesterActivity(){
@@ -115,6 +129,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     public void showAddSubjectActivity() {
         Intent intent = new Intent(this, EditSubjectActivity.class);
+        intent.putExtra("currentSemester", currentSemester);
         startActivity(intent);
         closeFABMenu();
     }
@@ -163,7 +178,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void setCurrentSemester(Semester semester){
         this.currentSemester = semester;
-        setCurrentSemesterName(semester.getSemesterName());
     }
 
 

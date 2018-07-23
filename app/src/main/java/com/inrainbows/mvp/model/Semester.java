@@ -9,6 +9,7 @@ import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,7 +18,9 @@ import java.util.NoSuchElementException;
 /**
  * @author diego on 1/08/2017.
  */
-public class Semester {
+
+//TODO Change Serializable for Parcelable to improve speed.
+public class Semester implements Serializable{
 
     private long id;
 
@@ -131,30 +134,11 @@ public class Semester {
         this.currentSemester = currentSemester;
     }
 
-    /**
-     * @return semester current GPA
-     */
-    public double getCurrentGPA() {
-
-        double ans = 0;
-        int credits = 0;
-        try{
-            double sum = 0;
-            for( Subject currentSubject : subjects ){
-                sum += (currentSubject.getCurrentGrade()*currentSubject.getCredits());
-                credits += currentSubject.getCredits();
-            }
-            ans = sum / credits;
-        }catch (NoSuchElementException e){
-            return ans;
-        }
-        return ans;
-    }
 
     /**
      * @return number of credits of the semester
      */
-    public double getCredits() {
+    public double credits() {
         int credits = 0;
         try{
             for( Subject currentSubject : subjects ){
@@ -298,22 +282,33 @@ public class Semester {
         return (points / credits);
     }
 
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("ID: ")
+//                .append(id)
+//                .append("\n" + semesterName)
+//                .append("\nStart: ")
+//                .append(startDate.getYear()).append("-")
+//                .append(startDate.getMonthOfYear()).append("-")
+//                .append(startDate.getDayOfMonth())
+//                .append("\nEnd: ")
+//                .append(endDate.getYear()).append("-")
+//                .append(endDate.getMonthOfYear()).append("-")
+//                .append(endDate.getDayOfMonth());
+//
+//        return sb.toString();
+//    }
+
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID: ")
-                .append(id)
-                .append("\n" + semesterName)
-                .append("\nStart: ")
-                .append(startDate.getYear()).append("-")
-                .append(startDate.getMonthOfYear()).append("-")
-                .append(startDate.getDayOfMonth())
-                .append("\nEnd: ")
-                .append(endDate.getYear()).append("-")
-                .append(endDate.getMonthOfYear()).append("-")
-                .append(endDate.getDayOfMonth());
-
-        return sb.toString();
+        return "Semester{" +
+                "id=" + id +
+                ", semesterName='" + semesterName + '\'' +
+                ", currentSemester=" + currentSemester +
+                ", subjects=" + subjects +
+                '}';
     }
 
     public static class SemesterBuilder {

@@ -88,13 +88,45 @@ public class Subject {
         this.tasks = builder.getTasks();
     }
 
+    public Subject(SubjectEntity entity){
+        if(entity != null) {
+            this.id = entity.getId();
+            this.semesterId = entity.getSemesterId();
+            this.name = entity.getName();
+            this.credits = entity.getCredits();
+
+            this.totalHours = entity.getTotalHours();
+            this.classHours = entity.getClassHours();
+            this.extraHours = entity.getExtraHours();
+
+            this.studiedHoursDay = entity.getStudiedHoursDay();
+            this.studiedHoursWeek = entity.getStudiedHoursWeek();
+            this.studiedHoursSemester = entity.getStudiedHoursSemester();
+            this.tasks = new ArrayList<>();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", semesterId=" + semesterId +
+                ", name='" + name + '\'' +
+                ", credits=" + credits +
+                ", totalHours=" + totalHours +
+                ", classHours=" + classHours +
+                ", extraHours=" + extraHours +
+                ", studiedHoursDay=" + studiedHoursDay +
+                ", studiedHoursWeek=" + studiedHoursWeek +
+                ", studiedHoursSemester=" + studiedHoursSemester +
+                ", tasks=" + tasks +
+                '}';
+    }
+
     /**
      * @return Subject info as a String
      */
-    public String toString() {
-        //Shows "Name, 3 credits, 5.0, 50% graded"
-        return name + ", " + credits + " credits, " + "class hours: " + classHours + " extra: " + extraHours + " total: " + totalHours + " day: " + studiedHoursDay + " week:" + studiedHoursWeek + " semester: " + studiedHoursSemester + " grade:" + getCurrentGrade() + ", " + getGradedTasksPercentage() + "% graded" + tasks;
-    }
+
 
     public long getId() {
         return id;

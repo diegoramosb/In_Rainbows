@@ -3,7 +3,6 @@ package com.inrainbows.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.widget.EditText;
 
@@ -22,8 +21,9 @@ import butterknife.OnClick;
  */
 public class EditSubjectActivity extends BaseActivity implements EditSubjectContract.View {
 
-
     EditSubjectContract.Presenter presenter;
+
+    private Semester currentSemester;
 
     /**
      * Name edit text
@@ -46,6 +46,10 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras();
+        currentSemester = (Semester) bundle.getSerializable("currentSemester");
+
         setContentView(R.layout.edit_act);
         ButterKnife.bind(this);
 

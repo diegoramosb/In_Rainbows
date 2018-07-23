@@ -5,11 +5,13 @@ import android.arch.lifecycle.ViewModel;
 import android.os.SystemClock;
 
 import com.inrainbows.mvp.model.Semester;
+import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.view.BaseView;
 import com.inrainbows.mvp.view.MainContract;
 import com.inrainbows.persistence.AppDatabase;
 import com.inrainbows.persistence.daos.SemesterDao;
 import com.inrainbows.persistence.entities.SemesterEntity;
+import com.inrainbows.persistence.entities.SubjectEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,14 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
     public void currentSemester() {
         SemesterEntity entity = db.semesterDao().getCurrentSemester();
         if(entity != null){
-            currentSemester.postValue(new Semester(db.semesterDao().getCurrentSemester()));
+            Semester semester = new Semester(entity);
+            List<SubjectEntity> subjectEntities = db.subjectDao().getAllSubjectsWithSemesterId(entity.getId());
+            ArrayList<Subject> subjects = new ArrayList<>();
+            for(SubjectEntity subject : subjectEntities){
+                subjects.add(new Subject(subject));
+            }
+            semester.setSubjects(subjects);
+            currentSemester.postValue(semester);
         }
     }
 

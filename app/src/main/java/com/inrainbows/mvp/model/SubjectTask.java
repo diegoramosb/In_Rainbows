@@ -66,17 +66,23 @@ public class SubjectTask implements Task, GradedAssignment {
         this.graded = builder.graded;
     }
 
+    @Override
+    public String toString() {
+        return "SubjectTask{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", done=" + done +
+                ", grade=" + grade +
+                ", percentage=" + percentage +
+                ", delivered=" + delivered +
+                ", graded=" + graded +
+                '}';
+    }
+
     /**
      * @return a string indicating the task status
      */
-    public String toString()
-    {
-        //Shows "not delivered yet" if it has not been delivered or Delivered, + gradeString if it has
-        String deliveredString = (delivered) ? "delivered" : "not delivered yet";
-        String doneString = (done)? "done" : "not done yet";
 
-        return String.format("%s, %s, %s, %s, %s, %s", name, tag, doneString, deliveredString, grade, percentage + "%");
-    }
 
     public long getId() {
         return id;
