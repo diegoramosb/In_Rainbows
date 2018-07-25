@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
-import org.joda.time.Weeks;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -276,7 +275,7 @@ public class Semester implements Serializable{
         double credits = 0;
         double points = 0;
         for(Subject subject : subjects) {
-            points += (subject.getCurrentGrade() * subject.getCredits());
+            points += (subject.currentGrade() * subject.getCredits());
             credits += subject.getCredits();
         }
         return (points / credits);

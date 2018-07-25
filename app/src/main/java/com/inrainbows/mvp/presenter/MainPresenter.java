@@ -2,21 +2,16 @@ package com.inrainbows.mvp.presenter;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.os.SystemClock;
 
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
-import com.inrainbows.mvp.view.BaseView;
 import com.inrainbows.mvp.view.MainContract;
 import com.inrainbows.persistence.AppDatabase;
-import com.inrainbows.persistence.daos.SemesterDao;
 import com.inrainbows.persistence.entities.SemesterEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author diego on 15/07/2018.
@@ -25,18 +20,11 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
 
 //    MainContract.View view;
 
-    AppDatabase db;
+    private AppDatabase db;
 
     private MutableLiveData<Semester> currentSemester = new MutableLiveData<>();
 
-    private MutableLiveData<Long> time = new MutableLiveData<>();
-
-//    public MainPresenter(MainContract.View view) {
-//        this.view = view;
-//        this.view.setPresenter(this);
-//        db = view.getDb();
-//    }
-
+    private MutableLiveData<List<Subject>> subjects = new MutableLiveData<>();
 
     public MainPresenter() {
     }
@@ -44,11 +32,11 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
     @Override
     public void setDb(AppDatabase db) {
         this.db = db;
-        currentSemester();
+        getCurrentSemesterFromDb();
+        getSubjectsFromDb();
     }
 
-    @Override
-    public void currentSemester() {
+    private void getCurrentSemesterFromDb() {
         SemesterEntity entity = db.semesterDao().getCurrentSemester();
         if(entity != null){
             Semester semester = new Semester(entity);
@@ -73,9 +61,8 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         semester.setCurrentSemester(true);
         db.semesterDao().update(semester.toEntity());
 
-        currentSemester();
+        getCurrentSemesterFromDb();
     }
-
 
     @Override
     public MutableLiveData<Semester> getCurrentSemester() {
@@ -93,6 +80,23 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
             ans.add(new Semester(semesterEntity));
         }
         return ans;
+    }
+
+    private void getSubjectsFromDb(){
+        subjects.postValue(subjectEntityListToSubject(db.subjectDao().getAllList()));
+    }
+
+    private List<Subject> subjectEntityListToSubject(List<SubjectEntity> subjects){
+        List<Subject> ans = new ArrayList<>();
+        for(SubjectEntity entity : subjects){
+            ans.add(new Subject(entity));
+        }
+        return ans;
+    }
+
+    @Override
+    public MutableLiveData<List<Subject>> getSubjects() {
+        return subjects;
     }
 
     @Override

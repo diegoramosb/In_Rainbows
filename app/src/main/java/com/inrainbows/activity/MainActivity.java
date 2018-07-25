@@ -11,17 +11,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Semester;
+import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.MainPresenter;
 import com.inrainbows.mvp.view.MainContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +36,7 @@ import butterknife.OnClick;
 /**
  * @author diego on 15/07/2018.
  */
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View, SubjectsRecyclerViewAdapter.ItemClickListener {
 
     private MainContract.Presenter presenter;
 
@@ -70,6 +75,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.layout_add_semester)
     LinearLayout layoutAddSemester;
 
+    @BindView(R.id.rv_subject_list)
+    RecyclerView rvSubjects;
+
+    private SubjectsRecyclerViewAdapter subjectsRvAdapter;
+
     boolean isFABOpen;
 
     @Override
@@ -83,6 +93,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         presenter = ViewModelProviders.of(this).get(MainPresenter.class);
         presenter.setDb(db);
 
+        rvSubjects.setHasFixedSize(true);
+        rvSubjects.setLayoutManager(new LinearLayoutManager(this));
+        subjectsRvAdapter = new SubjectsRecyclerViewAdapter(this, new ArrayList<Subject>());
+        subjectsRvAdapter.setClickListener(this);
+        rvSubjects.setAdapter(subjectsRvAdapter);
+
+
         drawerLayout.setStatusBarBackgroundColor(getColor(R.color.colorPrimaryDark));
 
         isFABOpen = false;
@@ -92,6 +109,28 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         }
 
         subscribeToCurrentSemester();
+        subscribeToSubjects();
+    }
+
+    private void subscribeToSubjects(){
+        final Observer<List<Subject>> subjectsObserver = new Observer<List<Subject>>(){
+            @Override
+            public void onChanged(@Nullable List<Subject> subjects) {
+                if(subjects != null) {
+                    subjectsRvAdapter.setSubjects(subjects);
+                    updateUI();
+                }
+                else {
+                    //TODO: Hide recycler view and show empty message instead.
+                }
+            }
+        };
+
+        if(subjectsRvAdapter.getItemCount() == 0) {
+            subjectsObserver.onChanged(presenter.getSubjects().getValue());
+        }
+
+        presenter.getSubjects().observe(this, subjectsObserver);
     }
 
     private void subscribeToCurrentSemester() {
@@ -230,6 +269,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @OnClick(R.id.fab_add_subject)
     public void setFabAddSubjectOnClick() {
         showAddSubjectActivity();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + subjectsRvAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
     private void showFABMenu(){

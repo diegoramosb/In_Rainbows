@@ -616,7 +616,7 @@ public class Subject {
      * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
      * @return ITask actual de la materia (solo de las notas entregadas)
      */
-    public double getCurrentGrade() {
+    public double currentGrade() {
         double ans = 0;
         double gradedPercentage = getGradedTasksPercentage();
         try {

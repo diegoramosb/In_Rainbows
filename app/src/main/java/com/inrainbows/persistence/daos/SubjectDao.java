@@ -21,9 +21,6 @@ public interface SubjectDao extends BaseDao<SubjectEntity> {
     @Query("SELECT * FROM SUBJECTS")
     List<SubjectEntity> getAllList();
 
-    @Query("SELECT * FROM SUBJECTS")
-    LiveData<List<SubjectEntity>> getAllLD();
-
     @Query("SELECT * FROM SUBJECTS WHERE SEMESTER_ID = :semesterId")
     List<SubjectEntity> getAllSubjectsWithSemesterId(long semesterId);
 

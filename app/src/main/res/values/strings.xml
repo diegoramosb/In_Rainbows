@@ -17,6 +17,13 @@
     <string name="sample_subject_name">Data structures</string>
     <string name="sample_subject_credits">3</string>
     <string name="sample_subject_class_hours">4.5</string>
+    <string name="sample_subject_grade">3.75</string>
+    <string name="sample_subject_studied_hours_day">0.5 H</string>
+    <string name="sample_subject_studied_hours_week">3.5 H</string>
+    <string name="sample_subject_total_hours_week">4.5 H</string>
+    <string name="sample_subject_studied_hours_semester">38.5 H</string>
+    <string name="forward_slash">/</string>
+    <string name="studied_week">this week</string>
 
     <string name="navigation_view_header">In Rainbows</string>
 
@@ -25,6 +32,8 @@
     <string name="add_semester">Add semester</string>
     <string name="add_subject">Add subject</string>
     <string name="add_task">Add task</string>
+    <string name="tab_subjects">Subjects</string>
+    <string name="tab_tasks">Tasks</string>
 
     <string name="grade">Grade</string>
     <string name="credits">Credits</string>
