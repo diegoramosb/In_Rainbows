@@ -1,5 +1,8 @@
 package com.inrainbows.mvp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.inrainbows.persistence.entities.SubjectEntity;
 import com.inrainbows.persistence.entities.SubjectTaskEntity;
 
@@ -11,7 +14,7 @@ import java.util.NoSuchElementException;
  * Created by diego on 31/05/2017.
  * This class represents a subject
  */
-public class Subject {
+public class Subject implements Parcelable{
 
     /**
      * Subject id
@@ -343,21 +346,12 @@ public class Subject {
             throw new IllegalArgumentException("Name not valid");
     }
 
-    /**
-     * @return an iterable containing the tasks of the subject
-     * @throws NoSuchElementException if there are no tasks
-     */
-    public Iterable<SubjectTask> getTasks() throws NoSuchElementException {
-        if(!tasks.isEmpty()){
-            return tasks;
-        }
-        else{
-            throw new NoSuchElementException("The subject doesn't have any tasks");
-        }
-    }
-
     public void setTasks(List<SubjectTask> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<SubjectTask> getTasks(){
+        return tasks;
     }
 
     /**
@@ -782,4 +776,60 @@ public class Subject {
             return new Subject(this);
         }
     }
+
+    protected Subject(Parcel in){
+        id = in.readLong();
+        semesterId = in.readLong();
+        name = in.readString();
+        credits = in.readDouble();
+        totalHours = in.readDouble();
+        classHours = in.readDouble();
+        extraHours = in.readDouble();
+        studiedHoursDay = in.readDouble();
+        studiedHoursWeek = in.readDouble();
+        studiedHoursSemester = in.readDouble();
+        if (in.readByte() == 0x01) {
+            tasks = new ArrayList<SubjectTask>();
+            in.readList(tasks, Subject.class.getClassLoader());
+        } else {
+            tasks = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(semesterId);
+        dest.writeString(name);
+        dest.writeDouble(totalHours);
+        dest.writeDouble(classHours);
+        dest.writeDouble(extraHours);
+        dest.writeDouble(studiedHoursDay);
+        dest.writeDouble(studiedHoursWeek);
+        dest.writeDouble(studiedHoursSemester);
+        if (tasks == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(tasks);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Subject> CREATOR = new Parcelable.Creator<Subject>() {
+        @Override
+        public Subject createFromParcel(Parcel in) {
+            return new Subject(in);
+        }
+
+        @Override
+        public Subject[] newArray(int size) {
+            return new Subject[size];
+        }
+    };
 }

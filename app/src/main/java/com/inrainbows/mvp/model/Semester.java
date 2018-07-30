@@ -1,5 +1,8 @@
 package com.inrainbows.mvp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.inrainbows.persistence.entities.SemesterEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
@@ -18,8 +21,7 @@ import java.util.NoSuchElementException;
  * @author diego on 1/08/2017.
  */
 
-//TODO Change Serializable for Parcelable to improve speed.
-public class Semester implements Serializable{
+public class Semester implements Parcelable{
 
     private long id;
 
@@ -281,25 +283,6 @@ public class Semester implements Serializable{
         return (points / credits);
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("ID: ")
-//                .append(id)
-//                .append("\n" + semesterName)
-//                .append("\nStart: ")
-//                .append(startDate.getYear()).append("-")
-//                .append(startDate.getMonthOfYear()).append("-")
-//                .append(startDate.getDayOfMonth())
-//                .append("\nEnd: ")
-//                .append(endDate.getYear()).append("-")
-//                .append(endDate.getMonthOfYear()).append("-")
-//                .append(endDate.getDayOfMonth());
-//
-//        return sb.toString();
-//    }
-
-
     @Override
     public String toString() {
         return "Semester{" +
@@ -309,6 +292,7 @@ public class Semester implements Serializable{
                 ", subjects=" + subjects +
                 '}';
     }
+
 
     public static class SemesterBuilder {
         private long id;
@@ -368,4 +352,51 @@ public class Semester implements Serializable{
             return new Semester(this);
         }
     }
+
+    protected Semester(Parcel in) {
+        id = in.readLong();
+        semesterName = in.readString();
+        startDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
+        endDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
+        currentSemester = in.readByte() != 0x00;
+        if (in.readByte() == 0x01) {
+            subjects = new ArrayList<Subject>();
+            in.readList(subjects, Subject.class.getClassLoader());
+        } else {
+            subjects = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(semesterName);
+        dest.writeValue(startDate);
+        dest.writeValue(endDate);
+        dest.writeByte((byte) (currentSemester ? 0x01 : 0x00));
+        if (subjects == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(subjects);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Semester> CREATOR = new Parcelable.Creator<Semester>() {
+        @Override
+        public Semester createFromParcel(Parcel in) {
+            return new Semester(in);
+        }
+
+        @Override
+        public Semester[] newArray(int size) {
+            return new Semester[size];
+        }
+    };
 }
