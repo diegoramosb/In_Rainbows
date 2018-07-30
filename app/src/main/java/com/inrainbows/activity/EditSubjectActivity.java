@@ -48,7 +48,7 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getIntent().getExtras();
-        currentSemester = (Semester) bundle.getSerializable("currentSemester");
+        currentSemester = (Semester) bundle.getParcelable("currentSemester");
 
         setContentView(R.layout.edit_act);
         ButterKnife.bind(this);

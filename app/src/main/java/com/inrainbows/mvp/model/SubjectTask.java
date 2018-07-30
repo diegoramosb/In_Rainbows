@@ -1,12 +1,15 @@
 package com.inrainbows.mvp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.inrainbows.persistence.entities.SubjectTaskEntity;
 
 /**
  * @author diego on 1/06/2017.
  */
 
-public class SubjectTask implements Task, GradedAssignment {
+public class SubjectTask implements Task, GradedAssignment, Parcelable {
 
     /**
      * Subject task id;
@@ -352,4 +355,49 @@ public class SubjectTask implements Task, GradedAssignment {
             return new SubjectTask(this);
         }
     }
+
+    protected SubjectTask(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        tag = in.readString();
+        description = in.readString();
+        done = in.readByte() != 0x00;
+        grade = in.readDouble();
+        percentage = in.readDouble();
+        delivered = in.readByte() != 0x00;
+        graded = in.readByte() != 0x00;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(tag);
+        dest.writeString(description);
+        dest.writeByte((byte) (done ? 0x01 : 0x00));
+        dest.writeDouble(grade);
+        dest.writeDouble(percentage);
+        dest.writeByte((byte) (delivered ? 0x01 : 0x00));
+        dest.writeByte((byte) (graded ? 0x01 : 0x00));
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<SubjectTask> CREATOR = new Parcelable.Creator<SubjectTask>() {
+        @Override
+        public SubjectTask createFromParcel(Parcel in) {
+            return new SubjectTask(in);
+        }
+
+        @Override
+        public SubjectTask[] newArray(int size) {
+            return new SubjectTask[size];
+        }
+    };
+
+
 }

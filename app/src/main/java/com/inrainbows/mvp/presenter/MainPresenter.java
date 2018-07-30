@@ -46,8 +46,12 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
                 subjects.add(new Subject(subject));
             }
             semester.setSubjects(subjects);
-            currentSemester.postValue(semester);
+            currentSemester.setValue(semester);
         }
+    }
+
+    private void getSubjectsFromDb(){
+        subjects.setValue(subjectEntityListToSubject(db.subjectDao().getAllList()));
     }
 
     @Override
@@ -82,9 +86,6 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         return ans;
     }
 
-    private void getSubjectsFromDb(){
-        subjects.postValue(subjectEntityListToSubject(db.subjectDao().getAllList()));
-    }
 
     private List<Subject> subjectEntityListToSubject(List<SubjectEntity> subjects){
         List<Subject> ans = new ArrayList<>();
