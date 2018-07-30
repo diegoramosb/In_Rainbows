@@ -19,7 +19,7 @@ import com.inrainbows.persistence.entities.SubjectTaskEntity;
 /**
  * @author diego on 12/07/2018.
  */
-@Database(entities = {SemesterEntity.class, SubjectEntity.class, SubjectTaskEntity.class}, version = 2)
+@Database(entities = {SemesterEntity.class, SubjectEntity.class, SubjectTaskEntity.class}, version = 3)
 @TypeConverters(DateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -34,6 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "in_rainbows")
+                    .addMigrations(MIGRATION_2_3)
                     .allowMainThreadQueries() //Eventually remove and  do asynchronously.
                     .build();
         }
@@ -43,7 +44,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase getMemoryDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_2_3)
                     .allowMainThreadQueries()
                     .build();
         }
@@ -58,6 +59,13 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE SEMESTERS ADD COLUMN CURRENT_SEMESTER INTEGER NOT NULL DEFAULT 0");
+        }
+    };
+
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE SUBJECT_TASKS ADD COLUMN DUE_DATE INTEGER NOT NULL DEFAULT 0");
         }
     };
 }

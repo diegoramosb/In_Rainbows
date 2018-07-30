@@ -9,6 +9,9 @@ import android.support.annotation.NonNull;
 
 import com.inrainbows.persistence.daos.SubjectDao;
 
+import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
+
 /**
  * @author diego on 12/07/2018.
  */
@@ -28,6 +31,10 @@ public class SubjectTaskEntity extends BaseEntity{
      */
     @ColumnInfo(name = "TAG", typeAffinity = ColumnInfo.TEXT)
     private String tag;
+
+    @ColumnInfo(name = "DUE_DATE")
+    @NonNull
+    private DateTime dueDate;
 
     /**
      * Task description
@@ -53,7 +60,6 @@ public class SubjectTaskEntity extends BaseEntity{
      * Final subject grade percentage.
      */
     @ColumnInfo(name = "PERCENTAGE", typeAffinity = ColumnInfo.REAL)
-    @NonNull
     private double percentage;
 
     /**
@@ -80,9 +86,10 @@ public class SubjectTaskEntity extends BaseEntity{
     private SubjectTaskEntity(SubjectTaskEntityBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.percentage = builder.percentage;
         this.subjectId = builder.subjectId;
+        this.dueDate = builder.dueDate;
 
+        this.percentage = builder.getPercentage();
         this.tag = builder.getTag();
         this.description = builder.getDescription();
         this.done = builder.isDone();
@@ -91,9 +98,13 @@ public class SubjectTaskEntity extends BaseEntity{
         this.graded = builder.graded;
     }
 
-    public SubjectTaskEntity(long id, String name, String tag, String description, @NonNull boolean done, double grade, @NonNull double percentage, @NonNull boolean delivered, @NonNull boolean graded, @NonNull long subjectId) {
+    public SubjectTaskEntity(long id, String name, @NonNull DateTime dueDate, String tag, String description,
+                             @NonNull boolean done, double grade, double percentage, @NonNull boolean delivered,
+                             @NonNull boolean graded, @NonNull long subjectId) {
+
         this.id = id;
         this.name = name;
+        this.dueDate = dueDate;
         this.tag = tag;
         this.description = description;
         this.done = done;
@@ -112,6 +123,23 @@ public class SubjectTaskEntity extends BaseEntity{
     }
 
     /**
+     * Sets the task name to pName
+     * @param pName new task name
+     */
+    public void setName(String pName) {
+        name = pName;
+    }
+
+    @NonNull
+    public DateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(@NonNull DateTime dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    /**
      * @return task grade
      */
     public double getGrade() {
@@ -123,14 +151,6 @@ public class SubjectTaskEntity extends BaseEntity{
      */
     public void setGrade(double pGrade) {
         grade = pGrade;
-    }
-
-    /**
-     * Sets the task name to pName
-     * @param pName new task name
-     */
-    public void setName(String pName) {
-        name = pName;
     }
 
     public String getDescription() {
@@ -230,6 +250,8 @@ public class SubjectTaskEntity extends BaseEntity{
 
         private String name;
 
+        private DateTime dueDate;
+
         private String tag;
 
         private String description;
@@ -246,11 +268,11 @@ public class SubjectTaskEntity extends BaseEntity{
 
         private long subjectId;
 
-        public SubjectTaskEntityBuilder(long id, String name, double percentage, long subjectId){
+        public SubjectTaskEntityBuilder(long id, String name, DateTime dueDate, long subjectId){
             this.name = name;
-            this.percentage = percentage;
             this.id = id;
             this.subjectId = subjectId;
+            this.dueDate = dueDate;
         }
 
         public String getTag() {
@@ -277,6 +299,15 @@ public class SubjectTaskEntity extends BaseEntity{
 
         public SubjectTaskEntityBuilder setDone(boolean done) {
             this.done = done;
+            return this;
+        }
+
+        public double getPercentage() {
+            return percentage;
+        }
+
+        public SubjectTaskEntityBuilder setPercentage(double percentage) {
+            this.percentage = percentage;
             return this;
         }
 

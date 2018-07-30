@@ -17,8 +17,6 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     protected AppDatabase db;
 
-    protected Semester currentSemester;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

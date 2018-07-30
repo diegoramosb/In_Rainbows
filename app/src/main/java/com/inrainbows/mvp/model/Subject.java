@@ -636,7 +636,7 @@ public class Subject implements Parcelable{
     public List<SubjectTaskEntity> subjectTasksToEntity(){
         ArrayList<SubjectTaskEntity> ans = new ArrayList<>();
         for(SubjectTask task : tasks){
-            ans.add(new SubjectTaskEntity.SubjectTaskEntityBuilder(task.getId(), task.getName(), task.getPercentage(), id).build());
+            ans.add(new SubjectTaskEntity.SubjectTaskEntityBuilder(task.getId(), task.getName(), task.getDueDate(), id).build());
         }
         return ans;
     }

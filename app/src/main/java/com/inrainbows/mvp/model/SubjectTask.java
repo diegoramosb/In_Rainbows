@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.inrainbows.persistence.entities.SubjectTaskEntity;
 
+import org.joda.time.DateTime;
+import org.joda.time.MutableDateTime;
+
 /**
  * @author diego on 1/06/2017.
  */
@@ -30,6 +33,11 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
      * Task description
      */
     private String description;
+
+    /**
+     * Task due date.
+     */
+    private DateTime dueDate;
 
     /**
      * Done status of the task
@@ -60,13 +68,14 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
         this.id = builder.id;
         this.name = builder.name;
         this.percentage = builder.percentage;
+        this.dueDate = builder.dueDate;
 
         this.tag = builder.getTag();
         this.description = builder.getDescription();
         this.done = builder.isDone();
         this.grade = builder.getGrade();
         this.delivered = builder.isDelivered();
-        this.graded = builder.graded;
+        this.graded = builder.isGraded();
     }
 
     @Override
@@ -81,11 +90,6 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
                 ", graded=" + graded +
                 '}';
     }
-
-    /**
-     * @return a string indicating the task status
-     */
-
 
     public long getId() {
         return id;
@@ -145,6 +149,15 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
      */
     public void setDone(boolean pDone) {
         done = pDone;
+    }
+
+    @Override
+    public DateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(DateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
     /**
@@ -219,7 +232,8 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
     }
 
     public SubjectTaskEntity toEntity(long subjectId){
-        return new SubjectTaskEntity.SubjectTaskEntityBuilder(id, name, percentage, subjectId )
+        return new SubjectTaskEntity.SubjectTaskEntityBuilder(id, name, dueDate, subjectId )
+                .setPercentage(percentage)
                 .setTag(tag)
                 .setDescription(description)
                 .setDone(done)
@@ -277,6 +291,8 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
 
         private String name;
 
+        private DateTime dueDate;
+
         private String tag;
 
         private String description;
@@ -291,10 +307,11 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
 
         private boolean graded;
 
-        public TaskBuilder(long id, String name, double percentage){
+        public TaskBuilder(long id, String name, double percentage, DateTime dueDate){
             this.id = id;
             this.name = name;
             this.percentage = percentage;
+            this.dueDate = dueDate;
         }
 
         public String getTag() {
@@ -359,6 +376,7 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
     protected SubjectTask(Parcel in) {
         id = in.readLong();
         name = in.readString();
+        dueDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
         tag = in.readString();
         description = in.readString();
         done = in.readByte() != 0x00;
@@ -377,6 +395,7 @@ public class SubjectTask implements Task, GradedAssignment, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeString(name);
+        dest.writeValue(dueDate);
         dest.writeString(tag);
         dest.writeString(description);
         dest.writeByte((byte) (done ? 0x01 : 0x00));
