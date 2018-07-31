@@ -2,7 +2,6 @@ package com.inrainbows.model.model;
 
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
-import com.inrainbows.mvp.model.SubjectTask;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,9 +53,9 @@ public class SemesterTest {
                 .setGraded(true)
                 .build();
 
-        subject1.addTask(task11);
-        subject1.addTask(task12);
-        subject1.addTask(task13);
+        subject1.addGrade(task11);
+        subject1.addGrade(task12);
+        subject1.addGrade(task13);
         semester.addSubject(subject1);
 
 
@@ -68,7 +67,7 @@ public class SemesterTest {
                 .setDelivered(true)
                 .setGraded(true)
                 .build();
-        subject2.addTask(task21);
+        subject2.addGrade(task21);
         semester.addSubject(subject2);
     }
 
@@ -98,9 +97,9 @@ public class SemesterTest {
                 .setDone(true)
                 .setGraded(true)
                 .build();
-        subject1.addTask(task11);
-        subject1.addTask(task12);
-        subject1.addTask(task13);
+        subject1.addGrade(task11);
+        subject1.addGrade(task12);
+        subject1.addGrade(task13);
         semester.addSubject(subject1);
 
 
@@ -111,7 +110,7 @@ public class SemesterTest {
                 .setDelivered(true)
                 .setGraded(true)
                 .build();
-        subject2.addTask(task21);
+        subject2.addGrade(task21);
         semester.addSubject(subject2);
     }
 

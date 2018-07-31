@@ -28,51 +28,51 @@ public class SubjectEntity extends BaseEntity{
      */
     @ColumnInfo(name = "CREDITS", typeAffinity = ColumnInfo.REAL)
     @NonNull
-    private double credits;
+    private Double credits;
 
     /**
      * Total expected weekly hours of study
      */
     @ColumnInfo(name = "TOTAL_HOURS", typeAffinity = ColumnInfo.REAL)
-    private double totalHours;
+    private Double totalHours;
 
     /**
      * Weekly hours of class
      */
     @ColumnInfo(name = "CLASS_HOURS", typeAffinity = ColumnInfo.REAL)
     @NonNull
-    private double classHours;
+    private Double classHours;
 
     /**
      * Extra expected hours of study (hours without counting class)
      */
     @ColumnInfo(name = "EXTRA_HOURS", typeAffinity = ColumnInfo.REAL)
-    private double extraHours;
+    private Double extraHours;
 
     /**
      * Actual studied hours on this day
      */
     @ColumnInfo(name = "STUDIED_HOURS_DAY", typeAffinity = ColumnInfo.REAL)
-    private double studiedHoursDay;
+    private Double studiedHoursDay;
 
     /**
      * Actual studied hours this week
      */
     @ColumnInfo(name = "STUDIED_HOURS_WEEK", typeAffinity = ColumnInfo.REAL)
-    private double studiedHoursWeek;
+    private Double studiedHoursWeek;
 
     /**
      * Actual studied hours this semester
      */
     @ColumnInfo(name = "STUDIED_HOURS_SEMESTER", typeAffinity = ColumnInfo.REAL)
-    private double studiedHoursSemester;
+    private Double studiedHoursSemester;
 
     /**
      * Parent semester Id.
      */
     @ColumnInfo(name = "SEMESTER_ID")
     @NonNull
-    private long semesterId;
+    private Long semesterId;
 
     /**
      * Private constructor for builder.
@@ -92,7 +92,7 @@ public class SubjectEntity extends BaseEntity{
         this.studiedHoursSemester = builder.getStudiedHoursSemester();
     }
 
-    public SubjectEntity(long id, @NonNull String name, @NonNull double credits, double totalHours, @NonNull double classHours, double extraHours, double studiedHoursDay, double studiedHoursWeek, double studiedHoursSemester, @NonNull long semesterId) {
+    public SubjectEntity(Long id, @NonNull String name, @NonNull Double credits, Double totalHours, @NonNull Double classHours, Double extraHours, Double studiedHoursDay, Double studiedHoursWeek, Double studiedHoursSemester, @NonNull Long semesterId) {
         this.id = id;
         this.name = name;
         this.credits = credits;
@@ -113,93 +113,93 @@ public class SubjectEntity extends BaseEntity{
         this.name = name;
     }
 
-    public double getCredits() {
+    public Double getCredits() {
         return credits;
     }
 
-    public void setCredits(double credits) {
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 
-    public double getTotalHours() {
+    public Double getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(double totalHours) {
+    public void setTotalHours(Double totalHours) {
         this.totalHours = totalHours;
     }
 
-    public double getClassHours() {
+    public Double getClassHours() {
         return classHours;
     }
 
-    public void setClassHours(double classHours) {
+    public void setClassHours(Double classHours) {
         this.classHours = classHours;
     }
 
-    public double getExtraHours() {
+    public Double getExtraHours() {
         return extraHours;
     }
 
-    public void setExtraHours(double extraHours) {
+    public void setExtraHours(Double extraHours) {
         this.extraHours = extraHours;
     }
 
-    public double getStudiedHoursDay() {
+    public Double getStudiedHoursDay() {
         return studiedHoursDay;
     }
 
-    public void setStudiedHoursDay(double studiedHoursDay) {
+    public void setStudiedHoursDay(Double studiedHoursDay) {
         this.studiedHoursDay = studiedHoursDay;
     }
 
-    public double getStudiedHoursWeek() {
+    public Double getStudiedHoursWeek() {
         return studiedHoursWeek;
     }
 
-    public void setStudiedHoursWeek(double studiedHoursWeek) {
+    public void setStudiedHoursWeek(Double studiedHoursWeek) {
         this.studiedHoursWeek = studiedHoursWeek;
     }
 
-    public double getStudiedHoursSemester() {
+    public Double getStudiedHoursSemester() {
         return studiedHoursSemester;
     }
 
-    public void setStudiedHoursSemester(double studiedHoursSemester) {
+    public void setStudiedHoursSemester(Double studiedHoursSemester) {
         this.studiedHoursSemester = studiedHoursSemester;
     }
 
-    public long getSemesterId() {
+    public Long getSemesterId() {
         return semesterId;
     }
 
-    public void setSemesterId(long semesterId) {
+    public void setSemesterId(Long semesterId) {
         this.semesterId = semesterId;
     }
 
     public static class SubjectEntityBuilder {
 
-        private long id;
+        private Long id;
 
         private String name;
 
-        private double credits;
+        private Double credits;
 
-        private double totalHours;
+        private Double totalHours;
 
-        private double classHours;
+        private Double classHours;
 
-        private double extraHours;
+        private Double extraHours;
 
-        private double studiedHoursDay;
+        private Double studiedHoursDay;
 
-        private double studiedHoursWeek;
+        private Double studiedHoursWeek;
 
-        private double studiedHoursSemester;
+        private Double studiedHoursSemester;
 
-        private long semesterId;
+        private Long semesterId;
 
-        public SubjectEntityBuilder(long id, String name, double credits, double classHours, long semesterId) {
+        public SubjectEntityBuilder(Long id, String name, Double credits, Double classHours, Long semesterId) {
             this.id = id;
             this.name = name;
             this.credits = credits;
@@ -207,56 +207,56 @@ public class SubjectEntity extends BaseEntity{
             this.semesterId = semesterId;
         }
 
-        public double getTotalHours() {
+        public Double getTotalHours() {
             return totalHours;
         }
 
-        public SubjectEntityBuilder setTotalHours(double totalHours) {
+        public SubjectEntityBuilder setTotalHours(Double totalHours) {
             this.totalHours = totalHours;
             return this;
         }
 
-        public double getExtraHours() {
+        public Double getExtraHours() {
             return extraHours;
         }
 
-        public SubjectEntityBuilder setExtraHours(double extraHours) {
+        public SubjectEntityBuilder setExtraHours(Double extraHours) {
             this.extraHours = extraHours;
             return this;
         }
 
-        public double getStudiedHoursDay() {
+        public Double getStudiedHoursDay() {
             return studiedHoursDay;
         }
 
-        public SubjectEntityBuilder setStudiedHoursDay(double studiedHoursDay) {
+        public SubjectEntityBuilder setStudiedHoursDay(Double studiedHoursDay) {
             this.studiedHoursDay = studiedHoursDay;
             return this;
         }
 
-        public double getStudiedHoursWeek() {
+        public Double getStudiedHoursWeek() {
             return studiedHoursWeek;
         }
 
-        public SubjectEntityBuilder setStudiedHoursWeek(double studiedHoursWeek) {
+        public SubjectEntityBuilder setStudiedHoursWeek(Double studiedHoursWeek) {
             this.studiedHoursWeek = studiedHoursWeek;
             return this;
         }
 
-        public double getStudiedHoursSemester() {
+        public Double getStudiedHoursSemester() {
             return studiedHoursSemester;
         }
 
-        public SubjectEntityBuilder setStudiedHoursSemester(double studiedHoursSemester) {
+        public SubjectEntityBuilder setStudiedHoursSemester(Double studiedHoursSemester) {
             this.studiedHoursSemester = studiedHoursSemester;
             return this;
         }
 
-        public long getSemesterId() {
+        public Long getSemesterId() {
             return semesterId;
         }
 
-        public void setSemesterId(long semesterId) {
+        public void setSemesterId(Long semesterId) {
             this.semesterId = semesterId;
         }
 

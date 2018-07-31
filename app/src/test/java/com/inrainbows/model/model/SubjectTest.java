@@ -1,7 +1,6 @@
 package com.inrainbows.model.model;
 
 import com.inrainbows.mvp.model.Subject;
-import com.inrainbows.mvp.model.SubjectTask;
 
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class SubjectTest {
             .setStudiedHoursDay(2)
             .setStudiedHoursSemester(2)
             .setStudiedHoursWeek(2)
-            .setTasks(tasks)
+            .setGrades(tasks)
             .build();
         }catch (Exception error){
             fail();
@@ -146,10 +145,10 @@ public class SubjectTest {
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
-        for( SubjectTask currentTask : subject.getTasks() ){
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
+        for( SubjectTask currentTask : subject.getGrades() ){
             if( !((currentTask.equals(task1) || currentTask.equals(task2) || currentTask.equals(task3)))){
                 fail();
             }
@@ -174,9 +173,9 @@ public class SubjectTest {
                 .setGraded(true)
                 .build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         for( SubjectTask currentTask : subject.getGradedTasks() ){
             if(!(currentTask.equals(task1)||currentTask.equals(task2)))
                 fail();
@@ -195,9 +194,9 @@ public class SubjectTest {
                 .build();
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"b", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         for( SubjectTask currentTask : subject.getNonGradedTasks() ){
             if(!(currentTask.equals(task2)||currentTask.equals(task3)))
                 fail();
@@ -222,9 +221,9 @@ public class SubjectTest {
                 .setGraded(true)
                 .build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         for( SubjectTask currentTask : subject.getDeliveredTasks() ){
             if(!(currentTask.equals(task1)||currentTask.equals(task2)))
                 fail();
@@ -243,9 +242,9 @@ public class SubjectTest {
                 .build();
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"b", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         for( SubjectTask currentTask : subject.getNonDeliveredTasks() ){
             if(!(currentTask.equals(task2)||currentTask.equals(task3)))
                 fail();
@@ -259,9 +258,9 @@ public class SubjectTest {
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
 
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         try{
             assertTrue(subject.containsTask(task1));
             assertTrue(subject.containsTask(task2));
@@ -280,9 +279,9 @@ public class SubjectTest {
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
 
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         assertEquals(task1, subject.getTask("a"));
         assertEquals(task2, subject.getTask("b"));
         assertEquals(task3, subject.getTask("c"));
@@ -295,9 +294,9 @@ public class SubjectTest {
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
 
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
         try{
             subject.deleteTask(task1);
             subject.deleteTask(task2);
@@ -313,7 +312,7 @@ public class SubjectTest {
     public void setDelivered() {
         setUp();
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"a", 50).build();
-        subject.addTask(task1);
+        subject.addGrade(task1);
         try{
             subject.setDelivered("b", true);
             fail();
@@ -335,7 +334,7 @@ public class SubjectTest {
     public void setGraded() {
         setUp();
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"a", 50).build();
-        subject.addTask(task1);
+        subject.addGrade(task1);
         try{
             subject.setGrade("b",5.0);
             subject.setGraded("b", true);
@@ -360,7 +359,7 @@ public class SubjectTest {
     public void setDone(){
         setUp();
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"a", 50).build();
-        subject.addTask(task1);
+        subject.addGrade(task1);
         try{
             subject.setDone("b", true);
             fail();
@@ -381,7 +380,7 @@ public class SubjectTest {
     public void setGrade(){
         setUp();
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"a", 50).build();
-        subject.addTask(task1);
+        subject.addGrade(task1);
         subject.setDone("a", true);
         subject.setDelivered("a", true);
         try{
@@ -404,9 +403,9 @@ public class SubjectTest {
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"c", 25).build();
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 25).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 25).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
 
         subject.markAsDone("a");
         subject.markAsDone("b");
@@ -419,13 +418,13 @@ public class SubjectTest {
         subject.setGrade("a", 5.0);
         subject.markAsGraded("a");
 
-        assertEquals(25, subject.getGradedTasksPercentage(), 0.0);
+        assertEquals(25, subject.getGradedPercentage(), 0.0);
 
         subject.setGrade("b", 5.0);
         subject.markAsGraded("b");
         subject.setGrade("c", 5.0);
         subject.markAsGraded("c");
-        assertEquals(70, subject.getGradedTasksPercentage(), 0.0);
+        assertEquals(70, subject.getGradedPercentage(), 0.0);
     }
 
     @Test
@@ -434,9 +433,9 @@ public class SubjectTest {
         SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"a", 25).build();
         SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"b", 20).build();
         SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 55).build();
-        subject.addTask(task1);
-        subject.addTask(task2);
-        subject.addTask(task3);
+        subject.addGrade(task1);
+        subject.addGrade(task2);
+        subject.addGrade(task3);
 
         subject.markAsDone("a");
         subject.markAsDone("b");

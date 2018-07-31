@@ -30,9 +30,9 @@ public class SemesterEntity extends BaseEntity {
 
     @ColumnInfo(name = "CURRENT_SEMESTER")
     @NonNull
-    private boolean currentSemester;
+    private Boolean currentSemester;
 
-    public SemesterEntity(long id, String semesterName, DateTime startDate, DateTime endDate, boolean currentSemester) {
+    public SemesterEntity(Long id, String semesterName, DateTime startDate, DateTime endDate, Boolean currentSemester) {
         this.id = id;
         this.semesterName = semesterName;
         this.startDate = startDate;
@@ -65,11 +65,11 @@ public class SemesterEntity extends BaseEntity {
     }
 
     @NonNull
-    public boolean isCurrentSemester() {
+    public Boolean isCurrentSemester() {
         return currentSemester;
     }
 
-    public void setCurrentSemester(@NonNull boolean currentSemester) {
+    public void setCurrentSemester(@NonNull Boolean currentSemester) {
         this.currentSemester = currentSemester;
     }
 

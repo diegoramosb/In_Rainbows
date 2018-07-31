@@ -79,7 +79,6 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:entries="@string-array/sample_subject_names"
         android:spinnerMode="dialog"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/et_4"

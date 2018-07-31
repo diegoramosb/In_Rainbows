@@ -1,7 +1,5 @@
 package com.inrainbows.model.model;
 
-import com.inrainbows.mvp.model.SubjectTask;
-
 import org.junit.Before;
 import org.junit.Test;
 
