@@ -63,4 +63,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/et_4"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/subject_task_percentage_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/et_3"
+        app:layout_constraintTop_toBottomOf="@+id/et_3" />
+
+    <Spinner
+        android:id="@+id/spinner_select_subject"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:entries="@string-array/sample_subject_names"
+        android:spinnerMode="dialog"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/et_4"
+        app:layout_constraintTop_toBottomOf="@+id/et_4" />
+
 </android.support.constraint.ConstraintLayout>
