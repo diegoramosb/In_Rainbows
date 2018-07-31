@@ -14,13 +14,13 @@ public abstract class BaseEntity {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    protected Long id;
+    protected long id;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

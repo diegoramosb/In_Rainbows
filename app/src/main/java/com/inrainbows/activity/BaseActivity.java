@@ -23,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        deleteDatabaseFile(this, "in_rainbows");
+//        deleteDatabaseFile(this, "in_rainbows");
         db = AppDatabase.getDatabase(getApplication());
     }
 

@@ -110,19 +110,7 @@ public class Subject implements Parcelable{
 
     @Override
     public String toString() {
-        return "Subject{" +
-                "id=" + id +
-                ", semesterId=" + semesterId +
-                ", name='" + name + '\'' +
-                ", credits=" + credits +
-                ", totalHours=" + totalHours +
-                ", classHours=" + classHours +
-                ", extraHours=" + extraHours +
-                ", studiedHoursDay=" + studiedHoursDay +
-                ", studiedHoursWeek=" + studiedHoursWeek +
-                ", studiedHoursSemester=" + studiedHoursSemester +
-                ", grades=" + grades +
-                '}';
+        return name;
     }
 
     /**

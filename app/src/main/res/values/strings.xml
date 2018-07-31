@@ -25,18 +25,13 @@
     <string name="forward_slash">/</string>
     <string name="studied_week">" this week"</string>
 
-    <string name="task_name_hint">Task name</string>
-    <string name="task_due_date_hint">Due date</string>
-    <string name="task_description_hint">Task description</string>
+    <string name="grade_name_hint">Name</string>
+    <string name="grade_hint">Grade</string>
+    <string name="grade_percentage_hint">Percentage</string>
+    <string name="grade_graded">I\'ve been given this grade</string>
 
-    <string name="subject_task_percentage_hint">Percentage</string>
-
-    <string name="sample_subject_task_name">Project</string>
-    <string name="sample_subject_task_percentage">30%</string>
-    <string-array name="sample_subject_names">
-        <item>Data Structures</item>
-        <item>Transactional Systems</item>
-    </string-array>
+    <string name="sample_grade_name">Project</string>
+    <string name="sample_grade_percentage">30%</string>
 
     <string name="navigation_view_header">In Rainbows</string>
 

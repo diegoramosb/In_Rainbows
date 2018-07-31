@@ -57,8 +57,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
 
-    @BindView(R.id.fab_add_task)
-    FloatingActionButton fabAddTask;
+    @BindView(R.id.fab_add_grade)
+    FloatingActionButton fabAddGrade;
 
     @BindView(R.id.fab_add_subject)
     FloatingActionButton fabAddSubject;
@@ -66,8 +66,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     @BindView(R.id.fab_add_semester)
     FloatingActionButton fabAddSemester;
 
-    @BindView(R.id.layout_add_task)
-    LinearLayout layoutAddTask;
+    @BindView(R.id.layout_add_grade)
+    LinearLayout layoutAddGrade;
 
     @BindView(R.id.layout_add_subject)
     LinearLayout layoutAddSubject;
@@ -167,15 +167,24 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         }
     }
 
+    @Override
     public void showAddSemesterActivity(){
         Intent intent = new Intent(this, EditSemesterActivity.class);
         startActivity(intent);
         closeFABMenu();
     }
 
+    @Override
     public void showAddSubjectActivity() {
         Intent intent = new Intent(this, EditSubjectActivity.class);
         intent.putExtra("currentSemester", currentSemester);
+        startActivity(intent);
+        closeFABMenu();
+    }
+
+    @Override
+    public void showAddGradeActivity() {
+        Intent intent = new Intent(this, EditGradeActivity.class);
         startActivity(intent);
         closeFABMenu();
     }
@@ -274,8 +283,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     }
 
     @OnClick(R.id.fab_add_subject)
-    public void setFabAddSubjectOnClick() {
+    public void fabAddSubjectOnClick() {
         showAddSubjectActivity();
+    }
+
+    @OnClick(R.id.fab_add_grade)
+    public void fabAddGradeOnClick(){
+        showAddGradeActivity();
     }
 
     @Override
@@ -286,13 +300,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     private void showFABMenu(){
         isFABOpen=true;
 
-        layoutAddTask.setVisibility(View.VISIBLE);
+        layoutAddGrade.setVisibility(View.VISIBLE);
         layoutAddSubject.setVisibility(View.VISIBLE);
         layoutAddSemester.setVisibility(View.VISIBLE);
 
         fabAdd.animate().rotationBy(90);
 
-        layoutAddTask.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        layoutAddGrade.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         layoutAddSubject.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
         layoutAddSemester.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
     }
@@ -302,11 +316,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
 
         fabAdd.animate().rotationBy(-90);
 
-        layoutAddTask.animate().translationY(0);
+        layoutAddGrade.animate().translationY(0);
         layoutAddSubject.animate().translationY(0);
         layoutAddSemester.animate().translationY(0);
 
-        layoutAddTask.setVisibility(View.GONE);
+        layoutAddGrade.setVisibility(View.GONE);
         layoutAddSubject.setVisibility(View.GONE);
         layoutAddSemester.setVisibility(View.GONE);
     }

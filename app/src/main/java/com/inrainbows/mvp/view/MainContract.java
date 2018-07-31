@@ -37,6 +37,8 @@ public interface MainContract {
 
         void showAddSubjectActivity();
 
+        void showAddGradeActivity();
+
         void setCurrentSemester(Semester semester);
 
         void setCurrentSemesterName(String semesterName);
