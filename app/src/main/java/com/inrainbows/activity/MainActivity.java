@@ -89,7 +89,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         setContentView(R.layout.main_act);
         ButterKnife.bind(this);
 
-//        presenter = new MainPresenter(this);
         presenter = ViewModelProviders.of(this).get(MainPresenter.class);
         presenter.setDb(db);
 
@@ -126,10 +125,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
             }
         };
 
-        if(subjectsRvAdapter.getItemCount() == 0) {
-            subjectsObserver.onChanged(presenter.getSubjects().getValue());
-        }
-
+        subjectsObserver.onChanged(presenter.getSubjects().getValue());
+        
         presenter.getSubjects().observe(this, subjectsObserver);
     }
 
@@ -157,13 +154,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     private void updateUI(){
         if(currentSemester != null) {
             setCurrentSemesterName(currentSemester.getSemesterName());
-            tvGrade.setText(currentSemester.currentGrade() + "");
-            tvCredits.setText(currentSemester.credits() + "");
+            tvGrade.setText(new StringBuilder().append(currentSemester.currentGrade()).append("").toString());
+            tvCredits.setText(new StringBuilder().append(currentSemester.credits()).append("").toString());
         }
         else {
             setCurrentSemesterName("No semesters");
-            tvGrade.setText(0.0+"");
-            tvCredits.setText(0.+"");
+            tvGrade.setText("0.0");
+            tvCredits.setText("0.0");
         }
     }
 

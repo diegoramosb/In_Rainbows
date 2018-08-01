@@ -1,7 +1,10 @@
 package com.inrainbows.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.inrainbows.R;
+import com.inrainbows.mvp.model.Grade;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.EditGradePresenter;
@@ -50,6 +54,9 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
     @BindView(R.id.et_3)
     EditText et_grade;
 
+    @BindView(R.id.fab_check)
+    FloatingActionButton fab_check;
+
     /**
      * Subject selection spinner spinner
      */
@@ -68,6 +75,10 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
         et_name.setHint(R.string.grade_name_hint);
         et_grade.setHint(R.string.grade_hint);
         et_percentage.setHint(R.string.grade_percentage_hint);
+
+        et_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        et_grade.setInputType(InputType.TYPE_CLASS_NUMBER);
+        et_percentage.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         cb_graded.setVisibility(View.VISIBLE);
         cb_graded.setChecked(true);
@@ -92,7 +103,33 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
 
     @Override
     public void showMainView() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
+    @OnClick(R.id.fab_check)
+    public void fabCheckOnClick() {
+        if(getSelectedSubject() != null) {
+            Grade grade = new Grade.GradeBuilder(0L, getSelectedSubject().getId(),
+                    et_name.getText().toString(),
+                    Double.valueOf(et_percentage.getText().toString()))
+                    .setGraded(false)
+                    .build();
+            if (cb_graded.isChecked()) {
+                grade.setGraded(true);
+                grade.setGrade(Double.valueOf(et_grade.getText().toString()));
+            }
+
+            presenter.insertGrade(grade);
+            showMainView();
+        }
+        else {
+            showErrorDialog(R.string.err_no_selected_subject, R.string.err_no_selected_subject_msg);
+        }
+    }
+
+    private Subject getSelectedSubject() {
+        return (Subject) spinner.getSelectedItem();
     }
 
     @OnClick(R.id.cb_graded)

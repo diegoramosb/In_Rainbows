@@ -6,9 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import com.inrainbows.mvp.model.Semester;
-import com.inrainbows.mvp.presenter.BasePresenter;
-import com.inrainbows.mvp.view.BaseView;
 import com.inrainbows.persistence.AppDatabase;
 
 import java.io.File;

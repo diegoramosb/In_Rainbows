@@ -3,10 +3,12 @@ package com.inrainbows.mvp.presenter;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.inrainbows.mvp.model.Grade;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.view.MainContract;
 import com.inrainbows.persistence.AppDatabase;
+import com.inrainbows.persistence.entities.GradeEntity;
 import com.inrainbows.persistence.entities.SemesterEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
@@ -51,7 +53,11 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
     }
 
     private void getSubjectsFromDb(){
-        subjects.setValue(subjectEntityListToSubject(db.subjectDao().getAllList()));
+        List<Subject> semesterSubjects = subjectEntityListToSubject(db.subjectDao().getAllSubjectsWithSemesterId(currentSemester.getValue().getId()));
+        for(Subject subject : semesterSubjects){
+            subject.setGrades(gradeEntityListToGrade(db.gradeDao().getAllWithSubjectId(subject.getId())));
+        }
+        subjects.setValue(semesterSubjects);
     }
 
     @Override
@@ -91,6 +97,14 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         List<Subject> ans = new ArrayList<>();
         for(SubjectEntity entity : subjects){
             ans.add(new Subject(entity));
+        }
+        return ans;
+    }
+
+    private List<Grade> gradeEntityListToGrade(List<GradeEntity> entities){
+        List<Grade> ans = new ArrayList<>();
+        for(GradeEntity entity : entities){
+            ans.add(new Grade(entity));
         }
         return ans;
     }

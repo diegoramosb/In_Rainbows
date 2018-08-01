@@ -34,6 +34,15 @@ public class Grade implements GradedAssignment, Parcelable{
         this.graded = builder.isGraded();
     }
 
+    public Grade(GradeEntity entity) {
+        this.id = entity.getId();
+        this.subjectId = entity.getSubjectId();
+        this.name = entity.getName();
+        this.percentage = entity.getPercentage();
+        this.grade = entity.getGrade();
+        this.graded = entity.isGraded();
+    }
+
 
     @Override
     public long getId() {
@@ -98,7 +107,7 @@ public class Grade implements GradedAssignment, Parcelable{
         return new GradeEntity(id, subjectId, name, grade, percentage, graded);
     }
 
-    private class GradeBuilder {
+    public static class GradeBuilder {
 
         private long id;
 
