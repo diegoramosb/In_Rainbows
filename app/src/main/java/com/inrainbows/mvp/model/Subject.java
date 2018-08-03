@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.inrainbows.persistence.entities.GradeEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -356,6 +357,36 @@ public class Subject implements Parcelable{
                     ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / gradedPercentage;
             }
         return ans;
+    }
+
+    public double dailyHours() {
+        //TODO: Let the user choose the number of weekly study days.
+        return extraHours / 6;
+    }
+
+    public String dailyHoursString() {
+        DecimalFormat format = new DecimalFormat("#.##");
+        return format.format(dailyHours());
+    }
+
+    public int dailyStudiedPercentage() {
+        Double ans = (studiedHoursWeek / dailyHours());
+        return ans.intValue();
+    }
+
+    public int weeklyStudiedPercentage() {
+        Double ans = studiedHoursWeek / extraHours;
+        return ans.intValue();
+    }
+
+    public double semesterHours() {
+        //TODO: Calculate the semester hours counting the number of weeks.
+        return extraHours * 16;
+    }
+
+    public int semesterStudiedPercentage() {
+        Double ans = studiedHoursSemester / semesterHours();
+        return ans.intValue();
     }
 
     public SubjectEntity toEntity(long semesterId){

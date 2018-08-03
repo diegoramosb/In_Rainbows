@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -93,6 +94,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         presenter.setDb(db);
 
         rvSubjects.setHasFixedSize(true);
+        rvSubjects.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         rvSubjects.setLayoutManager(new LinearLayoutManager(this));
         subjectsRvAdapter = new SubjectsRecyclerViewAdapter(this, new ArrayList<Subject>());
         subjectsRvAdapter.setClickListener(this);

@@ -16,14 +16,15 @@
 
     <string name="sample_subject_name">Data structures</string>
     <string name="sample_subject_credits">3</string>
-    <string name="sample_subject_class_hours">4.5</string>
     <string name="sample_subject_grade">3.75</string>
-    <string name="sample_subject_studied_hours_day">0.5 H</string>
-    <string name="sample_subject_studied_hours_week">3.5 H</string>
-    <string name="sample_subject_total_hours_week">4.5 H</string>
-    <string name="sample_subject_studied_hours_semester">38.5 H</string>
-    <string name="forward_slash">/</string>
-    <string name="studied_week">" this week"</string>
+    <string name="sample_subject_class_hours">4.5</string>
+
+    <string name="sample_hours_day">0.5 h/0.75 h</string>
+    <string name="sample_hours_week">3.5 h/4.5 h</string>
+    <string name="sample_hours_semester">38.5 h/72 h</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="all_semester">All semester</string>
 
     <string name="grade_name_hint">Name</string>
     <string name="grade_hint">Grade</string>

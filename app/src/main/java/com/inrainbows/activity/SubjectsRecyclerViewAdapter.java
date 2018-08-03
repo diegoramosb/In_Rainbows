@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.inrainbows.R;
@@ -41,12 +42,28 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String subjectName = subjects.get(position).getName();
-        String grade = subjects.get(position).currentGrade()+"";
-        String studiedHoursWeek = subjects.get(position).getStudiedHoursWeek()+" H";
+        Subject subject = subjects.get(position);
+        String subjectName = subject.getName();
+        String grade = subject.currentGrade()+"";
+        String studiedHoursDay = new StringBuilder().append(subject.getStudiedHoursDay()).append(" h/")
+                .append(subject.dailyHoursString()).append(" h")
+                .toString();
+        String studiedHoursWeek = new StringBuilder().append(subject.getStudiedHoursWeek()).append(" h/")
+                .append(subject.getExtraHours()).append(" h")
+                .toString();
+        String studiedHoursSemester = new StringBuilder().append(subject.getStudiedHoursSemester()).append(" h/")
+                .append(subject.semesterHours()).append(" h")
+                .toString();
+
         holder.tvSubjectName.setText(subjectName);
         holder.tvGrade.setText(grade);
-        holder.tvStudiedHoursWeek.setText(studiedHoursWeek);
+        holder.tvProgressToday.setText(studiedHoursDay);
+        holder.tvProgressWeek.setText(studiedHoursWeek);
+        holder.tvProgressSemester.setText(studiedHoursSemester);
+
+        holder.pbToday.setProgress(75/*subject.dailyStudiedPercentage()*/);
+        holder.pbWeek.setProgress(subject.weeklyStudiedPercentage());
+        holder.pbSemester.setProgress(subject.semesterStudiedPercentage());
     }
 
     @Override
@@ -60,16 +77,31 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
 
         TextView tvGrade;
 
-        TextView tvStudiedHoursWeek;
+        TextView tvProgressToday;
 
-        ImageButton ibAddTask;
+        TextView tvProgressWeek;
+
+        TextView tvProgressSemester;
+
+        ProgressBar pbToday;
+
+        ProgressBar pbWeek;
+
+        ProgressBar pbSemester;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvSubjectName = itemView.findViewById(R.id.tv_subject_name);
             tvGrade = itemView.findViewById(R.id.tv_subject_grade);
-            tvStudiedHoursWeek = itemView.findViewById(R.id.tv_studied_hours_week);
-            ibAddTask = itemView.findViewById(R.id.ib_add_task);
+            tvProgressToday = itemView.findViewById(R.id.tv_progress_today);
+            tvProgressWeek = itemView.findViewById(R.id.tv_progress_week);
+            tvProgressSemester = itemView.findViewById(R.id.tv_progress_semester);
+
+            pbToday = itemView.findViewById(R.id.pb_today);
+            pbWeek = itemView.findViewById(R.id.pb_week);
+            pbSemester = itemView.findViewById(R.id.pb_semester);
+
 
             itemView.setOnClickListener(this);
         }

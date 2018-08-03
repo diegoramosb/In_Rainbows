@@ -1,64 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp">
-
-    <TextView
-        android:id="@+id/tv_studied"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/studied_week"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_total_hours_week"
-        app:layout_constraintStart_toEndOf="@+id/tv_total_hours_week" />
-
-    <ImageButton
-        android:id="@+id/ib_add_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_studied"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-    <TextView
-        android:id="@+id/tv_slash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/forward_slash"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_studied_hours_week"
-        app:layout_constraintStart_toEndOf="@+id/tv_studied_hours_week" />
-
-    <TextView
-        android:id="@+id/tv_total_hours_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_subject_total_hours_week"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_slash"
-        app:layout_constraintStart_toEndOf="@+id/tv_slash" />
-
-    <TextView
-        android:id="@+id/tv_studied_hours_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="@string/sample_subject_studied_hours_week"
-        android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_subject_grade"
-        app:layout_constraintStart_toEndOf="@+id/tv_subject_grade" />
 
     <TextView
         android:id="@+id/tv_subject_grade"
@@ -75,17 +22,119 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:text="@string/sample_subject_name"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/today"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_week"
+        app:layout_constraintEnd_toEndOf="@+id/tv_progress_today"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@+id/tv_progress_today" />
+
+    <TextView
+        android:id="@+id/tv_progress_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/sample_hours_day"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/pb_today"
+        app:layout_constraintStart_toStartOf="@+id/pb_today"
+        app:layout_constraintTop_toBottomOf="@+id/tv_today" />
+
+    <ProgressBar
+        android:id="@+id/pb_today"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintEnd_toStartOf="@+id/pb_week"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_progress_today" />
+
+    <TextView
+        android:id="@+id/tv_week"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/this_week"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_progress_week"
+        app:layout_constraintStart_toStartOf="@+id/tv_progress_week"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subject_grade" />
+
+    <TextView
+        android:id="@+id/tv_progress_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/sample_hours_week"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/pb_week"
+        app:layout_constraintStart_toStartOf="@+id/pb_week"
+        app:layout_constraintTop_toBottomOf="@+id/tv_week" />
+
+    <ProgressBar
+        android:id="@+id/pb_week"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintEnd_toStartOf="@+id/pb_semester"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pb_today"
+        app:layout_constraintTop_toBottomOf="@+id/tv_progress_week" />
+
+    <TextView
+        android:id="@+id/tv_semester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_semester"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_week"
+        app:layout_constraintEnd_toEndOf="@+id/tv_progress_semester"
+        app:layout_constraintStart_toStartOf="@+id/tv_progress_semester" />
+
+    <TextView
+        android:id="@+id/tv_progress_semester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/sample_hours_semester"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/pb_semester"
+        app:layout_constraintStart_toStartOf="@+id/pb_semester"
+        app:layout_constraintTop_toBottomOf="@+id/tv_semester" />
+
+    <ProgressBar
+        android:id="@+id/pb_semester"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="false"
+        android:progress="25"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pb_week"
+        app:layout_constraintTop_toBottomOf="@+id/tv_progress_semester" />
 
 </android.support.constraint.ConstraintLayout>
