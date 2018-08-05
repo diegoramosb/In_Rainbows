@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,7 +35,7 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.recyclerview_row, parent, false);
+        View view = inflater.inflate(R.layout.subject_recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
 

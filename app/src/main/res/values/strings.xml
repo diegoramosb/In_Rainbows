@@ -40,7 +40,7 @@
     <string name="semesters">Semesters</string>
     <string name="add_semester">Add semester</string>
     <string name="add_subject">Add subject</string>
-    <string name="add_task">Add task</string>
+    <string name="add_grade">Add grade</string>
 
     <string name="grade">Grade</string>
     <string name="credits">Credits</string>
@@ -49,6 +49,6 @@
 
     <string name="err_no_semester">Error: No semesters were found</string>
     <string name="err_no_semester_msg">There is not any semester to add this subject to. Create a semester first.</string>
-    <string name="err_no_selected_subject">Error: No subjects were found</string>
+    <string name="err_no_selected_subject">Error: No grades were found</string>
     <string name="err_no_selected_subject_msg">There is not any subject to add this grade to. Create a subject first.</string>
 </resources>

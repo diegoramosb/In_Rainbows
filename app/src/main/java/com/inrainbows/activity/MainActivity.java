@@ -294,7 +294,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + subjectsRvAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "You clicked " + subjectsRvAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SubjectDetailActivity.class);
+        intent.putExtra("subject", subjectsRvAdapter.getItem(position));
+        startActivity(intent);
     }
 
     private void showFABMenu(){

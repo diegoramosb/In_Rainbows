@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/semester_detail_hours"
+        android:title="study_hours"
+        android:icon="@drawable/ic_timer_white_24dp">
+    </item>
+</menu>

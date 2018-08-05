@@ -22,26 +22,28 @@
         </activity>
         <activity
             android:name=".activity.EditSemesterActivity"
-            android:label="AddSemester"
+            android:label="EditSemester"
             android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".activity.EditSubjectActivity"
-            android:label="AddSubject"
+            android:label="EditSubject"
             android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".activity.EditGradeActivity"
-            android:label="AddSubject"
+            android:label="EditGrade"
             android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
-
-
-
-
+        <activity
+            android:name=".activity.SubjectDetailActivity"
+            android:label="SubjectDetail"
+            android:parentActivityName=".activity.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 
 </manifest>
