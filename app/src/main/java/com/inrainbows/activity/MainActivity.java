@@ -101,7 +101,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         subjectsRvAdapter.setClickListener(this);
         rvSubjects.setAdapter(subjectsRvAdapter);
 
-
         drawerLayout.setStatusBarBackgroundColor(getColor(R.color.colorPrimaryDark));
 
         isFABOpen = false;

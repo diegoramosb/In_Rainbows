@@ -88,18 +88,17 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
 
         ProgressBar pbSemester;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
-            tvSubjectName = itemView.findViewById(R.id.tv_subject_name);
-            tvGrade = itemView.findViewById(R.id.tv_subject_grade);
-            tvProgressToday = itemView.findViewById(R.id.tv_progress_today);
-            tvProgressWeek = itemView.findViewById(R.id.tv_progress_week);
-            tvProgressSemester = itemView.findViewById(R.id.tv_progress_semester);
+            tvSubjectName = itemView.findViewById(R.id.tv_subject_rv_name);
+            tvGrade = itemView.findViewById(R.id.tv_subject_rv_grade);
+            tvProgressToday = itemView.findViewById(R.id.tv_subject_rv_progress_today);
+            tvProgressWeek = itemView.findViewById(R.id.tv_subject_rv_progress_week);
+            tvProgressSemester = itemView.findViewById(R.id.tv_subject_rv_progress_semester);
 
-            pbToday = itemView.findViewById(R.id.pb_today);
-            pbWeek = itemView.findViewById(R.id.pb_week);
-            pbSemester = itemView.findViewById(R.id.pb_semester);
+            pbToday = itemView.findViewById(R.id.pb_subject_rv_today);
+            pbWeek = itemView.findViewById(R.id.pb_subject_rv_week);
+            pbSemester = itemView.findViewById(R.id.pb_subject_rv_semester);
 
 
             itemView.setOnClickListener(this);

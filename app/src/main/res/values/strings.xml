@@ -47,6 +47,10 @@
     <string name="sample_grade">5.0</string>
     <string name="sample_credits">20.5</string>
 
+    <string name="dialog_h">h</string>
+    <string name="dialog_m">m</string>
+    <string name="number_picker_dialog_title">Pick time amount:</string>
+
     <string name="err_no_semester">Error: No semesters were found</string>
     <string name="err_no_semester_msg">There is not any semester to add this subject to. Create a semester first.</string>
     <string name="err_no_selected_subject">Error: No grades were found</string>

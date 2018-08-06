@@ -235,8 +235,12 @@ public class Subject implements Parcelable{
      *
      * @param pStudiedHours hours to increase
      */
-    public void increaseStudiedHoursDay(double pStudiedHours) {
+    public void addStudiedHoursDay(double pStudiedHours) {
         studiedHoursDay += pStudiedHours;
+    }
+
+    public void removeStudiedHoursDay(double hours) {
+        studiedHoursDay -= hours;
     }
 
     /**
@@ -260,8 +264,12 @@ public class Subject implements Parcelable{
      *
      * @param pStudiedHours hours to increase
      */
-    public void increaseStudiedHoursWeek(double pStudiedHours) {
+    public void addStudiedHoursWeek(double pStudiedHours) {
         studiedHoursWeek += pStudiedHours;
+    }
+
+    public void removeStudiedHoursWeek(double hours) {
+        studiedHoursWeek -= hours;
     }
 
     /**
@@ -285,8 +293,12 @@ public class Subject implements Parcelable{
      *
      * @param pStudiedHours hours to increase
      */
-    public void increaseStudiedHoursSemester(double pStudiedHours) {
+    public void addStudiedHoursSemester(double pStudiedHours) {
         studiedHoursSemester += pStudiedHours;
+    }
+
+    public void removeStudiedHoursSemester(double hours) {
+        studiedHoursSemester -= hours;
     }
 
     /**

@@ -1,12 +1,14 @@
 package com.inrainbows.activity;
 
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
+import android.widget.TimePicker;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Subject;
@@ -14,19 +16,23 @@ import com.inrainbows.mvp.view.SubjectDetailContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author diego on 4/08/2018.
  */
-public class SubjectDetailActivity extends BaseActivity {
+public class SubjectDetailActivity extends BaseActivity implements NumberPickerDialogFragment.NumberPickerDialogListener {
 
     Subject subject;
 
-    @BindView(R.id.tv_subject_name)
+    @BindView(R.id.tv_subject_detail_name)
     TextView tvSubjectName;
 
-//    @BindView(R.id.subject_detail_toolbar)
-//    Toolbar toolbar;
+    @BindView(R.id.tv_subject_detail_progress_today)
+    TextView tvProgressToday;
+
+    @BindView(R.id.pb_subject_detail_today)
+    ProgressBar pbDay;
 
     SubjectDetailContract.Presenter presenter;
 
@@ -40,28 +46,23 @@ public class SubjectDetailActivity extends BaseActivity {
         setContentView(R.layout.subject_detail_act);
         ButterKnife.bind(this);
 
-//        setActionBar(toolbar);
-
         tvSubjectName.setText(subject.getName());
+        tvProgressToday.setText("LOL");
+    }
+
+    @OnClick(R.id.fab_add_time)
+    public void onClickFab() {
+        showTimePickerDialog();
+    }
+
+    private void showTimePickerDialog() {
+        NumberPickerDialogFragment dialog = new NumberPickerDialogFragment();
+        dialog.show(getSupportFragmentManager(), "numberPickerDialog");
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.semester_detail_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.semester_detail_hours:
-                //TODO: Show popup options to add or remove time, then show dialog to choose time to add or remove.
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void saveInput(int hours, int minutes) {
+        pbDay.setProgress(pbDay.getProgress() + hours);
+        tvProgressToday.setText(hours+"");
     }
 }

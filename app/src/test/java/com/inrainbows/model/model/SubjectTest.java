@@ -105,7 +105,7 @@ public class SubjectTest {
     public void increaseStudiedHoursDay() {
         setUp();
         subject.setStudiedHoursDay(5.5);
-        subject.increaseStudiedHoursDay(0.5);
+        subject.addStudiedHoursDay(0.5);
         assertEquals(6, subject.getStudiedHoursDay(), 0.0);
     }
 
@@ -120,7 +120,7 @@ public class SubjectTest {
     public void increaseStudiedHoursWeek() {
         setUp();
         subject.setStudiedHoursWeek(5.5);
-        subject.increaseStudiedHoursWeek(0.5);
+        subject.addStudiedHoursWeek(0.5);
         assertEquals(6, subject.getStudiedHoursWeek(), 0.0);
     }
 
@@ -135,7 +135,7 @@ public class SubjectTest {
     public void increaseStudiedHoursSemester() {
         setUp();
         subject.setStudiedHoursSemester(5.5);
-        subject.increaseStudiedHoursSemester(1.5);
+        subject.addStudiedHoursSemester(1.5);
         assertEquals(7, subject.getStudiedHoursSemester(), 0.0);
     }
 
