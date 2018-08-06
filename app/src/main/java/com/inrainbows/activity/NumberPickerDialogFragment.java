@@ -9,24 +9,21 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import com.inrainbows.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author diego on 5/08/2018.
  */
 public class NumberPickerDialogFragment extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
 
-    private int hours;
+    public final static int ADD = 1;
 
-    private int minutes;
+    public final static int REMOVE = 2;
 
     NumberPicker npHours;
 
@@ -63,21 +60,23 @@ public class NumberPickerDialogFragment extends AppCompatDialogFragment implemen
         npMinutes.setMinValue(0);
         npMinutes.setMaxValue(59);
 
+        final int title = getArguments().getInt("title");
+
         builder.setView(view)
-                .setTitle(R.string.number_picker_dialog_title)
+                .setTitle( title == ADD ? R.string.add_time_dialog_title : R.string.remove_time_dialog_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         int hours = npHours.getValue();
                         int minutes = npHours.getValue();
 
-                        listener.saveInput(hours, minutes);
+                        listener.modifyTime(hours, minutes, (title == ADD ? ADD : REMOVE));
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                    }
+            }
         });
         return builder.create();
     }
@@ -95,7 +94,7 @@ public class NumberPickerDialogFragment extends AppCompatDialogFragment implemen
     }
 
     public interface NumberPickerDialogListener {
-        void saveInput(int hours, int minutes);
+        void modifyTime(int hours, int minutes, int mode);
     }
 
     @Override

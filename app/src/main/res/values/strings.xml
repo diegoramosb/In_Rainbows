@@ -49,7 +49,10 @@
 
     <string name="dialog_h">h</string>
     <string name="dialog_m">m</string>
-    <string name="number_picker_dialog_title">Pick time amount:</string>
+    <string name="add_time_dialog_title">Pick time amount to add</string>
+    <string name="remove_time_dialog_title">Pick time amount to remove</string>
+    <string name="add_time">Add time</string>
+    <string name="remove_time">Remove time</string>
 
     <string name="err_no_semester">Error: No semesters were found</string>
     <string name="err_no_semester_msg">There is not any semester to add this subject to. Create a semester first.</string>
