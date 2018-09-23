@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * @author diego on 4/08/2018.
  */
-public class SubjectDetailActivity extends BaseActivity implements NumberPickerDialogFragment.NumberPickerDialogListener {
+public class SubjectDetailActivity extends BaseActivity implements SubjectDetailContract.View, NumberPickerDialogFragment.NumberPickerDialogListener {
 
     Subject subject;
 
@@ -78,6 +78,11 @@ public class SubjectDetailActivity extends BaseActivity implements NumberPickerD
 
         setContentView(R.layout.subject_detail_act);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void setPresenter(SubjectDetailContract.Presenter presenter) {
+
     }
 
     private void updateUI() {
