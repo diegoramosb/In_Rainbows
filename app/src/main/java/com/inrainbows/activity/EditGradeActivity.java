@@ -24,10 +24,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * Activity for grade editing
  * @author diego on 30/07/2018.
  */
 public class EditGradeActivity extends BaseActivity implements EditGradeContract.View {
 
+    /**
+     * Presenter
+     */
     EditGradeContract.Presenter presenter;
 
     /**
@@ -54,36 +58,37 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
     @BindView(R.id.et_3)
     EditText et_grade;
 
+    /**
+     * FAB to confirm editing
+     */
     @BindView(R.id.fab_check)
     FloatingActionButton fab_check;
 
     /**
-     * Subject selection spinner spinner
+     * Subject selection spinner
      */
     @BindView(R.id.spinner_select_subject)
     Spinner spinner;
 
+    /**
+     * Creates a new activity
+     * @param savedInstanceState parámetros de estado
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.edit_act);
-        ButterKnife.bind(this);
+        setUIComponents();
+        setDropdownData();
 
         this.presenter = new EditGradePresenter(this);
+    }
 
-        et_name.setHint(R.string.grade_name_hint);
-        et_grade.setHint(R.string.grade_hint);
-        et_percentage.setHint(R.string.grade_percentage_hint);
-
-        et_name.setInputType(InputType.TYPE_CLASS_TEXT);
-        et_grade.setInputType(InputType.TYPE_CLASS_NUMBER);
-        et_percentage.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        cb_graded.setVisibility(View.VISIBLE);
-        cb_graded.setChecked(true);
-
-        ArrayAdapter<Subject> adapter = new ArrayAdapter<Subject>(this, android.R.layout.simple_spinner_item, presenter.getAllSubjects());
+    /**
+     * Carga los nombres de las materias en el dropdown de elegir el nombre de la materia
+     */
+    private void setDropdownData() {
+        ArrayAdapter<Subject> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getAllSubjects());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -101,12 +106,42 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
         spinner.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Vuelve a la vista principal
+     */
     @Override
     public void showMainView() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Initializes de UI components
+     */
+    @Override
+    public void setUIComponents() {
+        //Butterknife binding
+        setContentView(R.layout.edit_act);
+        ButterKnife.bind(this);
+
+        //Edit texts' hints
+        et_name.setHint(R.string.grade_name_hint);
+        et_grade.setHint(R.string.grade_hint);
+        et_percentage.setHint(R.string.grade_percentage_hint);
+
+        //Edit texts' input types
+        et_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        et_grade.setInputType(InputType.TYPE_CLASS_NUMBER);
+        et_percentage.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        //Checkbox visibility
+        cb_graded.setVisibility(View.VISIBLE);
+        cb_graded.setChecked(true);
+    }
+
+    /**
+     * Adds a new grade to de subject if all info is correct, otherwise shows an error message
+     */
     @OnClick(R.id.fab_check)
     public void fabCheckOnClick() {
         if(getSelectedSubject() != null) {
@@ -119,7 +154,6 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
                 grade.setGraded(true);
                 grade.setGrade(Double.valueOf(et_grade.getText().toString()));
             }
-
             presenter.insertGrade(grade);
             showMainView();
         }
@@ -128,10 +162,17 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
         }
     }
 
+    /**
+     * Returns the selected subject in the spinner
+     * @return selected subject in the spinner
+     */
     private Subject getSelectedSubject() {
         return (Subject) spinner.getSelectedItem();
     }
 
+    /**
+     * Changes the grade edit text visibility according to the checkbox state
+     */
     @OnClick(R.id.cb_graded)
     public void isCbChecked(){
         if(cb_graded.isChecked()){
@@ -142,6 +183,10 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
         }
     }
 
+    /**
+     * Sets the presenter
+     * @param presenter presenter
+     */
     @Override
     public void setPresenter(EditGradeContract.Presenter presenter) {
         this.presenter = presenter;
