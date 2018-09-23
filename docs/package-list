@@ -1,0 +1,9 @@
+com.inrainbows
+com.inrainbows.activity
+com.inrainbows.model.model
+com.inrainbows.mvp.model
+com.inrainbows.mvp.presenter
+com.inrainbows.mvp.view
+com.inrainbows.persistence
+com.inrainbows.persistence.daos
+com.inrainbows.persistence.entities
