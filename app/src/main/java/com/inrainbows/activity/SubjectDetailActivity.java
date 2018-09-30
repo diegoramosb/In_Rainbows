@@ -74,8 +74,9 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         Bundle bundle = getIntent().getExtras();
         subject = bundle.getParcelable("subject");
 
+        System.out.println(subject);
 
-
+        setUIComponents();
     }
 
     /**
@@ -87,22 +88,27 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         ButterKnife.bind(this);
 
         isFABOpen = false;
+        tvSubjectName.setText(subject.getName());
+
+
+        tvSubjectGrade.setText(String.format("%d", subject.currentGrade()));
+
+        Double value = subject.getStudiedHoursDay();
+        pbDay.setProgress(value.intValue(), true);
+        tvProgressToday.setText(String.format("%d", value));
+
+        value = subject.getStudiedHoursWeek();
+        pbWeek.setProgress(value.intValue(), true);
+        tvProgressWeek.setText(String.format("%d", value));
+
+        value = subject.getStudiedHoursSemester();
+        pbSemester.setProgress(value.intValue(), true);
+        tvProgressSemester.setText(String.format("%d", value));
     }
 
     @Override
     public void setPresenter(SubjectDetailContract.Presenter presenter) {
-
-    }
-
-    private void updateUI() {
-        tvSubjectName.setText(subject.getName());
-        tvProgressToday.setText(subject.getStudiedHoursDay() + " h/" + subject.dailyHoursString() + " h");
-        tvProgressWeek.setText(subject.getStudiedHoursWeek() + "h/" + subject.getExtraHours() + " h");
-        tvProgressSemester.setText(subject.getStudiedHoursSemester() + " h/" + subject.semesterHours() + " h");
-
-        pbDay.setProgress(subject.dailyStudiedPercentage());
-        pbWeek.setProgress(subject.weeklyStudiedPercentage());
-        pbSemester.setProgress(subject.semesterStudiedPercentage());
+        this.presenter = presenter;
     }
 
     private void subscribeToSubject() {
@@ -116,6 +122,17 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         subjectObserver.onChanged(subject);
 
         presenter.getSubject().observe(this, subjectObserver);
+    }
+
+    private void updateUI() {
+        tvSubjectName.setText(subject.getName());
+        tvProgressToday.setText(subject.getStudiedHoursDay() + " h/" + subject.dailyHoursString() + " h");
+        tvProgressWeek.setText(subject.getStudiedHoursWeek() + "h/" + subject.getExtraHours() + " h");
+        tvProgressSemester.setText(subject.getStudiedHoursSemester() + " h/" + subject.semesterHours() + " h");
+
+        pbDay.setProgress(subject.dailyStudiedPercentage());
+        pbWeek.setProgress(subject.weeklyStudiedPercentage());
+        pbSemester.setProgress(subject.semesterStudiedPercentage());
     }
 
     @OnClick(R.id.fab_modify_time)

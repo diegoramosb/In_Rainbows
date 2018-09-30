@@ -87,6 +87,17 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setUIComponents();
+
+        subscribeToCurrentSemester();
+        subscribeToSubjects();
+    }
+
+    /**
+     * Initializes the UI components
+     */
+    @Override
+    public void setUIComponents() {
         setContentView(R.layout.main_act);
         ButterKnife.bind(this);
 
@@ -108,9 +119,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         if(navigationView != null){
             setupDrawerContent(navigationView);
         }
-
-        subscribeToCurrentSemester();
-        subscribeToSubjects();
     }
 
     private void subscribeToSubjects(){
@@ -186,6 +194,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         Intent intent = new Intent(this, EditGradeActivity.class);
         startActivity(intent);
         closeFABMenu();
+    }
+
+    public void showSubjectDetailActivity(Subject subject) {
+        Intent intent = new Intent(this, SubjectDetailActivity.class);
+        intent.putExtra("subject", subject);
+        startActivity(intent);
     }
 
     @Override
@@ -294,9 +308,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     @Override
     public void onItemClick(View view, int position) {
 //        Toast.makeText(this, "You clicked " + subjectsRvAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, SubjectDetailActivity.class);
-        intent.putExtra("subject", subjectsRvAdapter.getItem(position));
-        startActivity(intent);
+        showSubjectDetailActivity(subjectsRvAdapter.getItem(position));
     }
 
     private void showFABMenu(){
