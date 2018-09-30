@@ -560,12 +560,8 @@ public class Subject implements Parcelable{
         studiedHoursDay = in.readDouble();
         studiedHoursWeek = in.readDouble();
         studiedHoursSemester = in.readDouble();
-        if (in.readByte() == 0x01) {
-            grades = new ArrayList<Grade>();
-            in.readList(grades, Subject.class.getClassLoader());
-        } else {
-            grades = null;
-        }
+        grades = new ArrayList<>();
+        in.readTypedList(grades, Grade.CREATOR);
     }
 
     @Override
@@ -584,12 +580,7 @@ public class Subject implements Parcelable{
         dest.writeDouble(studiedHoursDay);
         dest.writeDouble(studiedHoursWeek);
         dest.writeDouble(studiedHoursSemester);
-        if (grades == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(grades);
-        }
+        dest.writeTypedList(grades);
     }
 
     @SuppressWarnings("unused")

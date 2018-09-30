@@ -176,7 +176,7 @@ public class Grade implements GradedAssignment, Parcelable{
         dest.writeString(name);
         dest.writeDouble(grade);
         dest.writeDouble(percentage);
-        dest.writeByte((byte) (graded ? 0x01 : 0x00));
+        dest.writeByte((byte) (graded ? 1 : 0));
     }
 
     @SuppressWarnings("unused")
