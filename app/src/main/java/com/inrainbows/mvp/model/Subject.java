@@ -562,6 +562,7 @@ public class Subject implements Parcelable{
         studiedHoursSemester = in.readDouble();
         grades = new ArrayList<>();
         in.readTypedList(grades, Grade.CREATOR);
+        System.out.println(grades.toString());
     }
 
     @Override
