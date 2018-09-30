@@ -74,10 +74,19 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         Bundle bundle = getIntent().getExtras();
         subject = bundle.getParcelable("subject");
 
-        isFABOpen = false;
 
+
+    }
+
+    /**
+     * Initializes the UI components
+     */
+    @Override
+    public void setUIComponents() {
         setContentView(R.layout.subject_detail_act);
         ButterKnife.bind(this);
+
+        isFABOpen = false;
     }
 
     @Override

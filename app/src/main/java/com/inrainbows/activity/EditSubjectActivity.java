@@ -50,6 +50,14 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
         Bundle bundle = getIntent().getExtras();
         currentSemester = (Semester) bundle.getParcelable("currentSemester");
 
+        setUIComponents();
+    }
+
+    /**
+     * Initializes the UI components
+     */
+    @Override
+    public void setUIComponents() {
         setContentView(R.layout.edit_act);
         ButterKnife.bind(this);
 
