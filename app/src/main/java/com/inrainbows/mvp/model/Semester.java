@@ -3,6 +3,7 @@ package com.inrainbows.mvp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.inrainbows.mvp.model.listConverters.SubjectListConverter;
 import com.inrainbows.persistence.entities.SemesterEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
@@ -10,6 +11,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
+import org.parceler.ParcelProperty;
+import org.parceler.ParcelPropertyConverter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,20 +23,27 @@ import java.util.NoSuchElementException;
 /**
  * @author diego on 1/08/2017.
  */
+@org.parceler.Parcel()
+public class Semester {
 
-public class Semester implements Parcelable{
+    long id;
 
-    private long id;
+    String semesterName;
 
-    private String semesterName;
+    DateTime startDate;
 
-    private DateTime startDate;
+    DateTime endDate;
 
-    private DateTime endDate;
+    boolean currentSemester;
 
-    private boolean currentSemester;
+    @ParcelPropertyConverter(SubjectListConverter.class)
+    List<Subject> subjects;
 
-    private List<Subject> subjects;
+    /**
+     * Empty constructor for Parceler
+     */
+    Semester(){
+    }
 
     private Semester(SemesterBuilder builder) {
         this.id = builder.id;
@@ -44,8 +54,8 @@ public class Semester implements Parcelable{
         this.subjects = builder.getSubjects();
     }
 
-    public Semester(SemesterEntity entity){
-        if(entity != null) {
+    public Semester(SemesterEntity entity) {
+        if (entity != null) {
             this.id = entity.getId();
             this.semesterName = entity.getSemesterName();
             this.startDate = entity.getStartDate();
@@ -84,12 +94,12 @@ public class Semester implements Parcelable{
      * @param pStartMonth Start month
      * @param pStartDay   Start day
      */
-    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) throws IllegalArgumentException{
+    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) throws IllegalArgumentException {
         try {
-              MutableDateTime startDateCopy = startDate.toMutableDateTime();
-              startDateCopy.setDate(pStartYear, pStartMonth, pStartDay);
-              startDate = startDateCopy.toDateTime();
-        }catch (IllegalFieldValueException e){
+            MutableDateTime startDateCopy = startDate.toMutableDateTime();
+            startDateCopy.setDate(pStartYear, pStartMonth, pStartDay);
+            startDate = startDateCopy.toDateTime();
+        } catch (IllegalFieldValueException e) {
             throw new IllegalArgumentException("Date not valid");
         }
     }
@@ -113,13 +123,13 @@ public class Semester implements Parcelable{
      * @param pEndDay   End day
      */
 
-    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException{
+    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException {
         try {
             MutableDateTime endDateCopy = endDate.toMutableDateTime();
             endDateCopy.setDate(pEndYear, pEndMonth, pEndDay);
             endDate = endDateCopy.toDateTime();
-        }catch (IllegalArgumentException e){
-            throw  new IllegalArgumentException("Date not valid");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Date not valid");
         }
     }
 
@@ -141,11 +151,11 @@ public class Semester implements Parcelable{
      */
     public double credits() {
         int credits = 0;
-        try{
-            for( Subject currentSubject : subjects ){
+        try {
+            for (Subject currentSubject : subjects) {
                 credits += currentSubject.getCredits();
             }
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return credits;
         }
         return credits;
@@ -159,7 +169,7 @@ public class Semester implements Parcelable{
     public boolean containsSubject(Subject subject) throws IllegalArgumentException {
         try {
             return subjects.contains(subject);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Subject cannot be null");
         }
     }
@@ -169,10 +179,9 @@ public class Semester implements Parcelable{
      * @throws NoSuchElementException if there are no subjects
      */
     public Iterable<Subject> getSubjects() throws NoSuchElementException {
-        if(!subjects.isEmpty()){
+        if (!subjects.isEmpty()) {
             return subjects;
-        }
-        else {
+        } else {
             throw new NoSuchElementException("The semester doesn't have any subjects");
         }
     }
@@ -181,7 +190,7 @@ public class Semester implements Parcelable{
         this.subjects = subjects;
     }
 
-    public int getSubjectAmount(){
+    public int getSubjectAmount() {
         return subjects.size();
     }
 
@@ -189,19 +198,18 @@ public class Semester implements Parcelable{
      * @param pSubjectName name of the subject
      * @return subject with name pSubjectName
      * @throws IllegalArgumentException if the name is not valid
-     * @throws NoSuchElementException if there is no subject with the given name
+     * @throws NoSuchElementException   if there is no subject with the given name
      */
     public Subject getSubject(String pSubjectName) {
-            if( !pSubjectName.equals("") ) {
-                for(Subject subject : subjects ){
-                    if(subject.getName().equals(pSubjectName)){
-                        return subject;
-                    }
+        if (!pSubjectName.equals("")) {
+            for (Subject subject : subjects) {
+                if (subject.getName().equals(pSubjectName)) {
+                    return subject;
                 }
-                    throw new NoSuchElementException("Subject not found");
             }
-            else
-                throw new IllegalArgumentException("Subject name not valid");
+            throw new NoSuchElementException("Subject not found");
+        } else
+            throw new IllegalArgumentException("Subject name not valid");
     }
 
     /**
@@ -222,10 +230,10 @@ public class Semester implements Parcelable{
      */
     public void deleteSubject(Subject subject) throws NoSuchElementException, IllegalArgumentException {
         try {
-            if (!subjects.remove(subject)){
+            if (!subjects.remove(subject)) {
                 throw new NoSuchElementException("Subject not found");
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new IllegalArgumentException("Trying to delete a null subject");
         }
     }
@@ -233,32 +241,31 @@ public class Semester implements Parcelable{
     /**
      * Changes the name of a subject
      *
-     * @param subject current subject
-     * @param pNewName     new subject name
+     * @param subject  current subject
+     * @param pNewName new subject name
      * @throws NoSuchElementException   if the subject is not found
      * @throws IllegalArgumentException if any name is not valid
      */
     public void setSubjectName(Subject subject, String pNewName) throws NoSuchElementException, IllegalArgumentException {
-        if(pNewName != null && !pNewName.equals("")){
-            try{
+        if (pNewName != null && !pNewName.equals("")) {
+            try {
                 deleteSubject(subject);
                 subject.setName(pNewName);
                 addSubject(subject);
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw e;
             }
-        }else
+        } else
             throw new IllegalArgumentException("Name not valid");
     }
 
-    public SemesterEntity toEntity(){
+    public SemesterEntity toEntity() {
         return new SemesterEntity(id, semesterName, startDate, endDate, isCurrentSemester());
     }
 
-    public List<SubjectEntity> subjectsToEntity(){
+    public List<SubjectEntity> subjectsToEntity() {
         ArrayList<SubjectEntity> ans = new ArrayList<>();
-        for(Subject subject : subjects){
+        for (Subject subject : subjects) {
             ans.add(new SubjectEntity.SubjectEntityBuilder(subject.getId(), subject.getName(),
                     subject.getCredits(), subject.getClassHours(), id).build());
         }
@@ -267,7 +274,7 @@ public class Semester implements Parcelable{
 
     public double totalStudiedHours() {
         double totalStudiedHours = 0;
-        for(Subject subject : subjects) {
+        for (Subject subject : subjects) {
             totalStudiedHours += subject.getStudiedHoursSemester();
         }
         return totalStudiedHours;
@@ -276,7 +283,7 @@ public class Semester implements Parcelable{
     public double currentGrade() {
         double credits = 0;
         double points = 0;
-        for(Subject subject : subjects) {
+        for (Subject subject : subjects) {
             points += (subject.currentGrade() * subject.getCredits());
             credits += subject.getCredits();
         }
@@ -324,15 +331,13 @@ public class Semester implements Parcelable{
             try {
                 startDate = new DateTime(startYear, startMonth, startDay,
                         0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
-            }
-            catch (IllegalFieldValueException e){
+            } catch (IllegalFieldValueException e) {
                 throw new IllegalArgumentException("Start date not valid.");
             }
             try {
                 endDate = new DateTime(endYear, endMonth, endDay,
                         0, 0, 0, 0, DateTimeZone.forID("America/Bogota"));
-            }
-            catch (IllegalFieldValueException e){
+            } catch (IllegalFieldValueException e) {
                 throw new IllegalArgumentException("End date not valid.");
             }
 
@@ -348,55 +353,8 @@ public class Semester implements Parcelable{
             return this;
         }
 
-        public Semester build(){
+        public Semester build() {
             return new Semester(this);
         }
     }
-
-    protected Semester(Parcel in) {
-        id = in.readLong();
-        semesterName = in.readString();
-        startDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
-        endDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
-        currentSemester = in.readByte() != 0x00;
-        if (in.readByte() == 0x01) {
-            subjects = new ArrayList<Subject>();
-            in.readList(subjects, Subject.class.getClassLoader());
-        } else {
-            subjects = null;
-        }
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(semesterName);
-        dest.writeValue(startDate);
-        dest.writeValue(endDate);
-        dest.writeByte((byte) (currentSemester ? 0x01 : 0x00));
-        if (subjects == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(subjects);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Semester> CREATOR = new Parcelable.Creator<Semester>() {
-        @Override
-        public Semester createFromParcel(Parcel in) {
-            return new Semester(in);
-        }
-
-        @Override
-        public Semester[] newArray(int size) {
-            return new Semester[size];
-        }
-    };
 }

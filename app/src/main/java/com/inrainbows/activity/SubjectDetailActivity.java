@@ -19,6 +19,8 @@ import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.view.SubjectDetailContract;
 
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,7 +74,7 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getIntent().getExtras();
-        subject = bundle.getParcelable("subject");
+        subject = Parcels.unwrap(getIntent().getParcelableExtra("subject"));
 
         System.out.println(subject);
 
@@ -91,19 +93,19 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         tvSubjectName.setText(subject.getName());
 
 
-        tvSubjectGrade.setText(String.format("%d", subject.currentGrade()));
+        tvSubjectGrade.setText(subject.currentGrade()+"");
 
         Double value = subject.getStudiedHoursDay();
         pbDay.setProgress(value.intValue(), true);
-        tvProgressToday.setText(String.format("%d", value));
+        tvProgressToday.setText(value+"");
 
         value = subject.getStudiedHoursWeek();
         pbWeek.setProgress(value.intValue(), true);
-        tvProgressWeek.setText(String.format("%d", value));
+        tvProgressWeek.setText(value+"");
 
         value = subject.getStudiedHoursSemester();
         pbSemester.setProgress(value.intValue(), true);
-        tvProgressSemester.setText(String.format("%d", value));
+        tvProgressSemester.setText(value+"");
     }
 
     @Override

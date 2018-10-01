@@ -10,19 +10,26 @@ import org.joda.time.DateTime;
 /**
  * @author diego on 31/07/2018.
  */
-public class Grade implements GradedAssignment, Parcelable{
+@org.parceler.Parcel(org.parceler.Parcel.Serialization.BEAN)
+public class Grade implements GradedAssignment{
 
-    private long id;
+    long id;
 
-    private long subjectId;
+    long subjectId;
 
-    private String name;
+    String name;
 
-    private double grade;
+    double grade;
 
-    private double percentage;
+    double percentage;
 
-    private boolean graded;
+    boolean graded;
+
+    /**
+     * Empty constructor for Parceler
+     */
+    Grade() {
+    }
 
     private Grade(GradeBuilder builder){
         this.id = builder.id;
@@ -154,41 +161,4 @@ public class Grade implements GradedAssignment, Parcelable{
             return new Grade(this);
         }
     }
-
-    protected Grade(Parcel in) {
-        id = in.readLong();
-        subjectId = in.readLong();
-        name = in.readString();
-        grade = in.readDouble();
-        percentage = in.readDouble();
-        graded = in.readByte() != 0x00;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeLong(subjectId);
-        dest.writeString(name);
-        dest.writeDouble(grade);
-        dest.writeDouble(percentage);
-        dest.writeByte((byte) (graded ? 1 : 0));
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Grade> CREATOR = new Parcelable.Creator<Grade>() {
-        @Override
-        public Grade createFromParcel(Parcel in) {
-            return new Grade(in);
-        }
-
-        @Override
-        public Grade[] newArray(int size) {
-            return new Grade[size];
-        }
-    };
 }

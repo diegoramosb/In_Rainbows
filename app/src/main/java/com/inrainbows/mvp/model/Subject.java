@@ -3,8 +3,12 @@ package com.inrainbows.mvp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.inrainbows.mvp.model.listConverters.GradeListsConverter;
 import com.inrainbows.persistence.entities.GradeEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
+
+import org.parceler.ParcelProperty;
+import org.parceler.ParcelPropertyConverter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,62 +18,70 @@ import java.util.List;
  * Created by diego on 31/05/2017.
  * This class represents a subject
  */
-public class Subject implements Parcelable{
+@org.parceler.Parcel(org.parceler.Parcel.Serialization.BEAN)
+public class Subject {
 
     /**
      * Subject id
      */
-    private long id;
+    long id;
 
     /**
      * Id of the semester that the subject belongs to
      */
-    private long semesterId;
+    long semesterId;
 
     /**
      * Subject name
      */
-    private String name;
+    String name;
 
     /**
      * Amount of credits the subject is worth
      */
-    private double credits;
+    double credits;
 
     /**
      * Total expected weekly hours of study
      */
-    private double totalHours;
+    double totalHours;
 
     /**
      * Weekly hours of class
      */
-    private double classHours;
+    double classHours;
 
     /**
      * Extra expected hours of study (hours without counting class)
      */
-    private double extraHours;
+    double extraHours;
 
     /**
      * Actual studied hours on this day
      */
-    private double studiedHoursDay;
+    double studiedHoursDay;
 
     /**
      * Actual studied hours this week
      */
-    private double studiedHoursWeek;
+    double studiedHoursWeek;
 
     /**
      * Actual studied hours this semester
      */
-    private double studiedHoursSemester;
+    double studiedHoursSemester;
 
     /**
-     * Hash table containing grades.
+     * List with the subject's grades
      */
+    @ParcelPropertyConverter(GradeListsConverter.class)
     private List<Grade> grades;
+
+    /**
+     * Empty constructor for Parceler
+     */
+    Subject(){
+    }
 
     /**
      * Private constructor for builder.
@@ -548,52 +560,4 @@ public class Subject implements Parcelable{
             return new Subject(this);
         }
     }
-
-    protected Subject(Parcel in){
-        id = in.readLong();
-        semesterId = in.readLong();
-        name = in.readString();
-        credits = in.readDouble();
-        totalHours = in.readDouble();
-        classHours = in.readDouble();
-        extraHours = in.readDouble();
-        studiedHoursDay = in.readDouble();
-        studiedHoursWeek = in.readDouble();
-        studiedHoursSemester = in.readDouble();
-        grades = new ArrayList<>();
-        in.readTypedList(grades, Grade.CREATOR);
-        System.out.println(grades.toString());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeLong(semesterId);
-        dest.writeString(name);
-        dest.writeDouble(totalHours);
-        dest.writeDouble(classHours);
-        dest.writeDouble(extraHours);
-        dest.writeDouble(studiedHoursDay);
-        dest.writeDouble(studiedHoursWeek);
-        dest.writeDouble(studiedHoursSemester);
-        dest.writeTypedList(grades);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Subject> CREATOR = new Parcelable.Creator<Subject>() {
-        @Override
-        public Subject createFromParcel(Parcel in) {
-            return new Subject(in);
-        }
-
-        @Override
-        public Subject[] newArray(int size) {
-            return new Subject[size];
-        }
-    };
 }

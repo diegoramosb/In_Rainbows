@@ -27,6 +27,8 @@ import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.MainPresenter;
 import com.inrainbows.mvp.view.MainContract;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,7 +186,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     @Override
     public void showAddSubjectActivity() {
         Intent intent = new Intent(this, EditSubjectActivity.class);
-        intent.putExtra("currentSemester", currentSemester);
+        intent.putExtra("currentSemester", Parcels.wrap(currentSemester));
         startActivity(intent);
         closeFABMenu();
     }
@@ -198,7 +200,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
 
     public void showSubjectDetailActivity(Subject subject) {
         Intent intent = new Intent(this, SubjectDetailActivity.class);
-        intent.putExtra("subject", subject);
+        intent.putExtra("subject", Parcels.wrap(subject));
         startActivity(intent);
     }
 
