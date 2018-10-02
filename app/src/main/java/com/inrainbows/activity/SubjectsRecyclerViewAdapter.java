@@ -48,10 +48,10 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
                 .append(subject.dailyHoursString()).append(" h")
                 .toString();
         String studiedHoursWeek = new StringBuilder().append(subject.getStudiedHoursWeek()).append(" h/")
-                .append(subject.getExtraHours()).append(" h")
+                .append(subject.getWeeklyExtraHours()).append(" h")
                 .toString();
         String studiedHoursSemester = new StringBuilder().append(subject.getStudiedHoursSemester()).append(" h/")
-                .append(subject.semesterHours()).append(" h")
+                .append(subject.getSemesterExtraHours()).append(" h")
                 .toString();
 
         holder.tvSubjectName.setText(subjectName);

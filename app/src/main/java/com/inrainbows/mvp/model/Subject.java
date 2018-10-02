@@ -1,13 +1,8 @@
 package com.inrainbows.mvp.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.inrainbows.mvp.model.listConverters.GradeListsConverter;
-import com.inrainbows.persistence.entities.GradeEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
-import org.parceler.ParcelProperty;
 import org.parceler.ParcelPropertyConverter;
 
 import java.text.DecimalFormat;
@@ -20,6 +15,10 @@ import java.util.List;
  */
 @org.parceler.Parcel(org.parceler.Parcel.Serialization.BEAN)
 public class Subject {
+
+    /*--------------------------------------------------------------------------------------------*/
+    /* FIELDS */
+    /*--------------------------------------------------------------------------------------------*/
 
     /**
      * Subject id
@@ -52,9 +51,19 @@ public class Subject {
     double classHours;
 
     /**
-     * Extra expected hours of study (hours without counting class)
+     * Daily extra expected hours of study (hours without counting class)
      */
-    double extraHours;
+    double weeklyExtraHours;
+
+    /**
+     * Weekly extra expected hours of study
+     */
+    double dailyExtraHours;
+
+    /**
+     * Expected extra studiy hours in all semester
+     */
+    double semesterExtraHours;
 
     /**
      * Actual studied hours on this day
@@ -77,6 +86,10 @@ public class Subject {
     @ParcelPropertyConverter(GradeListsConverter.class)
     private List<Grade> grades;
 
+    /*--------------------------------------------------------------------------------------------*/
+    /* CONSTRUCTORS */
+    /*--------------------------------------------------------------------------------------------*/
+
     /**
      * Empty constructor for Parceler
      */
@@ -95,7 +108,9 @@ public class Subject {
         this.classHours = builder.classHours;
 
         this.totalHours = calculateTotalHours();
-        this.extraHours = calculateExtraHours();
+        this.weeklyExtraHours = weeklyExtraHours();
+        this.dailyExtraHours = dailyExtraHours();
+        this.semesterExtraHours = semesterExtraHours();
 
         this.studiedHoursDay = builder.getStudiedHoursDay();
         this.studiedHoursWeek = builder.getStudiedHoursWeek();
@@ -103,6 +118,10 @@ public class Subject {
         this.grades = builder.getGrades();
     }
 
+    /**
+     * Creates a new Subject with the data of a SubjectEntity
+     * @param entity SubjectEntity retrieved from the database
+     */
     public Subject(SubjectEntity entity){
         if(entity != null) {
             this.id = entity.getId();
@@ -112,7 +131,7 @@ public class Subject {
 
             this.totalHours = entity.getTotalHours();
             this.classHours = entity.getClassHours();
-            this.extraHours = entity.getExtraHours();
+            this.weeklyExtraHours = entity.getExtraHours();
 
             this.studiedHoursDay = entity.getStudiedHoursDay();
             this.studiedHoursWeek = entity.getStudiedHoursWeek();
@@ -121,28 +140,38 @@ public class Subject {
         }
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
+    /*--------------------------------------------------------------------------------------------*/
+    /* GETTERS AND SETTERS */
+    /*--------------------------------------------------------------------------------------------*/
 
     /**
-     * @return Subject info as a String
+     * Returns the subject id
+     * @return subject id
      */
-
-
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets the subject id to id
+     * @param id new subject id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Returns the id of the semester that the subject belongs to
+     * @return id of the semester that the subject belongs to
+     */
     public long getSemesterId() {
         return semesterId;
     }
 
+    /**
+     * Sets the semesterId to the new value
+     * @param semesterId new semesterId
+     */
     public void setSemesterId(long semesterId) {
         this.semesterId = semesterId;
     }
@@ -211,19 +240,28 @@ public class Subject {
     }
 
     /**
-     * @return Extra hours of study that the subject requires, meaning totalHours - classHours
+     * @return Weekly extra hours of study that the subject requires, meaning totalHours - classHours
      */
-    public double getExtraHours() {
-        return extraHours;
+    public double getWeeklyExtraHours() {
+        return weeklyExtraHours;
     }
 
     /**
-     * Sets extraHours to pExtraHours
+     * Returns the daily extra study hours of the subject
      *
-     * @param pExtraHours new extra hours of the subject
+     * @return daily extra study hours of the subject
      */
-    public void setExtraHours(double pExtraHours) {
-        extraHours = pExtraHours;
+    public double getDailyExtraHours() {
+        return dailyExtraHours;
+    }
+
+    /**
+     * Returns the semseter extra study hours of the subject
+     *
+     * @return semseter extra study hours of the subject
+     */
+    public double getSemesterExtraHours() {
+        return semesterExtraHours;
     }
 
     /**
@@ -251,6 +289,10 @@ public class Subject {
         studiedHoursDay += pStudiedHours;
     }
 
+    /**
+     * Decreases the studied hours of the day by hours
+     * @param hours number of hours to decrease
+     */
     public void removeStudiedHoursDay(double hours) {
         studiedHoursDay -= hours;
     }
@@ -272,19 +314,6 @@ public class Subject {
     }
 
     /**
-     * Increases the amount of studied hours this week by pStudiedHours
-     *
-     * @param pStudiedHours hours to increase
-     */
-    public void addStudiedHoursWeek(double pStudiedHours) {
-        studiedHoursWeek += pStudiedHours;
-    }
-
-    public void removeStudiedHoursWeek(double hours) {
-        studiedHoursWeek -= hours;
-    }
-
-    /**
      * @return Amount of studiedHours this semester in the subject
      */
     public double getStudiedHoursSemester() {
@@ -301,16 +330,31 @@ public class Subject {
     }
 
     /**
-     * Increases the amount of studied hours of this subject in this semester by pStudiedHours
-     *
-     * @param pStudiedHours hours to increase
+     * Returns a list with the subject grades
+     * @return list with the subject grades
      */
-    public void addStudiedHoursSemester(double pStudiedHours) {
-        studiedHoursSemester += pStudiedHours;
+    public List<Grade> getGrades(){
+        return grades;
     }
 
-    public void removeStudiedHoursSemester(double hours) {
-        studiedHoursSemester -= hours;
+    /**
+     * Sets the list of grades to the parameter
+     * @param grades new list of grades
+     */
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
+    /* OTHER METHODS */
+    /*--------------------------------------------------------------------------------------------*/
+
+    /**
+     * Adds a grade to the list
+     * @param grade grade to add
+     */
+    public void addGrade(Grade grade) {
+        grades.add(grade);
     }
 
     /**
@@ -323,26 +367,36 @@ public class Subject {
     }
 
     /**
-     * Calculates the amount of extra study hours per week based on the number of total hours and class hours.
-     * @return Amount of extra study hours per week.
+     * Calculates the amount of extra study hours per day based on the number of total hours and class hours.
+     * @return Amount of extra study hours per day.
      */
-    private double calculateExtraHours(){
+    private double weeklyExtraHours(){
         return totalHours - classHours;
     }
 
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
+    /**
+     * Calculates the amount of extra study hours per week, assuming 6 days of study a week
+     * @return amount of extra study hours per week
+     */
+    private double dailyExtraHours() {
+        //TODO: Let the user choose the number of weekly study days.
+        return weeklyExtraHours() / 6;
     }
 
-    public List<Grade> getGrades(){
-        return grades;
+    /**
+     * Calculates the amount of extra study hours in the semester, assuming a semester of 16 weeks
+     * @return the amount of extra study hours in the semester
+     */
+    private double semesterExtraHours() {
+        //Assuming a 16 week long semester
+        return weeklyExtraHours() * 16;
     }
 
-    public void addGrade(Grade grade) {
-        grades.add(grade);
-    }
-
-    public double getGradedPercentage() {
+    /**
+     * Returns the percentage of graded grades of the subject
+     * @return percentage of graded grades of the subject
+     */
+    public double gradedPercentage() {
         double ans = 0;
             for (Grade currentGrade : grades) {
                 if(currentGrade.isGraded()) {
@@ -352,7 +406,11 @@ public class Subject {
         return ans;
     }
 
-    public List<Grade> graded() {
+    /**
+     * Returns the graded grades of the subject
+     * @return graded grades of the subject
+     */
+    private List<Grade> gradedGrades() {
         List<Grade> ans = new ArrayList<>();
         for(Grade currentGrade : grades){
             if(currentGrade.isGraded()){
@@ -363,15 +421,15 @@ public class Subject {
     }
 
     /**
-     * Retorna la nota actual de la materia. El cálculo se hace así: Si la suma de las notas
-     * entregadas es 100 se calcula calificacionActual * (porcentaje / 100). Sino, se calcula
-     * calificacionActual * (porcentaje / porcentajeNotasEntregadas).
-     * @return ITask actual de la materia (solo de las notas entregadas)
+     * Returns the current subject grade. The calculation is made like this:
+     * If the sum of the given grades is 100 it calculates currentGrade * (percentage/100).
+     * Else, it calculates currentGrade * (percentage/gradedPercentage).
+     * @return Current subject grade
      */
     public double currentGrade() {
         double ans = 0;
-        double gradedPercentage = getGradedPercentage();
-            List<Grade> grades = graded();
+        double gradedPercentage = gradedPercentage();
+            List<Grade> grades = gradedGrades();
             if( gradedPercentage >= 100.0 ){
                 for( Grade currentGrade : grades )
                     ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / 100.0;
@@ -383,51 +441,62 @@ public class Subject {
         return ans;
     }
 
-    public double dailyHours() {
-        //TODO: Let the user choose the number of weekly study days.
-        return extraHours / 6;
-    }
-
+    /**
+     * Returns the formatted daily study hours
+     * @return formatted daily study hours
+     */
     public String dailyHoursString() {
         DecimalFormat format = new DecimalFormat("#.##");
-        return format.format(dailyHours());
+        return format.format(dailyExtraHours);
     }
 
+    /**
+     * Returns the daily studied percentage
+     * @return daily studied percentage
+     */
     public int dailyStudiedPercentage() {
-        Double ans = (studiedHoursWeek / dailyHours());
+        Double ans = (studiedHoursWeek / dailyExtraHours);
         return ans.intValue();
     }
 
+    /**
+     * Returns the weekly studied percentage
+     * @return weekly studied percentage
+     */
     public int weeklyStudiedPercentage() {
-        Double ans = studiedHoursWeek / extraHours;
+        Double ans = studiedHoursWeek / weeklyExtraHours;
         return ans.intValue();
     }
 
-    public double semesterHours() {
-        //TODO: Calculate the semester hours counting the number of weeks.
-        return extraHours * 16;
-    }
-
+    /**
+     * Retunrns the semester studied percentage
+     * @return semester studied percentage
+     */
     public int semesterStudiedPercentage() {
-        Double ans = studiedHoursSemester / semesterHours();
+        Double ans = studiedHoursSemester / semesterExtraHours;
         return ans.intValue();
     }
 
-    public SubjectEntity toEntity(long semesterId){
-        return new SubjectEntity.SubjectEntityBuilder(id, name, credits, classHours, semesterId).build();
-    }
-
-    public List<GradeEntity> gradesToEntity(){
-        ArrayList<GradeEntity> ans = new ArrayList<>();
-        for(Grade grade : grades){
-            ans.add(grade.toEntity());
-        }
-        return ans;
-    }
-
+    /**
+     * Creates a new entity with the subject data
+     * @return
+     */
     public SubjectEntity toEntity() {
-        return new SubjectEntity(id, name, credits, totalHours, classHours, extraHours,
+        return new SubjectEntity(id, name, credits, totalHours, classHours, weeklyExtraHours,
                 studiedHoursDay, studiedHoursWeek, studiedHoursSemester, semesterId);
+    }
+
+    /**
+     * @return Subject info as a String
+     */
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Subject{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", credits=").append(credits);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -440,7 +509,7 @@ public class Subject {
         if (Double.compare(subject.credits, credits) != 0) return false;
         if (Double.compare(subject.totalHours, totalHours) != 0) return false;
         if (Double.compare(subject.classHours, classHours) != 0) return false;
-        if (Double.compare(subject.extraHours, extraHours) != 0) return false;
+        if (Double.compare(subject.weeklyExtraHours, weeklyExtraHours) != 0) return false;
         if (Double.compare(subject.studiedHoursDay, studiedHoursDay) != 0) return false;
         if (Double.compare(subject.studiedHoursWeek, studiedHoursWeek) != 0) return false;
         if (Double.compare(subject.studiedHoursSemester, studiedHoursSemester) != 0) return false;
@@ -458,7 +527,7 @@ public class Subject {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(classHours);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(extraHours);
+        temp = Double.doubleToLongBits(weeklyExtraHours);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(studiedHoursDay);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
@@ -483,7 +552,11 @@ public class Subject {
 
         private double classHours;
 
-        private double extraHours;
+        private double dailyExtraHours;
+
+        private double weeklyExtraHours;
+
+        private double semesterExtraHours;
 
         private double studiedHoursDay;
 
@@ -502,25 +575,28 @@ public class Subject {
             grades = new ArrayList<>();
         }
 
-        public double getTotalHours() {
-            return totalHours;
-        }
-
         public SubjectBuilder setTotalHours(double totalHours) {
             this.totalHours = totalHours;
             return this;
         }
 
-        public double getExtraHours() {
-            return extraHours;
-        }
-
-        public SubjectBuilder setExtraHours(double extraHours) {
-            this.extraHours = extraHours;
+        public SubjectBuilder setDailyExtraHours(double dailyExtraHours) {
+            this.dailyExtraHours = dailyExtraHours;
             return this;
         }
 
-        public double getStudiedHoursDay() {
+
+        public SubjectBuilder setWeeklyExtraHours(double weeklyExtraHours) {
+            this.weeklyExtraHours = weeklyExtraHours;
+            return this;
+        }
+
+        public SubjectBuilder setSemesterExtraHours(double semesterExtraHours) {
+            this.semesterExtraHours = semesterExtraHours;
+            return this;
+        }
+
+        double getStudiedHoursDay() {
             return studiedHoursDay;
         }
 
@@ -529,7 +605,7 @@ public class Subject {
             return this;
         }
 
-        public double getStudiedHoursWeek() {
+        double getStudiedHoursWeek() {
             return studiedHoursWeek;
         }
 
@@ -538,7 +614,7 @@ public class Subject {
             return this;
         }
 
-        public double getStudiedHoursSemester() {
+        double getStudiedHoursSemester() {
             return studiedHoursSemester;
         }
 

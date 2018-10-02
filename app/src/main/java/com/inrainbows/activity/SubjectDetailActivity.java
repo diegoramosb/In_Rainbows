@@ -1,8 +1,5 @@
 package com.inrainbows.activity;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.TimePicker;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Subject;
@@ -96,7 +91,7 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         tvSubjectGrade.setText(subject.currentGrade()+"");
 
         Double value = subject.getStudiedHoursDay();
-        pbDay.setProgress(value.intValue(), true);
+        pbDay.setProgress(Double.valueOf((value/subject.getWeeklyExtraHours()) * 100).intValue(), true);
         tvProgressToday.setText(value+"");
 
         value = subject.getStudiedHoursWeek();
@@ -129,8 +124,8 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
     private void updateUI() {
         tvSubjectName.setText(subject.getName());
         tvProgressToday.setText(subject.getStudiedHoursDay() + " h/" + subject.dailyHoursString() + " h");
-        tvProgressWeek.setText(subject.getStudiedHoursWeek() + "h/" + subject.getExtraHours() + " h");
-        tvProgressSemester.setText(subject.getStudiedHoursSemester() + " h/" + subject.semesterHours() + " h");
+        tvProgressWeek.setText(subject.getStudiedHoursWeek() + "h/" + subject.getWeeklyExtraHours() + " h");
+        tvProgressSemester.setText(subject.getStudiedHoursSemester() + " h/" + subject.getSemesterExtraHours() + " h");
 
         pbDay.setProgress(subject.dailyStudiedPercentage());
         pbWeek.setProgress(subject.weeklyStudiedPercentage());

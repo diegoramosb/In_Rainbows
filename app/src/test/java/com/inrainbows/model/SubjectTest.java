@@ -28,7 +28,7 @@ public class SubjectTest {
             List<SubjectTask> tasks = new ArrayList<>();
             tasks.add(new SubjectTask.TaskBuilder(1L,"a", 100).build());
             subject = new Subject.SubjectBuilder(1L,"a", 3, 3)
-            .setExtraHours(2)
+            .setDailyExtraHours(2)
             .setTotalHours(2)
             .setStudiedHoursDay(2)
             .setStudiedHoursSemester(2)
@@ -84,14 +84,14 @@ public class SubjectTest {
     @Test
     public void getExtraHours() {
         setUp();
-        assertEquals(6, subject.getExtraHours(), 0.0);
+        assertEquals(6, subject.getWeeklyExtraHours(), 0.0);
     }
 
     @Test
     public void setExtraHours() {
         setUp();
-        subject.setExtraHours(5);
-        assertEquals(5, subject.getExtraHours(), 0.0);
+        subject.setDailyExtraHours(5);
+        assertEquals(5, subject.getWeeklyExtraHours(), 0.0);
     }
 
     @Test
@@ -418,13 +418,13 @@ public class SubjectTest {
         subject.setGrade("a", 5.0);
         subject.markAsGraded("a");
 
-        assertEquals(25, subject.getGradedPercentage(), 0.0);
+        assertEquals(25, subject.gradedPercentage(), 0.0);
 
         subject.setGrade("b", 5.0);
         subject.markAsGraded("b");
         subject.setGrade("c", 5.0);
         subject.markAsGraded("c");
-        assertEquals(70, subject.getGradedPercentage(), 0.0);
+        assertEquals(70, subject.gradedPercentage(), 0.0);
     }
 
     @Test
