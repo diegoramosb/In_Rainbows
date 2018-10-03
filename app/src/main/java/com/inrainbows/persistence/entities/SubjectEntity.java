@@ -120,6 +120,27 @@ public class SubjectEntity extends BaseEntity{
     }
 
     /**
+     * Private constructor for builder.
+     *
+     * @param builder Builder.
+     */
+    private SubjectEntity(SubjectEntityBuilder builder){
+        this.id = builder.id;
+        this.name = builder.name;
+        this.credits = builder.credits;
+        this.classHours = builder.classHours;
+
+        this.totalHours = builder.getTotalHours();
+        this.dailyExtraHours = builder.getDailyExtraHours();
+        this.weeklyExtraHours = builder.getWeeklyExtraHours();
+        this.semesterExtraHours = builder.getSemseterExtraHours();
+
+        this.studiedHoursDay = builder.getStudiedHoursDay();
+        this.studiedHoursWeek = builder.getStudiedHoursWeek();
+        this.studiedHoursSemester = builder.getStudiedHoursSemester();
+    }
+
+    /**
      * Returns the subject name
      * @return subject name
      */
@@ -297,5 +318,115 @@ public class SubjectEntity extends BaseEntity{
      */
     public void setSemesterId(@NonNull Long semesterId) {
         this.semesterId = semesterId;
+    }
+
+    public static class SubjectEntityBuilder {
+
+        private Long id;
+
+        private String name;
+
+        private Double credits;
+
+        private Double totalHours;
+
+        private Double classHours;
+
+        private Double dailyExtraHours;
+
+        private Double weeklyExtraHours;
+
+        private Double semseterExtraHours;
+
+        private Double studiedHoursDay;
+
+        private Double studiedHoursWeek;
+
+        private Double studiedHoursSemester;
+
+        private Long semesterId;
+
+        public SubjectEntityBuilder(Long id, String name, Double credits, Double classHours, Long semesterId) {
+            this.id = id;
+            this.name = name;
+            this.credits = credits;
+            this.classHours = classHours;
+            this.semesterId = semesterId;
+        }
+
+        public Double getTotalHours() {
+            return totalHours;
+        }
+
+        public SubjectEntityBuilder setTotalHours(Double totalHours) {
+            this.totalHours = totalHours;
+            return this;
+        }
+
+        public Double getDailyExtraHours() {
+            return dailyExtraHours;
+        }
+
+        public SubjectEntityBuilder setDailyExtraHours(Double dailyExtraHours) {
+            this.dailyExtraHours = dailyExtraHours;
+            return this;
+        }
+
+        public Double getWeeklyExtraHours() {
+            return weeklyExtraHours;
+        }
+
+        public SubjectEntityBuilder setWeeklyExtraHours(Double weeklyExtraHours) {
+            this.weeklyExtraHours = weeklyExtraHours;
+            return this;
+        }
+
+        public Double getSemseterExtraHours() {
+            return semseterExtraHours;
+        }
+
+        public SubjectEntityBuilder setSemseterExtraHours(Double semseterExtraHours) {
+            this.semseterExtraHours = semseterExtraHours;
+            return this;
+        }
+
+        public Double getStudiedHoursDay() {
+            return studiedHoursDay;
+        }
+
+        public SubjectEntityBuilder setStudiedHoursDay(Double studiedHoursDay) {
+            this.studiedHoursDay = studiedHoursDay;
+            return this;
+        }
+
+        public Double getStudiedHoursWeek() {
+            return studiedHoursWeek;
+        }
+
+        public SubjectEntityBuilder setStudiedHoursWeek(Double studiedHoursWeek) {
+            this.studiedHoursWeek = studiedHoursWeek;
+            return this;
+        }
+
+        public Double getStudiedHoursSemester() {
+            return studiedHoursSemester;
+        }
+
+        public SubjectEntityBuilder setStudiedHoursSemester(Double studiedHoursSemester) {
+            this.studiedHoursSemester = studiedHoursSemester;
+            return this;
+        }
+
+        public Long getSemesterId() {
+            return semesterId;
+        }
+
+        public void setSemesterId(Long semesterId) {
+            this.semesterId = semesterId;
+        }
+
+        public SubjectEntity build(){
+            return new SubjectEntity(this);
+        }
     }
 }
