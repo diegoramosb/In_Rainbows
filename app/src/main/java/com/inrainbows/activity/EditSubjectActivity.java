@@ -12,6 +12,8 @@ import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.EditSubjectPresenter;
 import com.inrainbows.mvp.view.EditSubjectContract;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,8 +49,7 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = getIntent().getExtras();
-        currentSemester = (Semester) bundle.getParcelable("currentSemester");
+        currentSemester = Parcels.unwrap(getIntent().getParcelableExtra("currentSemester"));
 
         setUIComponents();
     }

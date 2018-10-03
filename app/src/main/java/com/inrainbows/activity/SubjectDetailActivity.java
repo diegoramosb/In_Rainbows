@@ -68,7 +68,6 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = getIntent().getExtras();
         subject = Parcels.unwrap(getIntent().getParcelableExtra("subject"));
 
         System.out.println(subject);

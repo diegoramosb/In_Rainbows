@@ -53,11 +53,13 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
     }
 
     private void getSubjectsFromDb(){
-        List<Subject> semesterSubjects = subjectEntityListToSubject(db.subjectDao().getAllSubjectsWithSemesterId(currentSemester.getValue().getId()));
-        for(Subject subject : semesterSubjects){
-            subject.setGrades(gradeEntityListToGrade(db.gradeDao().getAllWithSubjectId(subject.getId())));
+        if(currentSemester.getValue() != null) {
+            List<Subject> semesterSubjects = subjectEntityListToSubject(db.subjectDao().getAllSubjectsWithSemesterId(currentSemester.getValue().getId()));
+            for (Subject subject : semesterSubjects) {
+                subject.setGrades(gradeEntityListToGrade(db.gradeDao().getAllWithSubjectId(subject.getId())));
+            }
+            subjects.setValue(semesterSubjects);
         }
-        subjects.setValue(semesterSubjects);
     }
 
     @Override

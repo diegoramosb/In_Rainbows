@@ -79,9 +79,10 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
         super.onCreate(savedInstanceState);
 
         setUIComponents();
-        setDropdownData();
 
         this.presenter = new EditGradePresenter(this);
+
+        setDropdownData();
     }
 
     /**
