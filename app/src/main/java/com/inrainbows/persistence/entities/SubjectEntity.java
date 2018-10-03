@@ -421,10 +421,6 @@ public class SubjectEntity extends BaseEntity{
             return semesterId;
         }
 
-        public void setSemesterId(Long semesterId) {
-            this.semesterId = semesterId;
-        }
-
         public SubjectEntity build(){
             return new SubjectEntity(this);
         }

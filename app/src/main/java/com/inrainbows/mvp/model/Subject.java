@@ -484,9 +484,14 @@ public class Subject {
      * @return
      */
     public SubjectEntity toEntity() {
-        return new SubjectEntity(id, name, credits, totalHours, classHours, dailyExtraHours,
-                weeklyExtraHours, semesterExtraHours, studiedHoursDay, studiedHoursWeek,
-                studiedHoursSemester, semesterId);
+        return new SubjectEntity.SubjectEntityBuilder(id, name, credits, classHours, semesterId)
+                .setDailyExtraHours(dailyExtraHours)
+                .setSemseterExtraHours(semesterExtraHours)
+                .setStudiedHoursDay(studiedHoursDay)
+                .setStudiedHoursWeek(studiedHoursWeek)
+                .setStudiedHoursSemester(studiedHoursSemester)
+                .setTotalHours(totalHours)
+                .build();
     }
 
     /**
