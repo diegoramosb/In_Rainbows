@@ -131,7 +131,9 @@ public class Subject {
 
             this.totalHours = entity.getTotalHours();
             this.classHours = entity.getClassHours();
-            this.weeklyExtraHours = entity.getExtraHours();
+            this.dailyExtraHours = entity.getDailyExtraHours();
+            this.weeklyExtraHours = entity.getWeeklyExtraHours();
+            this.semesterExtraHours = entity.getSemesterExtraHours();
 
             this.studiedHoursDay = entity.getStudiedHoursDay();
             this.studiedHoursWeek = entity.getStudiedHoursWeek();
@@ -482,8 +484,9 @@ public class Subject {
      * @return
      */
     public SubjectEntity toEntity() {
-        return new SubjectEntity(id, name, credits, totalHours, classHours, weeklyExtraHours,
-                studiedHoursDay, studiedHoursWeek, studiedHoursSemester, semesterId);
+        return new SubjectEntity(id, name, credits, totalHours, classHours, dailyExtraHours,
+                weeklyExtraHours, semesterExtraHours, studiedHoursDay, studiedHoursWeek,
+                studiedHoursSemester, semesterId);
     }
 
     /**
