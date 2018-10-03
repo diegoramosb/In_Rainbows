@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ca0adf0ef5fcecbda042f309353250ab",
+    "identityHash": "b7c4b8396f3e2f0fe2f6f01fc0827a74",
     "entities": [
       {
         "tableName": "SEMESTERS",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "SUBJECTS",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL, `CREDITS` REAL NOT NULL, `TOTAL_HOURS` REAL, `CLASS_HOURS` REAL NOT NULL, `EXTRA_HOURS` REAL, `STUDIED_HOURS_DAY` REAL, `STUDIED_HOURS_WEEK` REAL, `STUDIED_HOURS_SEMESTER` REAL, `SEMESTER_ID` INTEGER NOT NULL, FOREIGN KEY(`SEMESTER_ID`) REFERENCES `SEMESTERS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL, `CREDITS` REAL NOT NULL, `TOTAL_HOURS` REAL, `CLASS_HOURS` REAL NOT NULL, `WEEKLY_EXTRA_HOURS` REAL, `DAILY_EXTRA_HOURS` REAL, `SEMESTER_EXTRA_HOURS` REAL, `STUDIED_HOURS_DAY` REAL, `STUDIED_HOURS_WEEK` REAL, `STUDIED_HOURS_SEMESTER` REAL, `SEMESTER_ID` INTEGER NOT NULL, FOREIGN KEY(`SEMESTER_ID`) REFERENCES `SEMESTERS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -83,8 +83,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "extraHours",
-            "columnName": "EXTRA_HOURS",
+            "fieldPath": "weeklyExtraHours",
+            "columnName": "WEEKLY_EXTRA_HOURS",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyExtraHours",
+            "columnName": "DAILY_EXTRA_HOURS",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "semesterExtraHours",
+            "columnName": "SEMESTER_EXTRA_HOURS",
             "affinity": "REAL",
             "notNull": false
           },
@@ -217,7 +229,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ca0adf0ef5fcecbda042f309353250ab\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7c4b8396f3e2f0fe2f6f01fc0827a74\")"
     ]
   }
 }

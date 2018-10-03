@@ -129,6 +129,7 @@ public class SubjectEntity extends BaseEntity{
         this.name = builder.name;
         this.credits = builder.credits;
         this.classHours = builder.classHours;
+        this.semesterId = builder.semesterId;
 
         this.totalHours = builder.getTotalHours();
         this.dailyExtraHours = builder.getDailyExtraHours();
@@ -415,10 +416,6 @@ public class SubjectEntity extends BaseEntity{
         public SubjectEntityBuilder setStudiedHoursSemester(Double studiedHoursSemester) {
             this.studiedHoursSemester = studiedHoursSemester;
             return this;
-        }
-
-        public Long getSemesterId() {
-            return semesterId;
         }
 
         public SubjectEntity build(){

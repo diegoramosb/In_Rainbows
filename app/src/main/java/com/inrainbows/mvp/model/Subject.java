@@ -486,6 +486,7 @@ public class Subject {
     public SubjectEntity toEntity() {
         return new SubjectEntity.SubjectEntityBuilder(id, name, credits, classHours, semesterId)
                 .setDailyExtraHours(dailyExtraHours)
+                .setWeeklyExtraHours(weeklyExtraHours)
                 .setSemseterExtraHours(semesterExtraHours)
                 .setStudiedHoursDay(studiedHoursDay)
                 .setStudiedHoursWeek(studiedHoursWeek)
