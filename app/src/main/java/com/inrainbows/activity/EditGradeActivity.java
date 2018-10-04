@@ -86,7 +86,7 @@ public class EditGradeActivity extends BaseActivity implements EditGradeContract
     }
 
     /**
-     * Carga los nombres de las materias en el dropdown de elegir el nombre de la materia
+     * Loads the subject names in the dropdown list
      */
     private void setDropdownData() {
         ArrayAdapter<Subject> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getAllSubjects());
