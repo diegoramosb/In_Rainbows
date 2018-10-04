@@ -53,6 +53,8 @@
     <string name="remove_time_dialog_title">Pick time amount to remove</string>
     <string name="add_time">Add time</string>
     <string name="remove_time">Remove time</string>
+    <string name="tasks_list">Tasks</string>
+    <string name="times_list">Time logs</string>
 
     <string name="err_no_semester">Error: No semesters were found</string>
     <string name="err_no_semester_msg">There is not any semester to add this subject to. Create a semester first.</string>
