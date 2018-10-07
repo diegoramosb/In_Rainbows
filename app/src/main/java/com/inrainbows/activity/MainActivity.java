@@ -124,35 +124,29 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     }
 
     private void subscribeToSubjects(){
-        final Observer<List<Subject>> subjectsObserver = new Observer<List<Subject>>(){
-            @Override
-            public void onChanged(@Nullable List<Subject> subjects) {
-                if(subjects != null) {
-                    subjectsRvAdapter.setSubjects(subjects);
-                    updateUI();
-                }
-                else {
-                    //TODO: Hide recycler view and show empty message instead.
-                }
+        final Observer<List<Subject>> subjectsObserver = (subjects) -> {
+            if(subjects != null) {
+                subjectsRvAdapter.setSubjects(subjects);
+                updateUI();
+            }
+            else {
+                //TODO: Hide recycler view and show empty message instead.
             }
         };
 
         subjectsObserver.onChanged(presenter.getSubjects().getValue());
-        
+
         presenter.getSubjects().observe(this, subjectsObserver);
     }
 
     private void subscribeToCurrentSemester() {
-        final Observer<Semester> currentSemesterObserver = new Observer<Semester>() {
-            @Override
-            public void onChanged(@Nullable Semester semester) {
-                if (semester != null) {
-                    setCurrentSemester(semester);
-                    updateUI();
-                }
-                else {
-                    setCurrentSemesterName("Tap here to add semester");
-                }
+        final Observer<Semester> currentSemesterObserver = (semester)-> {
+            if (semester != null) {
+                setCurrentSemester(semester);
+                updateUI();
+            }
+            else {
+                setCurrentSemesterName("Tap here to add semester");
             }
         };
         if(currentSemester == null){
@@ -223,23 +217,20 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     private void setupDrawerContent(NavigationView navigationView) {
 
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.semesters_drawer_item:
-                                showChooseCurrentSemesterDialog();
-                                break;
-                            case R.id.main_activity_drawer_item:
+                (item) -> {
+                    switch (item.getItemId()){
+                        case R.id.semesters_drawer_item:
+                            showChooseCurrentSemesterDialog();
+                            break;
+                        case R.id.main_activity_drawer_item:
 //                                Intent intent = new Intent(MainActivity.this, EditSemesterActivity.class);
 //                                startActivity(intent);
-                                break;
-                            default:
-                                break;
-                        }
-                        drawerLayout.closeDrawers();
-                        return true;
+                            break;
+                        default:
+                            break;
                     }
+                    drawerLayout.closeDrawers();
+                    return true;
                 }
         );
     }

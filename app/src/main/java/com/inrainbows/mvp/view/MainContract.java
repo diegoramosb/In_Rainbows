@@ -17,10 +17,55 @@ import java.util.List;
  */
 public interface MainContract {
 
+    /**
+     * Interface for the main activity of the application to implement
+     */
+    interface View extends BaseView<MainContract.Presenter>{
+
+        /**
+         * Shows the addSemesterActivity activity
+         */
+        void showAddSemesterActivity();
+
+        /**
+         * Shows the AddSubjectActivity activity
+         */
+        void showAddSubjectActivity();
+
+        /**
+         * Shows the AddGradeActivity activity
+         */
+        void showAddGradeActivity();
+
+        /**
+         * Sets the given semester as the activity's current semester
+         * @param semester new current semester
+         */
+        void setCurrentSemester(Semester semester);
+
+        /**
+         * Sets the current semester label to the given string
+         * @param semesterName semester name or other string
+         */
+        void setCurrentSemesterName(String semesterName);
+
+    }
+
+    /**
+     * Interface to be extended by the main presenter
+     */
     interface Presenter extends BasePresenter<MainContract.View>{
 
+        /**
+         * Returns a MutableLiveData with the current semster
+         * @return current semester
+         */
         MutableLiveData<Semester> getCurrentSemester();
 
+        /**
+         *
+         * @param semester
+         */
         void setCurrentSemester(Semester semester);
 
         List<Semester> getAllSemesters();
@@ -30,33 +75,4 @@ public interface MainContract {
         void setDb(AppDatabase db);
 
     }
-
-    interface View extends BaseView<MainContract.Presenter>{
-
-        void showAddSemesterActivity();
-
-        void showAddSubjectActivity();
-
-        void showAddGradeActivity();
-
-        void setCurrentSemester(Semester semester);
-
-        void setCurrentSemesterName(String semesterName);
-
-    }
-
-    interface OnItemClickListener {
-
-//        void onClickItem(Semester semester);
-//
-//        void onClickLongItem(Semester semester);
-
-    }
-
-    interface DeleteListener {
-
-//        void setConfirm(boolean confirm, Semester semester);
-
-    }
-
 }
