@@ -19,24 +19,24 @@ public class GradeEntity extends BaseEntity {
 
     @ColumnInfo(name = "SUBJECT_ID")
     @NonNull
-    private Long subjectId;
+    private long subjectId;
 
     @ColumnInfo(name = "NAME", typeAffinity = ColumnInfo.TEXT)
     @NonNull
     private String name;
 
     @ColumnInfo(name = "GRADE", typeAffinity = ColumnInfo.REAL)
-    private Double grade;
+    private double grade;
 
     @ColumnInfo(name = "PERCENTAGE", typeAffinity = ColumnInfo.REAL)
     @NonNull
-    private Double percentage;
+    private double percentage;
 
     @ColumnInfo(name = "GRADED")
     @NonNull
-    private Boolean graded;
+    private boolean graded;
 
-    public GradeEntity(long id, Long subjectId, String name, Double grade, Double percentage, Boolean graded) {
+    public GradeEntity(long id, Long subjectId, String name, double grade, double percentage, boolean graded) {
         this.id = id;
         this.subjectId = subjectId;
         this.name = name;
@@ -45,11 +45,11 @@ public class GradeEntity extends BaseEntity {
         this.graded = graded;
     }
 
-    public Long getSubjectId() {
+    public long getSubjectId() {
         return subjectId;
     }
 
-    public GradeEntity setSubjectId(Long subjectId) {
+    public GradeEntity setSubjectId(long subjectId) {
         this.subjectId = subjectId;
         return this;
     }
@@ -62,27 +62,27 @@ public class GradeEntity extends BaseEntity {
         this.name = name;
     }
 
-    public Double getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(Double grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 
-    public Double getPercentage() {
+    public double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Double percentage) {
+    public void setPercentage(double percentage) {
         this.percentage = percentage;
     }
 
-    public Boolean isGraded() {
+    public boolean isGraded() {
         return graded;
     }
 
-    public void setGraded(Boolean graded) {
+    public void setGraded(boolean graded) {
         this.graded = graded;
     }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b7c4b8396f3e2f0fe2f6f01fc0827a74",
+    "identityHash": "507c193fb193b390102ec8ea4a12b7a1",
     "entities": [
       {
         "tableName": "SEMESTERS",
@@ -157,7 +157,7 @@
       },
       {
         "tableName": "GRADES",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SUBJECT_ID` INTEGER NOT NULL, `NAME` TEXT NOT NULL, `GRADE` REAL, `PERCENTAGE` REAL NOT NULL, `GRADED` INTEGER NOT NULL, FOREIGN KEY(`SUBJECT_ID`) REFERENCES `SUBJECTS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SUBJECT_ID` INTEGER NOT NULL, `NAME` TEXT NOT NULL, `GRADE` REAL NOT NULL, `PERCENTAGE` REAL NOT NULL, `GRADED` INTEGER NOT NULL, FOREIGN KEY(`SUBJECT_ID`) REFERENCES `SUBJECTS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -181,7 +181,7 @@
             "fieldPath": "grade",
             "columnName": "GRADE",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "percentage",
@@ -229,7 +229,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7c4b8396f3e2f0fe2f6f01fc0827a74\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"507c193fb193b390102ec8ea4a12b7a1\")"
     ]
   }
 }
