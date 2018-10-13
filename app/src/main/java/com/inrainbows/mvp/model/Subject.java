@@ -1,6 +1,7 @@
 package com.inrainbows.mvp.model;
 
 import com.inrainbows.mvp.model.listConverters.GradeListsConverter;
+import com.inrainbows.mvp.model.listConverters.TimeLogListConverter;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
 import org.parceler.ParcelPropertyConverter;
@@ -23,68 +24,71 @@ public class Subject {
     /**
      * Subject id
      */
-    long id;
+    private long id;
 
     /**
      * Id of the semester that the subject belongs to
      */
-    long semesterId;
+    private long semesterId;
 
     /**
      * Subject name
      */
-    String name;
+    private String name;
 
     /**
      * Amount of credits the subject is worth
      */
-    double credits;
+    private double credits;
 
     /**
      * Total expected weekly hours of study
      */
-    double totalHours;
+    private double totalHours;
 
     /**
      * Weekly hours of class
      */
-    double classHours;
+    private double classHours;
 
     /**
      * Daily extra expected hours of study (hours without counting class)
      */
-    double weeklyExtraHours;
+    private double weeklyExtraHours;
 
     /**
      * Weekly extra expected hours of study
      */
-    double dailyExtraHours;
+    private double dailyExtraHours;
 
     /**
      * Expected extra studiy hours in all semester
      */
-    double semesterExtraHours;
+    private double semesterExtraHours;
 
     /**
      * Actual studied hours on this day
      */
-    double studiedHoursDay;
+    private double studiedHoursDay;
 
     /**
      * Actual studied hours this week
      */
-    double studiedHoursWeek;
+    private double studiedHoursWeek;
 
     /**
      * Actual studied hours this semester
      */
-    double studiedHoursSemester;
+    private double studiedHoursSemester;
 
     /**
      * List with the subject's grades
      */
     @ParcelPropertyConverter(GradeListsConverter.class)
     private List<Grade> grades;
+
+    @ParcelPropertyConverter(TimeLogListConverter.class)
+    private List<TimeLog> timeLogs;
 
     /*--------------------------------------------------------------------------------------------*/
     /* CONSTRUCTORS */
@@ -116,6 +120,7 @@ public class Subject {
         this.studiedHoursWeek = builder.getStudiedHoursWeek();
         this.studiedHoursSemester = builder.getStudiedHoursSemester();
         this.grades = builder.getGrades();
+        this.timeLogs = builder.getTimeLogs();
     }
 
     /**
@@ -347,6 +352,22 @@ public class Subject {
         this.grades = grades;
     }
 
+    /**
+     * Returns the subject time logs
+     * @return the subject time logs
+     */
+    public List<TimeLog> getTimeLogs() {
+        return timeLogs;
+    }
+
+    /**
+     * Sets the subject time logs to the given value
+     * @param timeLogs new subject time logs
+     */
+    public void setTimeLogs(List<TimeLog> timeLogs) {
+        this.timeLogs = timeLogs;
+    }
+
     /*--------------------------------------------------------------------------------------------*/
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
@@ -357,6 +378,14 @@ public class Subject {
      */
     public void addGrade(Grade grade) {
         grades.add(grade);
+    }
+
+    /**
+     * Adds a time log to the list
+     * @param timeLog time log to add
+     */
+    public void addTimeLog(TimeLog timeLog) {
+        timeLogs.add(timeLog);
     }
 
     /**
@@ -570,6 +599,8 @@ public class Subject {
 
         private List<Grade> grades;
 
+        private List<TimeLog> timeLogs;
+
         public SubjectBuilder(long id, String name, double credits, double classHours, long semesterId) {
             this.id = id;
             this.semesterId = semesterId;
@@ -577,6 +608,7 @@ public class Subject {
             this.credits = credits;
             this.classHours = classHours;
             grades = new ArrayList<>();
+            timeLogs = new ArrayList<>();
         }
 
         public SubjectBuilder setTotalHours(double totalHours) {
@@ -633,6 +665,15 @@ public class Subject {
 
         public SubjectBuilder setGrades(List<Grade> grades) {
             this.grades = grades;
+            return this;
+        }
+
+        public List<TimeLog> getTimeLogs() {
+            return timeLogs;
+        }
+
+        public SubjectBuilder setTimeLogs(List<TimeLog> timeLogs) {
+            this.timeLogs = timeLogs;
             return this;
         }
 

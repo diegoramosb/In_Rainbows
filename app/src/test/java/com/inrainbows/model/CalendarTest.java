@@ -1,4 +1,4 @@
-package com.inrainbows.model.model;
+package com.inrainbows.model;
 
 import com.inrainbows.mvp.model.Calendar;
 import com.inrainbows.mvp.model.Semester;
@@ -15,11 +15,11 @@ import static org.junit.Assert.*;
  */
 public class CalendarTest {
 
-    Calendar calendar;
-
-    public CalendarTest() {
-        this.calendar = new Calendar();
-    }
+//    Calendar calendar;
+//
+//    public CalendarTest() {
+//        this.calendar = new Calendar();
+//    }
 
 //    @Test
 //    public void getCurrentWeek() {
@@ -32,17 +32,17 @@ public class CalendarTest {
 //    }
 
 
-    @Test
-    public void getCurrentWeekNumber() {
-        DateTime startDate = calendar.getCurrentDateTime();
-
-        Semester semester = new Semester.SemesterBuilder(1L, "a", startDate, startDate.plusWeeks(16)).build();
-        assertEquals(new Integer(1), calendar.getCurrentWeekNumber(semester));
-
-        semester.setStartDate(startDate.minusWeeks(2));
-        assertEquals(new Integer(3), calendar.getCurrentWeekNumber(semester));
-
-        semester.setStartDate(startDate.plusWeeks(3));
-        assertEquals(new Integer(-3), calendar.getCurrentWeekNumber(semester));
-    }
+//    @Test
+//    public void getCurrentWeekNumber() {
+//        DateTime startDate = calendar.getCurrentDateTime();
+//
+//        Semester semester = new Semester.SemesterBuilder(1L, "a", startDate, startDate.plusWeeks(16)).build();
+//        assertEquals(new Integer(1), calendar.getCurrentWeekNumber(semester));
+//
+//        semester.setStartDate(startDate.minusWeeks(2));
+//        assertEquals(new Integer(3), calendar.getCurrentWeekNumber(semester));
+//
+//        semester.setStartDate(startDate.plusWeeks(3));
+//        assertEquals(new Integer(-3), calendar.getCurrentWeekNumber(semester));
+//    }
 }

@@ -26,18 +26,18 @@ import java.util.NoSuchElementException;
 @org.parceler.Parcel()
 public class Semester {
 
-    long id;
+    private long id;
 
-    String semesterName;
+    private String semesterName;
 
-    DateTime startDate;
+    private DateTime startDate;
 
-    DateTime endDate;
+    private DateTime endDate;
 
-    boolean currentSemester;
+    private boolean currentSemester;
 
     @ParcelPropertyConverter(SubjectListConverter.class)
-    List<Subject> subjects;
+    private List<Subject> subjects;
 
     /**
      * Empty constructor for Parceler

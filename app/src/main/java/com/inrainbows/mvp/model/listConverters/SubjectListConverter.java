@@ -47,7 +47,7 @@ public class SubjectListConverter implements ParcelConverter<List<Subject>> {
         }
         List<Subject> subjects = new ArrayList<>();
         for(int i = 0; i < size; i++) {
-            subjects.add((Subject) Parcels.unwrap(parcel.readParcelable(Subject.class.getClassLoader())));
+            subjects.add(Parcels.unwrap(parcel.readParcelable(Subject.class.getClassLoader())));
         }
         return subjects;
     }

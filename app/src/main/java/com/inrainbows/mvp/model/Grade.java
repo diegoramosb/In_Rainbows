@@ -10,20 +10,20 @@ import org.joda.time.DateTime;
 /**
  * @author diego on 31/07/2018.
  */
-@org.parceler.Parcel(org.parceler.Parcel.Serialization.BEAN)
+@org.parceler.Parcel()
 public class Grade implements GradedAssignment{
 
-    long id;
+    private long id;
 
-    long subjectId;
+    private long subjectId;
 
-    String name;
+    private String name;
 
-    double grade;
+    private double grade;
 
-    double percentage;
+    private double percentage;
 
-    boolean graded;
+    private boolean graded;
 
     /**
      * Empty constructor for Parceler
@@ -118,7 +118,7 @@ public class Grade implements GradedAssignment{
 
         private long id;
 
-        public long subjectId;
+        private long subjectId;
 
         private String name;
 

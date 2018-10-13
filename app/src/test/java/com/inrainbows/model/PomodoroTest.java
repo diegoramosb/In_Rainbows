@@ -1,4 +1,4 @@
-package com.inrainbows.model.model;
+package com.inrainbows.model;
 
 
 import com.inrainbows.mvp.model.Pomodoro;
@@ -11,16 +11,16 @@ import org.junit.Test;
 
 public class PomodoroTest {
 
-    Pomodoro pomodoro;
-
-    public void setup1(){
-        pomodoro = new Pomodoro();
-    }
-
-    @Test
-    public void testPomodoro(){
-        setup1();
-        pomodoro.set(10);
-        pomodoro.start();
-    }
+//    Pomodoro pomodoro;
+//
+//    public void setup1(){
+//        pomodoro = new Pomodoro();
+//    }
+//
+//    @Test
+//    public void testPomodoro(){
+//        setup1();
+//        pomodoro.set(10);
+//        pomodoro.start();
+//    }
 }
