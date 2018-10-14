@@ -1,12 +1,17 @@
 package com.inrainbows.model;
 
+import com.inrainbows.mvp.model.Grade;
 import com.inrainbows.mvp.model.Subject;
+import com.inrainbows.mvp.model.TimeLog;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import uk.co.jemos.podam.api.PodamFactory;
 
 import static org.junit.Assert.*;
 
@@ -15,37 +20,20 @@ import static org.junit.Assert.*;
  */
 public class SubjectTest {
 
-//    private Subject subject;
-//
-//    public void setUp(){
-//        subject = new Subject.SubjectBuilder(1L,"a", 3, 3).build();
-//    }
-//
-//    @Test
-//    public void subjectTest(){
-//        try{
-//            subject = new Subject.SubjectBuilder(1L,"a", 3, 3).build();
-//            List<SubjectTask> tasks = new ArrayList<>();
-//            tasks.add(new SubjectTask.TaskBuilder(1L,"a", 100).build());
-//            subject = new Subject.SubjectBuilder(1L,"a", 3, 3)
-//            .setDailyExtraHours(2)
-//            .setTotalHours(2)
-//            .setStudiedHoursDay(2)
-//            .setStudiedHoursSemester(2)
-//            .setStudiedHoursWeek(2)
-//            .setGrades(tasks)
-//            .build();
-//        }catch (Exception error){
-//            fail();
-//        }
-//    }
-//
-//    @Test
-//    public void toStringTest() {
-//        setUp();
-//
-//        //assertEquals("a, credits: 3, class hours: ", subject.toString());
-//    }
+    private PodamFactory factory;
+
+    private Subject subject;
+
+    @Before
+    public void setUp(){
+        subject = new Subject.SubjectBuilder(1L, "asdf", 3, 3, 1L).build();
+        for(int i = 0; i < 5; i++) {
+            subject.addGrade(factory.manufacturePojo(Grade.class));
+        }
+        for(int i = 0; i < 3; i++) {
+            subject.addTimeLog(factory.manufacturePojo(TimeLog.class));
+        }
+    }
 //
 //    @Test
 //    public void setName() {

@@ -67,21 +67,6 @@ public class Subject {
     private double semesterExtraHours;
 
     /**
-     * Actual studied hours on this day
-     */
-    private double studiedHoursDay;
-
-    /**
-     * Actual studied hours this week
-     */
-    private double studiedHoursWeek;
-
-    /**
-     * Actual studied hours this semester
-     */
-    private double studiedHoursSemester;
-
-    /**
      * List with the subject's grades
      */
     @ParcelPropertyConverter(GradeListsConverter.class)
@@ -116,9 +101,6 @@ public class Subject {
         this.dailyExtraHours = dailyExtraHours();
         this.semesterExtraHours = semesterExtraHours();
 
-        this.studiedHoursDay = builder.getStudiedHoursDay();
-        this.studiedHoursWeek = builder.getStudiedHoursWeek();
-        this.studiedHoursSemester = builder.getStudiedHoursSemester();
         this.grades = builder.getGrades();
         this.timeLogs = builder.getTimeLogs();
     }
@@ -140,10 +122,8 @@ public class Subject {
             this.weeklyExtraHours = entity.getWeeklyExtraHours();
             this.semesterExtraHours = entity.getSemesterExtraHours();
 
-            this.studiedHoursDay = entity.getStudiedHoursDay();
-            this.studiedHoursWeek = entity.getStudiedHoursWeek();
-            this.studiedHoursSemester = entity.getStudiedHoursSemester();
             this.grades = new ArrayList<>();
+            this.timeLogs = new ArrayList<>();
         }
     }
 
@@ -274,67 +254,67 @@ public class Subject {
     /**
      * @return Studied hours for the current day
      */
-    public double getStudiedHoursDay() {
-        return studiedHoursDay;
-    }
-
-    /**
-     * Sets the studied hours for the current day to pStudiedHours
-     *
-     * @param pStudiedHours new studied hours
-     */
-    public void setStudiedHoursDay(double pStudiedHours) {
-        studiedHoursDay = pStudiedHours;
-    }
-
-    /**
-     * Increases the studied hours of the current day by pStudiedHours
-     *
-     * @param pStudiedHours hours to increase
-     */
-    public void addStudiedHoursDay(double pStudiedHours) {
-        studiedHoursDay += pStudiedHours;
-    }
-
-    /**
-     * Decreases the studied hours of the day by hours
-     * @param hours number of hours to decrease
-     */
-    public void removeStudiedHoursDay(double hours) {
-        studiedHoursDay -= hours;
-    }
-
-    /**
-     * @return Studied hours this week in the subject
-     */
-    public double getStudiedHoursWeek() {
-        return studiedHoursWeek;
-    }
-
-    /**
-     * Sets the amount of studied hours this week to pStudiedHours
-     *
-     * @param pStudiedHours new amount of studied hours this week
-     */
-    public void setStudiedHoursWeek(double pStudiedHours) {
-        studiedHoursWeek = pStudiedHours;
-    }
-
-    /**
-     * @return Amount of studiedHours this semester in the subject
-     */
-    public double getStudiedHoursSemester() {
-        return studiedHoursSemester;
-    }
-
-    /**
-     * Sets the amount of studied hours of this subject in this semester to pStudiedHours
-     *
-     * @param pStudiedHours new amount of studied hours
-     */
-    public void setStudiedHoursSemester(double pStudiedHours) {
-        studiedHoursSemester = pStudiedHours;
-    }
+//    public double getStudiedHoursDay() {
+//        return studiedHoursDay;
+//    }
+//
+//    /**
+//     * Sets the studied hours for the current day to pStudiedHours
+//     *
+//     * @param pStudiedHours new studied hours
+//     */
+//    public void setStudiedHoursDay(double pStudiedHours) {
+//        studiedHoursDay = pStudiedHours;
+//    }
+//
+//    /**
+//     * Increases the studied hours of the current day by pStudiedHours
+//     *
+//     * @param pStudiedHours hours to increase
+//     */
+//    public void addStudiedHoursDay(double pStudiedHours) {
+//        studiedHoursDay += pStudiedHours;
+//    }
+//
+//    /**
+//     * Decreases the studied hours of the day by hours
+//     * @param hours number of hours to decrease
+//     */
+//    public void removeStudiedHoursDay(double hours) {
+//        studiedHoursDay -= hours;
+//    }
+//
+//    /**
+//     * @return Studied hours this week in the subject
+//     */
+//    public double getStudiedHoursWeek() {
+//        return studiedHoursWeek;
+//    }
+//
+//    /**
+//     * Sets the amount of studied hours this week to pStudiedHours
+//     *
+//     * @param pStudiedHours new amount of studied hours this week
+//     */
+//    public void setStudiedHoursWeek(double pStudiedHours) {
+//        studiedHoursWeek = pStudiedHours;
+//    }
+//
+//    /**
+//     * @return Amount of studiedHours this semester in the subject
+//     */
+//    public double getStudiedHoursSemester() {
+//        return studiedHoursSemester;
+//    }
+//
+//    /**
+//     * Sets the amount of studied hours of this subject in this semester to pStudiedHours
+//     *
+//     * @param pStudiedHours new amount of studied hours
+//     */
+//    public void setStudiedHoursSemester(double pStudiedHours) {
+//        studiedHoursSemester = pStudiedHours;
+//    }
 
     /**
      * Returns a list with the subject grades
@@ -371,6 +351,18 @@ public class Subject {
     /*--------------------------------------------------------------------------------------------*/
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
+
+    public double studiedTimeDay() {
+        return 0;
+    }
+
+    public double studiedTimeWeek() {
+        return 0;
+    }
+
+    public double studiedTimeSemester() {
+        return 0;
+    }
 
     /**
      * Adds a grade to the list
@@ -486,7 +478,7 @@ public class Subject {
      * @return daily studied percentage
      */
     public int dailyStudiedPercentage() {
-        Double ans = (studiedHoursWeek / dailyExtraHours);
+        Double ans = (studiedTimeDay() / dailyExtraHours);
         return ans.intValue();
     }
 
@@ -495,7 +487,7 @@ public class Subject {
      * @return weekly studied percentage
      */
     public int weeklyStudiedPercentage() {
-        Double ans = studiedHoursWeek / weeklyExtraHours;
+        Double ans = studiedTimeWeek() / weeklyExtraHours;
         return ans.intValue();
     }
 
@@ -504,7 +496,7 @@ public class Subject {
      * @return semester studied percentage
      */
     public int semesterStudiedPercentage() {
-        Double ans = studiedHoursSemester / semesterExtraHours;
+        Double ans = studiedTimeSemester() / semesterExtraHours;
         return ans.intValue();
     }
 
@@ -517,9 +509,9 @@ public class Subject {
                 .setDailyExtraHours(dailyExtraHours)
                 .setWeeklyExtraHours(weeklyExtraHours)
                 .setSemseterExtraHours(semesterExtraHours)
-                .setStudiedHoursDay(studiedHoursDay)
-                .setStudiedHoursWeek(studiedHoursWeek)
-                .setStudiedHoursSemester(studiedHoursSemester)
+//                .setStudiedHoursDay(studiedHoursDay)
+//                .setStudiedHoursWeek(studiedHoursWeek)
+//                .setStudiedHoursSemester(studiedHoursSemester)
                 .setTotalHours(totalHours)
                 .build();
     }
@@ -543,32 +535,10 @@ public class Subject {
         if (Double.compare(subject.totalHours, totalHours) != 0) return false;
         if (Double.compare(subject.classHours, classHours) != 0) return false;
         if (Double.compare(subject.weeklyExtraHours, weeklyExtraHours) != 0) return false;
-        if (Double.compare(subject.studiedHoursDay, studiedHoursDay) != 0) return false;
-        if (Double.compare(subject.studiedHoursWeek, studiedHoursWeek) != 0) return false;
-        if (Double.compare(subject.studiedHoursSemester, studiedHoursSemester) != 0) return false;
+//        if (Double.compare(subject.studiedHoursDay, studiedHoursDay) != 0) return false;
+//        if (Double.compare(subject.studiedHoursWeek, studiedHoursWeek) != 0) return false;
+//        if (Double.compare(subject.studiedHoursSemester, studiedHoursSemester) != 0) return false;
         return name.equals(subject.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
-        temp = Double.doubleToLongBits(credits);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(totalHours);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(classHours);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(weeklyExtraHours);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(studiedHoursDay);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(studiedHoursWeek);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(studiedHoursSemester);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
     }
 
     public static class SubjectBuilder {
@@ -590,12 +560,6 @@ public class Subject {
         private double weeklyExtraHours;
 
         private double semesterExtraHours;
-
-        private double studiedHoursDay;
-
-        private double studiedHoursWeek;
-
-        private double studiedHoursSemester;
 
         private List<Grade> grades;
 
@@ -632,32 +596,6 @@ public class Subject {
             return this;
         }
 
-        double getStudiedHoursDay() {
-            return studiedHoursDay;
-        }
-
-        public SubjectBuilder setStudiedHoursDay(double studiedHoursDay) {
-            this.studiedHoursDay = studiedHoursDay;
-            return this;
-        }
-
-        double getStudiedHoursWeek() {
-            return studiedHoursWeek;
-        }
-
-        public SubjectBuilder setStudiedHoursWeek(double studiedHoursWeek) {
-            this.studiedHoursWeek = studiedHoursWeek;
-            return this;
-        }
-
-        double getStudiedHoursSemester() {
-            return studiedHoursSemester;
-        }
-
-        public SubjectBuilder setStudiedHoursSemester(double studiedHoursSemester) {
-            this.studiedHoursSemester = studiedHoursSemester;
-            return this;
-        }
 
         public List<Grade> getGrades() {
             return grades;

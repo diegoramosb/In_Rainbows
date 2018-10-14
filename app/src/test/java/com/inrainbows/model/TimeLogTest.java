@@ -5,6 +5,8 @@ import com.inrainbows.mvp.model.TimeLog;
 import junit.framework.Assert;
 
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
+import org.joda.time.Interval;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,34 +22,31 @@ public class TimeLogTest  {
 
     private TimeLog timeLog;
 
-    private DateTime testDateTime;
+    private DateTime startTime;
+
+    private DateTime endTime;
 
     @Before
     public void setUp() {
-        testDateTime = factory.manufacturePojo(DateTime.class);
-        timeLog = new TimeLog(100, testDateTime);
-    }
-
-    @Test
-    public void getDurationTest() {
-        Assert.assertEquals(100.0,timeLog.getDuration());
-    }
-
-    @Test
-    public void setDurationTest() {
-        timeLog.setDuration(500);
-        Assert.assertEquals(500D, timeLog.getDuration());
+        startTime = factory.manufacturePojo(DateTime.class);
+        endTime =  new DateTime().plus(factory.manufacturePojo(Long.class));
+        timeLog = new TimeLog(startTime, endTime);
     }
 
     @Test
     public void getStartTimeTest() {
-        Assert.assertEquals(testDateTime, timeLog.getStartTime());
+        Assert.assertEquals(startTime, timeLog.getStartTime());
     }
 
     @Test
     public void setStartTimeTest() {
-        testDateTime = testDateTime.plus(10000);
-        timeLog.setStartTime(testDateTime);
-        Assert.assertEquals(testDateTime, timeLog.getStartTime());
+        startTime = startTime.plus(10000);
+        timeLog.setStartTime(startTime);
+        Assert.assertEquals(startTime, timeLog.getStartTime());
+    }
+
+    @Test
+    public void getDurationTest() {
+        Assert.assertEquals(new Interval(startTime, endTime).toDurationMillis(), timeLog.duration());
     }
 }
