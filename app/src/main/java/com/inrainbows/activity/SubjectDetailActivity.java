@@ -70,8 +70,6 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
 
         subject = Parcels.unwrap(getIntent().getParcelableExtra("subject"));
 
-        System.out.println(subject);
-
         setUIComponents();
     }
 
@@ -108,11 +106,8 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
     }
 
     private void subscribeToSubject() {
-        final Observer<Subject> subjectObserver = new Observer<Subject>() {
-            @Override
-            public void onChanged(@Nullable Subject subject) {
-                updateUI();
-            }
+        final Observer<Subject> subjectObserver = (subject) -> {
+            updateUI();
         };
 
         subjectObserver.onChanged(subject);

@@ -4,6 +4,7 @@ import com.inrainbows.mvp.model.listConverters.GradeListsConverter;
 import com.inrainbows.mvp.model.listConverters.TimeLogListConverter;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
+import org.joda.time.DateTime;
 import org.parceler.ParcelPropertyConverter;
 
 import java.text.DecimalFormat;
@@ -252,71 +253,6 @@ public class Subject {
     }
 
     /**
-     * @return Studied hours for the current day
-     */
-//    public double getStudiedHoursDay() {
-//        return studiedHoursDay;
-//    }
-//
-//    /**
-//     * Sets the studied hours for the current day to pStudiedHours
-//     *
-//     * @param pStudiedHours new studied hours
-//     */
-//    public void setStudiedHoursDay(double pStudiedHours) {
-//        studiedHoursDay = pStudiedHours;
-//    }
-//
-//    /**
-//     * Increases the studied hours of the current day by pStudiedHours
-//     *
-//     * @param pStudiedHours hours to increase
-//     */
-//    public void addStudiedHoursDay(double pStudiedHours) {
-//        studiedHoursDay += pStudiedHours;
-//    }
-//
-//    /**
-//     * Decreases the studied hours of the day by hours
-//     * @param hours number of hours to decrease
-//     */
-//    public void removeStudiedHoursDay(double hours) {
-//        studiedHoursDay -= hours;
-//    }
-//
-//    /**
-//     * @return Studied hours this week in the subject
-//     */
-//    public double getStudiedHoursWeek() {
-//        return studiedHoursWeek;
-//    }
-//
-//    /**
-//     * Sets the amount of studied hours this week to pStudiedHours
-//     *
-//     * @param pStudiedHours new amount of studied hours this week
-//     */
-//    public void setStudiedHoursWeek(double pStudiedHours) {
-//        studiedHoursWeek = pStudiedHours;
-//    }
-//
-//    /**
-//     * @return Amount of studiedHours this semester in the subject
-//     */
-//    public double getStudiedHoursSemester() {
-//        return studiedHoursSemester;
-//    }
-//
-//    /**
-//     * Sets the amount of studied hours of this subject in this semester to pStudiedHours
-//     *
-//     * @param pStudiedHours new amount of studied hours
-//     */
-//    public void setStudiedHoursSemester(double pStudiedHours) {
-//        studiedHoursSemester = pStudiedHours;
-//    }
-
-    /**
      * Returns a list with the subject grades
      * @return list with the subject grades
      */
@@ -352,16 +288,35 @@ public class Subject {
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
 
+
     public double studiedMinutesDay() {
-        return 0;
+        DateTime.Property currentDay = DateTime.now().dayOfYear();
+        double studiedMinutesDay = 0;
+        for(TimeLog timeLog : timeLogs) {
+            if(timeLog.getStartTime().dayOfYear().equals(currentDay)) {
+                studiedMinutesDay += timeLog.durationMinutes();
+            }
+        }
+        return studiedMinutesDay;
     }
 
     public double studiedMinutesWeek() {
-        return 0;
+        DateTime.Property currentDateTime = DateTime.now().weekOfWeekyear();
+        double studiedMinutesDay = 0;
+        for(TimeLog timeLog : timeLogs) {
+            if(timeLog.getStartTime().weekOfWeekyear().equals(currentDateTime)) {
+                studiedMinutesDay += timeLog.durationMinutes();
+            }
+        }
+        return studiedMinutesDay;
     }
 
     public double studiedMinutesSemester() {
-        return 0;
+        double studiedMinutesDay = 0;
+        for(TimeLog timeLog : timeLogs) {
+            studiedMinutesDay += timeLog.durationMinutes();
+        }
+        return studiedMinutesDay;
     }
 
     public double studiedHoursDay() {
@@ -433,11 +388,11 @@ public class Subject {
      */
     public double gradedPercentage() {
         double ans = 0;
-            for (Grade currentGrade : grades) {
-                if(currentGrade.isGraded()) {
-                    ans += currentGrade.getPercentage();
-                }
+        for (Grade currentGrade : grades) {
+            if(currentGrade.isGraded()) {
+                ans += currentGrade.getPercentage();
             }
+        }
         return ans;
     }
 
@@ -464,15 +419,15 @@ public class Subject {
     public double currentGrade() {
         double ans = 0;
         double gradedPercentage = gradedPercentage();
-            List<Grade> grades = gradedGrades();
-            if( gradedPercentage >= 100.0 ){
-                for( Grade currentGrade : grades )
-                    ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / 100.0;
-            }
-            else{
-                for( Grade currentGrade : grades )
-                    ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / gradedPercentage;
-            }
+        List<Grade> gradedGrades = gradedGrades();
+        if( gradedPercentage >= 100.0 ){
+            for( Grade currentGrade : gradedGrades )
+                ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / 100.0;
+        }
+        else{
+            for( Grade currentGrade : gradedGrades )
+                ans += (currentGrade.getGrade() * currentGrade.getPercentage()) / gradedPercentage;
+        }
         return ans;
     }
 

@@ -1,16 +1,12 @@
 package com.inrainbows.mvp.presenter;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.inrainbows.mvp.model.Grade;
-import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.view.SubjectDetailContract;
 import com.inrainbows.persistence.AppDatabase;
-import com.inrainbows.persistence.daos.SubjectDao;
 import com.inrainbows.persistence.entities.GradeEntity;
-import com.inrainbows.persistence.entities.SubjectEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +37,9 @@ public class SubjectDetailPresenter implements SubjectDetailContract.Presenter {
     private void getSubjectFromDb() {
         if(subject != null){
             subject.setValue(new Subject(db.subjectDao().get(subject.getValue().getId())));
+            List<Grade> grades = gradeEntityListToGrade(db.gradeDao().getAllWithSubjectId(subject.getValue().getId()));
+            subject.getValue().setGrades(grades);
         }
-        List<Grade> grades = gradeEntityListToGrade(db.gradeDao().getAllWithSubjectId(subject.getValue().getId()));
-        subject.getValue().setGrades(grades);
     }
 
     private List<Grade> gradeEntityListToGrade(List<GradeEntity> entities) {

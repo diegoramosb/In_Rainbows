@@ -1,8 +1,5 @@
 package com.inrainbows.mvp.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.inrainbows.mvp.model.listConverters.SubjectListConverter;
 import com.inrainbows.persistence.entities.SemesterEntity;
 import com.inrainbows.persistence.entities.SubjectEntity;
@@ -11,10 +8,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
-import org.parceler.ParcelProperty;
 import org.parceler.ParcelPropertyConverter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -50,6 +45,7 @@ public class Semester {
         this.semesterName = builder.semesterName;
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
+        this.currentSemester = builder.currentSemester;
 
         this.subjects = builder.getSubjects();
     }
@@ -94,7 +90,7 @@ public class Semester {
      * @param pStartMonth Start month
      * @param pStartDay   Start day
      */
-    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) throws IllegalArgumentException {
+    public void setStartDate(int pStartYear, int pStartMonth, int pStartDay) {
         try {
             MutableDateTime startDateCopy = startDate.toMutableDateTime();
             startDateCopy.setDate(pStartYear, pStartMonth, pStartDay);
@@ -123,7 +119,7 @@ public class Semester {
      * @param pEndDay   End day
      */
 
-    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) throws IllegalArgumentException {
+    public void setEndDate(int pEndYear, int pEndMonth, int pEndDay) {
         try {
             MutableDateTime endDateCopy = endDate.toMutableDateTime();
             endDateCopy.setDate(pEndYear, pEndMonth, pEndDay);
@@ -166,7 +162,7 @@ public class Semester {
      * @return true if the semester contains the subject with the given name
      * @throws IllegalArgumentException if the given name is not valid
      */
-    public boolean containsSubject(Subject subject) throws IllegalArgumentException {
+    public boolean containsSubject(Subject subject) {
         try {
             return subjects.contains(subject);
         } catch (IllegalArgumentException e) {
@@ -178,7 +174,7 @@ public class Semester {
      * @return an iterable with all the subjects of the semester
      * @throws NoSuchElementException if there are no subjects
      */
-    public Iterable<Subject> getSubjects() throws NoSuchElementException {
+    public Iterable<Subject> getSubjects() {
         if (!subjects.isEmpty()) {
             return subjects;
         } else {
@@ -228,7 +224,7 @@ public class Semester {
      * @throws IllegalArgumentException if the given name is not valid
      * @throws NoSuchElementException   if the subject is not found
      */
-    public void deleteSubject(Subject subject) throws NoSuchElementException, IllegalArgumentException {
+    public void deleteSubject(Subject subject) {
         try {
             if (!subjects.remove(subject)) {
                 throw new NoSuchElementException("Subject not found");
@@ -246,15 +242,11 @@ public class Semester {
      * @throws NoSuchElementException   if the subject is not found
      * @throws IllegalArgumentException if any name is not valid
      */
-    public void setSubjectName(Subject subject, String pNewName) throws NoSuchElementException, IllegalArgumentException {
+    public void setSubjectName(Subject subject, String pNewName) {
         if (pNewName != null && !pNewName.equals("")) {
-            try {
-                deleteSubject(subject);
-                subject.setName(pNewName);
-                addSubject(subject);
-            } catch (IllegalArgumentException e) {
-                throw e;
-            }
+            deleteSubject(subject);
+            subject.setName(pNewName);
+            addSubject(subject);
         } else
             throw new IllegalArgumentException("Name not valid");
     }
@@ -275,7 +267,7 @@ public class Semester {
     public double totalStudiedHours() {
         double totalStudiedHours = 0;
         for (Subject subject : subjects) {
-            totalStudiedHours += subject.getStudiedHoursSemester();
+            totalStudiedHours += subject.studiedHoursSemester();
         }
         return totalStudiedHours;
     }
@@ -287,7 +279,12 @@ public class Semester {
             points += (subject.currentGrade() * subject.getCredits());
             credits += subject.getCredits();
         }
-        return (points / credits);
+        if(credits > 0) {
+            return (points / credits);
+        }
+        else {
+            throw new NoSuchElementException("The semester doesn't have any subject with credits");
+        }
     }
 
     @Override
