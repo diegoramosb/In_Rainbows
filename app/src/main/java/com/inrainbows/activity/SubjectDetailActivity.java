@@ -89,15 +89,15 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
 
         tvSubjectGrade.setText(subject.currentGrade()+"");
 
-        Double value = subject.getStudiedHoursDay();
+        Double value = subject.studiedHoursDay();
         pbDay.setProgress(Double.valueOf((value/subject.getWeeklyExtraHours()) * 100).intValue(), true);
         tvProgressToday.setText(value+"");
 
-        value = subject.getStudiedHoursWeek();
+        value = subject.studiedHoursWeek();
         pbWeek.setProgress(value.intValue(), true);
         tvProgressWeek.setText(value+"");
 
-        value = subject.getStudiedHoursSemester();
+        value = subject.studiedHoursSemester();
         pbSemester.setProgress(value.intValue(), true);
         tvProgressSemester.setText(value+"");
     }
@@ -122,9 +122,9 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
 
     private void updateUI() {
         tvSubjectName.setText(subject.getName());
-        tvProgressToday.setText(subject.getStudiedHoursDay() + " h/" + subject.dailyHoursString() + " h");
-        tvProgressWeek.setText(subject.getStudiedHoursWeek() + "h/" + subject.getWeeklyExtraHours() + " h");
-        tvProgressSemester.setText(subject.getStudiedHoursSemester() + " h/" + subject.getSemesterExtraHours() + " h");
+        tvProgressToday.setText(subject.studiedHoursDay() + " h/" + subject.dailyHoursString() + " h");
+        tvProgressWeek.setText(subject.studiedHoursWeek() + "h/" + subject.getWeeklyExtraHours() + " h");
+        tvProgressSemester.setText(subject.studiedHoursSemester() + " h/" + subject.getSemesterExtraHours() + " h");
 
         pbDay.setProgress(subject.dailyStudiedPercentage());
         pbWeek.setProgress(subject.weeklyStudiedPercentage());

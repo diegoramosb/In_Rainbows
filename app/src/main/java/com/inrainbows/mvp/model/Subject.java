@@ -352,16 +352,28 @@ public class Subject {
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
 
-    public double studiedTimeDay() {
+    public double studiedMinutesDay() {
         return 0;
     }
 
-    public double studiedTimeWeek() {
+    public double studiedMinutesWeek() {
         return 0;
     }
 
-    public double studiedTimeSemester() {
+    public double studiedMinutesSemester() {
         return 0;
+    }
+
+    public double studiedHoursDay() {
+        return studiedMinutesDay() / 60;
+    }
+
+    public double studiedHoursWeek() {
+        return studiedMinutesWeek() / 60;
+    }
+
+    public double studiedHoursSemester() {
+        return studiedMinutesSemester() / 60;
     }
 
     /**
@@ -478,7 +490,7 @@ public class Subject {
      * @return daily studied percentage
      */
     public int dailyStudiedPercentage() {
-        Double ans = (studiedTimeDay() / dailyExtraHours);
+        Double ans = (studiedMinutesDay() / dailyExtraHours);
         return ans.intValue();
     }
 
@@ -487,7 +499,7 @@ public class Subject {
      * @return weekly studied percentage
      */
     public int weeklyStudiedPercentage() {
-        Double ans = studiedTimeWeek() / weeklyExtraHours;
+        Double ans = studiedMinutesWeek() / weeklyExtraHours;
         return ans.intValue();
     }
 
@@ -496,7 +508,7 @@ public class Subject {
      * @return semester studied percentage
      */
     public int semesterStudiedPercentage() {
-        Double ans = studiedTimeSemester() / semesterExtraHours;
+        Double ans = studiedMinutesSemester() / semesterExtraHours;
         return ans.intValue();
     }
 
