@@ -4,14 +4,16 @@ import com.inrainbows.mvp.model.Grade;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.model.TimeLog;
 
+import junit.framework.Assert;
+
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +22,7 @@ import static org.junit.Assert.*;
  */
 public class SubjectTest {
 
-    private PodamFactory factory;
+    private PodamFactory factory = new PodamFactoryImpl();
 
     private Subject subject;
 
@@ -28,120 +30,38 @@ public class SubjectTest {
     public void setUp(){
         subject = new Subject.SubjectBuilder(1L, "asdf", 3, 3, 1L).build();
         for(int i = 0; i < 5; i++) {
-            subject.addGrade(factory.manufacturePojo(Grade.class));
+            Grade grade = factory.manufacturePojo(Grade.class);
+            subject.addGrade(grade);
         }
-        for(int i = 0; i < 3; i++) {
-            subject.addTimeLog(factory.manufacturePojo(TimeLog.class));
+        for(int i = 0; i < 2; i++) {
+            TimeLog timeLog = new TimeLog(DateTime.now(), DateTime.now().plusMinutes(75));
+            subject.addTimeLog(timeLog);
+        }
+        DateTime yesterday = DateTime.now().minusDays(1);
+        TimeLog timeLog = new TimeLog(yesterday, yesterday.plusHours(1));
+        subject.addTimeLog(timeLog);
+    }
+
+    @Test
+    public void gradedGradesTest() {
+        List<Grade> graded = subject.gradedGrades();
+        List<Grade> allGrades = subject.getGrades();
+        for(Grade grade : allGrades) {
+            if(graded.contains(grade) && !grade.isGraded()){
+                fail("All grades in Graded should be graded");
+            }
         }
     }
-//
-//    @Test
-//    public void setName() {
-//        setUp();
-//        subject.setName("b");
-//        assertEquals("b", subject.getName());
-//    }
-//
-//    @Test
-//    public void setCredits() {
-//        setUp();
-//        subject.setCredits(1);
-//        assertEquals(1, subject.getCredits(), 0.0);
-//    }
-//
-//    @Test
-//    public void setClassHours() {
-//        setUp();
-//        subject.setClassHours(4.5);
-//        assertEquals(4.5, subject.getClassHours(), 0.0);
-//    }
-//
-//    @Test
-//    public void getTotalHours() {
-//        setUp();
-//        assertEquals(9, subject.getTotalHours(), 0.0);
-//    }
-//
-//    @Test
-//    public void setTotalHours() {
-//        setUp();
-//        subject.setTotalHours(10);
-//        assertEquals(10, subject.getTotalHours(), 0.0);
-//    }
-//
-//    @Test
-//    public void getExtraHours() {
-//        setUp();
-//        assertEquals(6, subject.getWeeklyExtraHours(), 0.0);
-//    }
-//
-//    @Test
-//    public void setExtraHours() {
-//        setUp();
-//        subject.setDailyExtraHours(5);
-//        assertEquals(5, subject.getWeeklyExtraHours(), 0.0);
-//    }
-//
-//    @Test
-//    public void setStudiedHoursDay() {
-//        setUp();
-//        subject.setStudiedHoursDay(5.5);
-//        assertEquals(5.5, subject.getStudiedHoursDay(), 0.0);
-//    }
-//
-//    @Test
-//    public void increaseStudiedHoursDay() {
-//        setUp();
-//        subject.setStudiedHoursDay(5.5);
-//        subject.addStudiedHoursDay(0.5);
-//        assertEquals(6, subject.getStudiedHoursDay(), 0.0);
-//    }
-//
-//    @Test
-//    public void setStudiedHoursWeek() throws Exception {
-//        setUp();
-//        subject.setStudiedHoursWeek(5.5);
-//        assertEquals(5.5, subject.getStudiedHoursWeek(), 0.0);
-//    }
-//
-//    @Test
-//    public void increaseStudiedHoursWeek() {
-//        setUp();
-//        subject.setStudiedHoursWeek(5.5);
-//        subject.addStudiedHoursWeek(0.5);
-//        assertEquals(6, subject.getStudiedHoursWeek(), 0.0);
-//    }
-//
-//    @Test
-//    public void setStudiedHoursSemester() {
-//        setUp();
-//        subject.setStudiedHoursSemester(5.5);
-//        assertEquals(5.5, subject.getStudiedHoursSemester(), 0.0);
-//    }
-//
-//    @Test
-//    public void increaseStudiedHoursSemester() {
-//        setUp();
-//        subject.setStudiedHoursSemester(5.5);
-//        subject.addStudiedHoursSemester(1.5);
-//        assertEquals(7, subject.getStudiedHoursSemester(), 0.0);
-//    }
-//
-//    @Test
-//    public void getAllTasks() {
-//        setUp();
-//        SubjectTask task1 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-//        SubjectTask task2 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-//        SubjectTask task3 = new SubjectTask.TaskBuilder(1L,"c", 50).build();
-//        subject.addGrade(task1);
-//        subject.addGrade(task2);
-//        subject.addGrade(task3);
-//        for( SubjectTask currentTask : subject.getGrades() ){
-//            if( !((currentTask.equals(task1) || currentTask.equals(task2) || currentTask.equals(task3)))){
-//                fail();
-//            }
-//        }
-//    }
+
+    @Test
+    public void studiedMinutesDayTest() {
+        Assert.assertEquals(150.0, subject.studiedMinutesToday());
+    }
+
+    public void studiedMinutesWeek() {
+
+    }
+
 //
 //    @Test
 //    public void getGradedTasks() {

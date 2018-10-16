@@ -5,6 +5,8 @@ import com.inrainbows.mvp.model.listConverters.TimeLogListConverter;
 import com.inrainbows.persistence.entities.SubjectEntity;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.Period;
 import org.parceler.ParcelPropertyConverter;
 
 import java.text.DecimalFormat;
@@ -288,19 +290,36 @@ public class Subject {
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
 
-
-    public double studiedMinutesDay() {
-        DateTime.Property currentDay = DateTime.now().dayOfYear();
+    public double studiedMinutesOnDate(DateTime date) {
         double studiedMinutesDay = 0;
         for(TimeLog timeLog : timeLogs) {
-            if(timeLog.getStartTime().dayOfYear().equals(currentDay)) {
+            if(timeLog.getStartTime().dayOfYear().equals(date.dayOfYear())) {
                 studiedMinutesDay += timeLog.durationMinutes();
             }
         }
         return studiedMinutesDay;
     }
 
-    public double studiedMinutesWeek() {
+    public double studiedMinutesInDateRange(DateTime startDate, DateTime endDate) {
+        Interval interval = new Interval(startDate, endDate);
+        double studiedMinutesRange = 0;
+        for(TimeLog timeLog : timeLogs) {
+            if(interval.contains(timeLog.getStartTime())) {
+                studiedMinutesRange += timeLog.durationMinutes();
+            }
+        }
+        return studiedMinutesRange;
+    }
+
+    /**
+     * Returns the amount of studied minutes for the current day
+     * @return the amount of studied minutes for the current day
+     */
+    public double studiedMinutesToday() {
+       return studiedMinutesOnDate(DateTime.now());
+    }
+
+    public double studiedMinutesThisWeek() {
         DateTime.Property currentDateTime = DateTime.now().weekOfWeekyear();
         double studiedMinutesDay = 0;
         for(TimeLog timeLog : timeLogs) {
@@ -311,7 +330,7 @@ public class Subject {
         return studiedMinutesDay;
     }
 
-    public double studiedMinutesSemester() {
+    public double studiedMinutesThisSemester() {
         double studiedMinutesDay = 0;
         for(TimeLog timeLog : timeLogs) {
             studiedMinutesDay += timeLog.durationMinutes();
@@ -319,16 +338,18 @@ public class Subject {
         return studiedMinutesDay;
     }
 
+
+
     public double studiedHoursDay() {
-        return studiedMinutesDay() / 60;
+        return studiedMinutesToday() / 60;
     }
 
     public double studiedHoursWeek() {
-        return studiedMinutesWeek() / 60;
+        return studiedMinutesThisWeek() / 60;
     }
 
     public double studiedHoursSemester() {
-        return studiedMinutesSemester() / 60;
+        return studiedMinutesThisSemester() / 60;
     }
 
     /**
@@ -400,7 +421,7 @@ public class Subject {
      * Returns the graded grades of the subject
      * @return graded grades of the subject
      */
-    private List<Grade> gradedGrades() {
+    public List<Grade> gradedGrades() {
         List<Grade> ans = new ArrayList<>();
         for(Grade currentGrade : grades){
             if(currentGrade.isGraded()){
@@ -445,7 +466,7 @@ public class Subject {
      * @return daily studied percentage
      */
     public int dailyStudiedPercentage() {
-        Double ans = (studiedMinutesDay() / dailyExtraHours);
+        Double ans = (studiedMinutesToday() / dailyExtraHours);
         return ans.intValue();
     }
 
@@ -454,7 +475,7 @@ public class Subject {
      * @return weekly studied percentage
      */
     public int weeklyStudiedPercentage() {
-        Double ans = studiedMinutesWeek() / weeklyExtraHours;
+        Double ans = studiedMinutesThisWeek() / weeklyExtraHours;
         return ans.intValue();
     }
 
@@ -463,7 +484,7 @@ public class Subject {
      * @return semester studied percentage
      */
     public int semesterStudiedPercentage() {
-        Double ans = studiedMinutesSemester() / semesterExtraHours;
+        Double ans = studiedMinutesThisSemester() / semesterExtraHours;
         return ans.intValue();
     }
 
