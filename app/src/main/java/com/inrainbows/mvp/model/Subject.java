@@ -300,8 +300,8 @@ public class Subject {
         return studiedMinutesDay;
     }
 
-    public double studiedMinutesInDateRange(DateTime startDate, DateTime endDate) {
-        Interval interval = new Interval(startDate, endDate);
+    public double studiedMinutesRange(DateTime startDate, DateTime endDate) {
+        Interval interval = new Interval(startDate.minusMillis(1), endDate); //startDate - 1 ms to include startDate in the range
         double studiedMinutesRange = 0;
         for(TimeLog timeLog : timeLogs) {
             if(interval.contains(timeLog.getStartTime())) {
