@@ -44,13 +44,13 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
         Subject subject = subjects.get(position);
         String subjectName = subject.getName();
         String grade = subject.currentGrade()+"";
-        String studiedHoursDay = new StringBuilder().append(subject.studiedHoursDay()).append(" h/")
+        String studiedHoursDay = new StringBuilder().append(subject.studiedMinutesToHours(subject.studiedMinutesToday())).append(" h/")
                 .append(subject.dailyHoursString()).append(" h")
                 .toString();
-        String studiedHoursWeek = new StringBuilder().append(subject.studiedHoursWeek()).append(" h/")
+        String studiedHoursWeek = new StringBuilder().append(subject.studiedMinutesToHours(subject.studiedMinutesThisWeek())).append(" h/")
                 .append(subject.getWeeklyExtraHours()).append(" h")
                 .toString();
-        String studiedHoursSemester = new StringBuilder().append(subject.studiedHoursSemester()).append(" h/")
+        String studiedHoursSemester = new StringBuilder().append(subject.studiedMinutesToHours(subject.studiedMinutesThisSemester())).append(" h/")
                 .append(subject.getSemesterExtraHours()).append(" h")
                 .toString();
 

@@ -290,6 +290,11 @@ public class Subject {
     /* OTHER METHODS */
     /*--------------------------------------------------------------------------------------------*/
 
+    /**
+     * Returns the studied minutes on a date
+     * @param date date to be checked in time logs
+     * @return the studied minutes on a date
+     */
     public double studiedMinutesOnDate(DateTime date) {
         double studiedMinutesDay = 0;
         for(TimeLog timeLog : timeLogs) {
@@ -300,6 +305,12 @@ public class Subject {
         return studiedMinutesDay;
     }
 
+    /**
+     * Returns the studied minutes in a range of dates
+     * @param startDate starting date of the range
+     * @param endDate ending date of the range
+     * @return the studied minutes in a range of dates
+     */
     public double studiedMinutesRange(DateTime startDate, DateTime endDate) {
         Interval interval = new Interval(startDate.minusMillis(1), endDate); //startDate - 1 ms to include startDate in the range
         double studiedMinutesRange = 0;
@@ -319,17 +330,29 @@ public class Subject {
        return studiedMinutesOnDate(DateTime.now());
     }
 
+    /**
+     * Returns the amount of studied minutes since this week's monday
+     * @return the amount of studied minutes since this week's monday
+     */
     public double studiedMinutesThisWeek() {
-        DateTime.Property currentDateTime = DateTime.now().weekOfWeekyear();
-        double studiedMinutesDay = 0;
-        for(TimeLog timeLog : timeLogs) {
-            if(timeLog.getStartTime().weekOfWeekyear().equals(currentDateTime)) {
-                studiedMinutesDay += timeLog.durationMinutes();
-            }
-        }
-        return studiedMinutesDay;
+        DateTime now = DateTime.now();
+        DateTime monday = now.minusDays(now.getDayOfWeek() - 1);
+        return studiedMinutesRange(monday, now);
     }
 
+    /**
+     * Returns the amount of studied minutes in the last seven days
+     * @return the amount of studied minutes in the last seven days
+     */
+    public double studiedMinutesLastSevenDays() {
+        DateTime now = DateTime.now();
+        return studiedMinutesRange(now.minusDays(7), now);
+    }
+
+    /**
+     * Returns the amount of studied minutes of this subject for the whole semester
+     * @return the amount of studied minutes of this subject for the whole semester
+     */
     public double studiedMinutesThisSemester() {
         double studiedMinutesDay = 0;
         for(TimeLog timeLog : timeLogs) {
@@ -338,18 +361,13 @@ public class Subject {
         return studiedMinutesDay;
     }
 
-
-
-    public double studiedHoursDay() {
-        return studiedMinutesToday() / 60;
-    }
-
-    public double studiedHoursWeek() {
-        return studiedMinutesThisWeek() / 60;
-    }
-
-    public double studiedHoursSemester() {
-        return studiedMinutesThisSemester() / 60;
+    /**
+     * Converts the given amount of minutes to hours
+     * @param studiedMinutes minutes to be converted to hours
+     * @return the given amount of minutes to hours
+     */
+    public double studiedMinutesToHours(double studiedMinutes) {
+        return studiedMinutes / 60;
     }
 
     /**

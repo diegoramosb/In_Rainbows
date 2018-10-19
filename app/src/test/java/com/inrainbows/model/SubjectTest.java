@@ -58,7 +58,7 @@ public class SubjectTest {
     }
 
     @Test
-    public void studiedMinutesDayTest() {
+    public void studiedMinutesTodayTest() {
         Assert.assertEquals(150.0, subject.studiedMinutesToday());
     }
 
@@ -81,6 +81,16 @@ public class SubjectTest {
     @Test
     public void studiedMinutesDateTest() {
         Assert.assertEquals(150.0, subject.studiedMinutesOnDate(DateTime.now()));
+    }
+
+    @Test
+    public void studiedMinutesLastSevenDaysTest() {
+        Assert.assertEquals(330.0, subject.studiedMinutesLastSevenDays());
+    }
+
+    @Test
+    public void studiedMinutesToHoursTest() {
+        Assert.assertEquals((150.0/60), subject.studiedMinutesToHours(subject.studiedMinutesToday()));
     }
 
 //
