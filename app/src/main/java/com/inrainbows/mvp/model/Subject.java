@@ -379,11 +379,27 @@ public class Subject {
     }
 
     /**
+     * Deletes the given grade
+     * @param grade grade to delete
+     */
+    public void deleteGrade(Grade grade) {
+        grades.remove(grade);
+    }
+
+    /**
      * Adds a time log to the list
      * @param timeLog time log to add
      */
     public void addTimeLog(TimeLog timeLog) {
         timeLogs.add(timeLog);
+    }
+
+    /**
+     * Deletes de given time log
+     * @param timeLog time log to delete
+     */
+    public void deleteTimeLog(TimeLog timeLog) {
+        timeLogs.remove(timeLog);
     }
 
     /**
