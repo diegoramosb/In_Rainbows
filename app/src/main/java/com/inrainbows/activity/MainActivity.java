@@ -160,8 +160,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
     private void updateUI(){
         if(currentSemester != null) {
             setCurrentSemesterName(currentSemester.getSemesterName());
-            tvGrade.setText(new StringBuilder().append(currentSemester.currentGrade()).append("").toString());
-            tvCredits.setText(new StringBuilder().append(currentSemester.credits()).append("").toString());
+            tvGrade.setText(new StringBuilder().append(currentSemester.currentGrade()).toString());
+            tvCredits.setText(new StringBuilder().append(currentSemester.credits()).toString());
         }
         else {
             setCurrentSemesterName("No semesters");

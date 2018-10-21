@@ -12,8 +12,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import uk.co.jemos.podam.api.PodamFactory;
-import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 import static org.junit.Assert.*;
 
@@ -24,6 +22,7 @@ public class SubjectTest {
 
 
     private Subject subject;
+
 
     @Before
     public void setUp(){
