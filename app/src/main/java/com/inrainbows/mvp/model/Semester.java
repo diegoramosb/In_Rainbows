@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.MutableDateTime;
+import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.NoSuchElementException;
 /**
  * @author diego on 1/08/2017.
  */
-@org.parceler.Parcel()
+@Parcel()
 public class Semester {
 
     private long id;
@@ -267,7 +268,7 @@ public class Semester {
     public double totalStudiedHours() {
         double totalStudiedHours = 0;
         for (Subject subject : subjects) {
-            totalStudiedHours += subject.studiedHoursSemester();
+            totalStudiedHours += subject.studiedMinutesToHours(subject.studiedMinutesThisSemester());
         }
         return totalStudiedHours;
     }

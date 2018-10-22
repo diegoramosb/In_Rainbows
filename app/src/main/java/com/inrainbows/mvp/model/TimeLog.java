@@ -93,7 +93,7 @@ public class TimeLog {
         final StringBuilder sb = new StringBuilder("TimeLog{");
         sb.append("startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
-        sb.append(", duraion=").append(durationMinutes());
+        sb.append(", duration=").append(durationMinutes());
         sb.append('}');
         return sb.toString();
     }

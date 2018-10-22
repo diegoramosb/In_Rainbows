@@ -6,7 +6,7 @@ import com.inrainbows.persistence.entities.SubjectEntity;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.Period;
+import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.text.DecimalFormat;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by diego on 31/05/2017.
  * This class represents a subject
  */
-@org.parceler.Parcel(org.parceler.Parcel.Serialization.BEAN)
+@Parcel()
 public class Subject {
 
     /*--------------------------------------------------------------------------------------------*/

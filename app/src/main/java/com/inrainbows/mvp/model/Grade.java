@@ -1,16 +1,14 @@
 package com.inrainbows.mvp.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.inrainbows.persistence.entities.GradeEntity;
 
 import org.joda.time.DateTime;
+import org.parceler.Parcel;
 
 /**
  * @author diego on 31/07/2018.
  */
-@org.parceler.Parcel()
+@Parcel()
 public class Grade implements GradedAssignment{
 
     private long id;
