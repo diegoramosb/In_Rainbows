@@ -37,15 +37,17 @@ public class SubjectTest {
         grade = new Grade.GradeBuilder(3L, 1L, "ASDF", 50).build();
         subject.addGrade(grade);
 
+        DateTime current = new DateTime(2018, 10, 18, 20, 0);
+
         for(int i = 0; i < 2; i++) {
-            TimeLog timeLog = new TimeLog(DateTime.now(), DateTime.now().plusMinutes(75));
+            TimeLog timeLog = new TimeLog(current, current.plusMinutes(75));
             subject.addTimeLog(timeLog);
         }
-        DateTime yesterday = DateTime.now().minusDays(1);
+        DateTime yesterday = current.minusDays(1);
         TimeLog timeLog = new TimeLog(yesterday, yesterday.plusHours(1));
         subject.addTimeLog(timeLog);
 
-        DateTime lastWeek = DateTime.now().minusWeeks(1);
+        DateTime lastWeek = current.minusWeeks(1);
         timeLog = new TimeLog(lastWeek, lastWeek.plusHours(2));
         subject.addTimeLog(timeLog);
     }
