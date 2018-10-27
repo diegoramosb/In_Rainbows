@@ -6,6 +6,7 @@ import com.inrainbows.persistence.entities.SubjectEntity;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
@@ -312,7 +313,8 @@ public class Subject {
      * @return the studied minutes in a range of dates
      */
     public double studiedMinutesRange(DateTime startDate, DateTime endDate) {
-        Interval interval = new Interval(startDate.minusMillis(1), endDate); //startDate - 1 ms to include startDate in the range
+        //startDate - 1 ms and endDate + 1 ms to include startDate and endDate in the range
+        Interval interval = new Interval(startDate.minusMillis(1), endDate.plusMillis(1));
         double studiedMinutesRange = 0;
         for(TimeLog timeLog : timeLogs) {
             if(interval.contains(timeLog.getStartTime())) {

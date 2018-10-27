@@ -22,16 +22,34 @@ import java.util.NoSuchElementException;
 @Parcel()
 public class Semester {
 
+    /**
+     * Semester id
+     */
     private long id;
 
+    /**
+     * Semester name
+     */
     private String semesterName;
 
+    /**
+     * Semester start date
+     */
     private DateTime startDate;
 
+    /**
+     * Semester end date
+     */
     private DateTime endDate;
 
+    /**
+     * Boolean that indicates if this is the current semester
+     */
     private boolean currentSemester;
 
+    /**
+     * Semester subjects
+     */
     @ParcelPropertyConverter(SubjectListConverter.class)
     private List<Subject> subjects;
 
@@ -41,6 +59,10 @@ public class Semester {
     Semester(){
     }
 
+    /**
+     * Creates a new semester with the semester builder
+     * @param builder semester builder with the desired values
+     */
     private Semester(SemesterBuilder builder) {
         this.id = builder.id;
         this.semesterName = builder.semesterName;
@@ -51,6 +73,10 @@ public class Semester {
         this.subjects = builder.getSubjects();
     }
 
+    /**
+     * Creates a new semester with a semester entity
+     * @param entity semester entity with the desired values
+     */
     public Semester(SemesterEntity entity) {
         if (entity != null) {
             this.id = entity.getId();
@@ -61,20 +87,36 @@ public class Semester {
         }
     }
 
+    /**
+     * Returns the semester id
+     * @return the semester id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets the semester id to the given value
+     * @param id new semester id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Returns the semester name
+     * @return the semester name
+     */
     public String getSemesterName() {
         return semesterName;
     }
 
-    public void setSemesterName(String semsterNumber) {
-        this.semesterName = semsterNumber;
+    /**
+     * Sets the semester name to the given value
+     * @param semsterName new semester name
+     */
+    public void setSemesterName(String semsterName) {
+        this.semesterName = semsterName;
     }
 
     /**
@@ -134,16 +176,24 @@ public class Semester {
         this.endDate = endDate;
     }
 
+    /**
+     * Returns true if this is the current semester, false otherwise
+     * @return true if this is the current semester, false otherwise
+     */
     public boolean isCurrentSemester() {
         return currentSemester;
     }
 
+    /**
+     * Sets the semester as the current semester or not
+     * @param currentSemester true if this is the current semester, false otherwise
+     */
     public void setCurrentSemester(boolean currentSemester) {
         this.currentSemester = currentSemester;
     }
 
-
     /**
+     * Returns the number of credits of the semester
      * @return number of credits of the semester
      */
     public double credits() {
@@ -252,10 +302,18 @@ public class Semester {
             throw new IllegalArgumentException("Name not valid");
     }
 
+    /**
+     * Returns a @{@link SemesterEntity} with the semester values
+     * @return a @{@link SemesterEntity} with the semester values
+     */
     public SemesterEntity toEntity() {
         return new SemesterEntity(id, semesterName, startDate, endDate, isCurrentSemester());
     }
 
+    /**
+     * Returns a list of @{@link SubjectEntity} with the subject values
+     * @return a list of @{@link SubjectEntity} with the subject values
+     */
     public List<SubjectEntity> subjectsToEntity() {
         ArrayList<SubjectEntity> ans = new ArrayList<>();
         for (Subject subject : subjects) {
@@ -265,6 +323,10 @@ public class Semester {
         return ans;
     }
 
+    /**
+     * Returns the total studied hours of all subjects in the semester
+     * @return the total studied hours of all subjects in the semester
+     */
     public double totalStudiedHours() {
         double totalStudiedHours = 0;
         for (Subject subject : subjects) {
@@ -273,6 +335,10 @@ public class Semester {
         return totalStudiedHours;
     }
 
+    /**
+     * Returns the current average grade in the semester
+     * @return the current average grade in the semester
+     */
     public double currentGrade() {
         double credits = 0;
         double points = 0;
