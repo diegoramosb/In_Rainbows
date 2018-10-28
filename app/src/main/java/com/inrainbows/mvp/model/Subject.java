@@ -6,7 +6,6 @@ import com.inrainbows.persistence.entities.SubjectEntity;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalTime;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 

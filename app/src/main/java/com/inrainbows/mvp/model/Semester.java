@@ -225,7 +225,7 @@ public class Semester {
      * @return an iterable with all the subjects of the semester
      * @throws NoSuchElementException if there are no subjects
      */
-    public Iterable<Subject> getSubjects() {
+    public List<Subject> getSubjects() {
         if (!subjects.isEmpty()) {
             return subjects;
         } else {
@@ -235,10 +235,6 @@ public class Semester {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
-    }
-
-    public int getSubjectAmount() {
-        return subjects.size();
     }
 
     /**

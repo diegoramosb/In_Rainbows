@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
  */
 public class SubjectTest {
 
-
     private Subject subject;
 
     private DateTime yesterday;
@@ -31,15 +30,11 @@ public class SubjectTest {
     public void setUp(){
         subject = new Subject.SubjectBuilder(1L, "asdf", 3, 3, 1L).build();
 
-        Grade grade = new Grade.GradeBuilder(1L, 1L, "asdf", 10).setGraded(true).build();
-        subject.addGrade(grade);
+        addGrades();
+        addTimeLogs();
+    }
 
-        grade = new Grade.GradeBuilder(2L, 1L, "asdf", 50).setGraded(true).build();
-        subject.addGrade(grade);
-
-        grade = new Grade.GradeBuilder(3L, 1L, "ASDF", 50).build();
-        subject.addGrade(grade);
-
+    private void addTimeLogs() {
         DateTime current = DateTime.now();
 
         yesterday = current.minusDays(1);
@@ -49,6 +44,20 @@ public class SubjectTest {
         twoAgo = current.minusDays(2);
         timeLog = new TimeLog(twoAgo, twoAgo.plusHours(2));
         subject.addTimeLog(timeLog);
+    }
+
+    private void addGrades() {
+        Grade grade = new Grade.GradeBuilder(1L, 1L, "asdf", 10)
+                .setGraded(true).setGrade(4.5).build();
+        subject.addGrade(grade);
+
+        grade = new Grade.GradeBuilder(2L, 1L, "asdf", 50)
+                .setGraded(true).setGrade(3.0).build();
+        subject.addGrade(grade);
+
+        grade = new Grade.GradeBuilder(3L, 1L, "ASDF", 40)
+                .setGraded(true).setGrade(5.0).build();
+        subject.addGrade(grade);
     }
 
     @Test
@@ -84,6 +93,11 @@ public class SubjectTest {
 
     @Test
     public void gradedPercentageTest() {
-        Assert.assertEquals(60.0, subject.gradedPercentage());
+        Assert.assertEquals(100.0, subject.gradedPercentage());
+    }
+
+    @Test
+    public void currentGradeTest() {
+        Assert.assertEquals(3.95, subject.currentGrade());
     }
 }
