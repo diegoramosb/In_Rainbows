@@ -70,4 +70,9 @@ public class SemesterTest {
     public void currentGradeTest() {
         Assert.assertEquals(4.25, semester.currentGrade());
     }
+
+    @Test
+    public void totalStudiedHoursTest() {
+        Assert.assertEquals(6.0, semester.totalStudiedHours());
+    }
 }
