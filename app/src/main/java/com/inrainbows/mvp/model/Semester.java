@@ -346,7 +346,8 @@ public class Semester {
             return (points / credits);
         }
         else {
-            throw new NoSuchElementException("The semester doesn't have any subject with credits");
+            return -1;
+//            throw new NoSuchElementException("The semester doesn't have any subject with credits");
         }
     }
 

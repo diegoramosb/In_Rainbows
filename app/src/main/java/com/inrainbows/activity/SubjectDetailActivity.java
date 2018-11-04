@@ -2,12 +2,14 @@ package com.inrainbows.activity;
 
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Subject;
@@ -126,6 +128,20 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
         pbSemester.setProgress(subject.semesterStudiedPercentage());
     }
 
+    private void startTimer(long durationMillis) {
+        CountDownTimer timer = new CountDownTimer(durationMillis, 1000) {
+            @Override
+            public void onTick(long millisLeft) {
+                System.out.println(millisLeft);
+            }
+
+            @Override
+            public void onFinish() {
+                System.out.println("done!");
+            }
+        }.start();
+    }
+
     @OnClick(R.id.fab_modify_time)
     public void onClickFab() {
         if(!isFABOpen){
@@ -162,7 +178,8 @@ public class SubjectDetailActivity extends BaseActivity implements SubjectDetail
 
     @OnClick(R.id.fab_add_time)
     public void fabAddTimeOnClick() {
-        showAddTimeDialog();
+//        showAddTimeDialog();
+        startTimer(10000);
     }
 
     @OnClick(R.id.fab_remove_time)
