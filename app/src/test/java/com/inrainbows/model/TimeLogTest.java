@@ -49,4 +49,15 @@ public class TimeLogTest  {
     public void getDurationTest() {
         Assert.assertEquals(new Interval(startTime, endTime).toDurationMillis(), timeLog.duration());
     }
+
+    @Test
+    public void toEntityTest() {
+        timeLog = factory.manufacturePojoWithFullData(TimeLog.class);
+        //TODO Implement TimeLogEntity
+    }
+
+    @Test
+    public void timeLogFromEntityTest() {
+
+    }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "507c193fb193b390102ec8ea4a12b7a1",
+    "identityHash": "8101d68c2b1f4a43bf9da6db37d586fc",
     "entities": [
       {
         "tableName": "SEMESTERS",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "SUBJECTS",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL, `CREDITS` REAL NOT NULL, `TOTAL_HOURS` REAL, `CLASS_HOURS` REAL NOT NULL, `WEEKLY_EXTRA_HOURS` REAL, `DAILY_EXTRA_HOURS` REAL, `SEMESTER_EXTRA_HOURS` REAL, `STUDIED_HOURS_DAY` REAL, `STUDIED_HOURS_WEEK` REAL, `STUDIED_HOURS_SEMESTER` REAL, `SEMESTER_ID` INTEGER NOT NULL, FOREIGN KEY(`SEMESTER_ID`) REFERENCES `SEMESTERS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `NAME` TEXT NOT NULL, `CREDITS` REAL NOT NULL, `TOTAL_HOURS` REAL NOT NULL, `CLASS_HOURS` REAL NOT NULL, `WEEKLY_EXTRA_HOURS` REAL NOT NULL, `DAILY_EXTRA_HOURS` REAL NOT NULL, `SEMESTER_EXTRA_HOURS` REAL NOT NULL, `SEMESTER_ID` INTEGER NOT NULL, FOREIGN KEY(`SEMESTER_ID`) REFERENCES `SEMESTERS`(`ID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -74,7 +74,7 @@
             "fieldPath": "totalHours",
             "columnName": "TOTAL_HOURS",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "classHours",
@@ -86,37 +86,19 @@
             "fieldPath": "weeklyExtraHours",
             "columnName": "WEEKLY_EXTRA_HOURS",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "dailyExtraHours",
             "columnName": "DAILY_EXTRA_HOURS",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "semesterExtraHours",
             "columnName": "SEMESTER_EXTRA_HOURS",
             "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "studiedHoursDay",
-            "columnName": "STUDIED_HOURS_DAY",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "studiedHoursWeek",
-            "columnName": "STUDIED_HOURS_WEEK",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "studiedHoursSemester",
-            "columnName": "STUDIED_HOURS_SEMESTER",
-            "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "semesterId",
@@ -229,7 +211,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"507c193fb193b390102ec8ea4a12b7a1\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8101d68c2b1f4a43bf9da6db37d586fc\")"
     ]
   }
 }

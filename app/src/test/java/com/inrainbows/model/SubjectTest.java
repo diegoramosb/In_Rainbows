@@ -3,6 +3,7 @@ package com.inrainbows.model;
 import com.inrainbows.mvp.model.Grade;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.model.TimeLog;
+import com.inrainbows.persistence.entities.SubjectEntity;
 
 import junit.framework.Assert;
 
@@ -13,12 +14,17 @@ import org.junit.Test;
 import java.util.List;
 
 
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
+
 import static org.junit.Assert.*;
 
 /**
  * @author diego on 20/12/2017.
  */
 public class SubjectTest {
+
+    private PodamFactory factory = new PodamFactoryImpl();
 
     private Subject subject;
 
@@ -99,5 +105,35 @@ public class SubjectTest {
     @Test
     public void currentGradeTest() {
         Assert.assertEquals(3.95, subject.currentGrade());
+    }
+
+    @Test
+    public void toEntityTest() {
+        subject = factory.manufacturePojoWithFullData(Subject.class);
+        SubjectEntity  entity = subject.toEntity();
+        Assert.assertEquals(subject.getId(), entity.getId());
+        Assert.assertEquals(subject.getSemesterId(), entity.getSemesterId());
+        Assert.assertEquals(subject.getName(), entity.getName());
+        Assert.assertEquals(subject.getCredits(), entity.getCredits());
+        Assert.assertEquals(subject.getTotalHours(), entity.getTotalHours());
+        Assert.assertEquals(subject.getClassHours(), entity.getClassHours());
+        Assert.assertEquals(subject.getDailyExtraHours(), entity.getDailyExtraHours());
+        Assert.assertEquals(subject.getWeeklyExtraHours(), entity.getWeeklyExtraHours());
+        Assert.assertEquals(subject.getSemesterExtraHours(), entity.getSemesterExtraHours());
+    }
+
+    @Test
+    public void subjectFromEntityTetst() {
+        SubjectEntity entity = factory.manufacturePojoWithFullData(SubjectEntity.class);
+        subject = new Subject(entity);
+        Assert.assertEquals(entity.getId(), subject.getId());
+        Assert.assertEquals(entity.getSemesterId(), subject.getSemesterId());
+        Assert.assertEquals(entity.getName(), subject.getName());
+        Assert.assertEquals(entity.getCredits(), subject.getCredits());
+        Assert.assertEquals(entity.getClassHours(), subject.getClassHours());
+        Assert.assertEquals(entity.getTotalHours(), subject.getTotalHours());
+        Assert.assertEquals(entity.getWeeklyExtraHours(), subject.getWeeklyExtraHours());
+        Assert.assertEquals(entity.getDailyExtraHours(), subject.getDailyExtraHours());
+        Assert.assertEquals(entity.getSemesterExtraHours(), subject.getSemesterExtraHours());
     }
 }
