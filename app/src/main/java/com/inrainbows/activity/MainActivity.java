@@ -35,60 +35,114 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * Main activity of the application
  * @author diego on 15/07/2018.
  */
 public class MainActivity extends BaseActivity implements MainContract.View, SubjectsRecyclerViewAdapter.ItemClickListener {
 
+    /**
+     * Presenter that the activity will use
+     */
     private MainContract.Presenter presenter;
 
+    /**
+     * Current semester that the application is displaying
+     */
     private Semester currentSemester;
 
+    /**
+     * Main page drawer menu
+     */
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    /**
+     * View for the drawer menu content
+     */
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    /**
+     * TextView for displaying the current semester grade
+     */
     @BindView(R.id.tvSemesterGrade)
     TextView tvGrade;
 
+    /**
+     * TextView for displaying the current semester credits
+     */
     @BindView(R.id.tvSemesterCredits)
     TextView tvCredits;
 
+    /**
+     * Button for selecting an "add" acction
+     */
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
 
+    /**
+     * Button to add a new grade
+     */
     @BindView(R.id.fab_add_grade)
     FloatingActionButton fabAddGrade;
 
+    /**
+     * Button to add a new subject
+     */
     @BindView(R.id.fab_add_subject)
     FloatingActionButton fabAddSubject;
 
+    /**
+     * Button to add a new semester
+     */
     @BindView(R.id.fab_add_semester)
     FloatingActionButton fabAddSemester;
 
+    /**
+     * Add grade label
+     */
     @BindView(R.id.layout_add_grade)
     LinearLayout layoutAddGrade;
 
+    /**
+     * Add subject label
+     */
     @BindView(R.id.layout_add_subject)
     LinearLayout layoutAddSubject;
 
+    /**
+     * Add semester label
+     */
     @BindView(R.id.layout_add_semester)
     LinearLayout layoutAddSemester;
 
+    /**
+     * RecyclerView for displaying the subjects
+     */
     @BindView(R.id.rv_subject_list)
     RecyclerView rvSubjects;
 
+    /**
+     * Adapter for the subjects recycler view
+     */
     private SubjectsRecyclerViewAdapter subjectsRvAdapter;
 
+    /**
+     * Variable to indicate if the FAB menu is open or not
+     */
     boolean isFABOpen;
 
+    /**
+     * Initializes the activity
+     * @param savedInstanceState state parameters
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setUIComponents();
 
+        // Subscribe to the semester and subjects, so that the UI is updated if they change
         subscribeToCurrentSemester();
         subscribeToSubjects();
     }
@@ -121,22 +175,30 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         }
     }
 
+    /**
+     * Method used to subscribe to the subjects
+     */
     private void subscribeToSubjects(){
         final Observer<List<Subject>> subjectsObserver = (subjects) -> {
             if(subjects != null) {
                 subjectsRvAdapter.setSubjects(subjects);
-                updateUI();
+                updateUI(); //The ui is updated every time that there is a change in the subject list
             }
             else {
                 //TODO: Hide recycler view and show empty message instead.
             }
         };
 
+        //The observer is executed with any change in the subjects provided by the presenter
+
         subjectsObserver.onChanged(presenter.getSubjects().getValue());
 
         presenter.getSubjects().observe(this, subjectsObserver);
     }
 
+    /**
+     * Method used to subscribe to the subjects. See subscribeToSubjects() for details
+     */
     private void subscribeToCurrentSemester() {
         final Observer<Semester> currentSemesterObserver = (semester)-> {
             if (semester != null) {
@@ -153,6 +215,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         presenter.getCurrentSemester().observe(this, currentSemesterObserver);
     }
 
+    /**
+     * Updates the UI
+     */
     private void updateUI(){
         if(currentSemester != null) {
             setCurrentSemesterName(currentSemester.getSemesterName());
@@ -166,6 +231,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         }
     }
 
+    /**
+     * Shows the {@link EditSemesterActivity} in add mode
+     */
     @Override
     public void showAddSemesterActivity(){
         Intent intent = new Intent(this, EditSemesterActivity.class);
@@ -173,6 +241,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         closeFABMenu();
     }
 
+    /**
+     * Shows the {@link EditSubjectActivity} in add mode
+     */
     @Override
     public void showAddSubjectActivity() {
         Intent intent = new Intent(this, EditSubjectActivity.class);
@@ -181,6 +252,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         closeFABMenu();
     }
 
+    /**
+     * Shows the {@link EditGradeActivity} in add mode
+     */
     @Override
     public void showAddGradeActivity() {
         Intent intent = new Intent(this, EditGradeActivity.class);
@@ -188,12 +262,20 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         closeFABMenu();
     }
 
+    /**
+     * Shows the {@link SubjectDetailActivity} of the selected subject
+     * @param subject selected subject
+     */
     public void showSubjectDetailActivity(Subject subject) {
         Intent intent = new Intent(this, SubjectDetailActivity.class);
         intent.putExtra("subject", Parcels.wrap(subject));
         startActivity(intent);
     }
 
+    /**
+     * Binds the presenter to the view
+     * @param presenter presenter that the view will use
+     */
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         this.presenter = presenter;
@@ -210,6 +292,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
 
     }
 
+    /**
+     * Sets ups the drawer menu content
+     * @param navigationView NavigationView with the content
+     */
     private void setupDrawerContent(NavigationView navigationView) {
 
         navigationView.setNavigationItemSelectedListener(
@@ -231,12 +317,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         );
     }
 
+    /**
+     * Sets the given semester as the activity's current semester
+     * @param semester new current semester
+     */
     @Override
     public void setCurrentSemester(Semester semester){
         this.currentSemester = semester;
     }
 
-
+    /**
+     * Sets the current semester label to the given string
+     * @param semesterName semester name or other string
+     */
     @Override
     public void setCurrentSemesterName(String semesterName) {
         Menu menu = navigationView.getMenu();
@@ -244,6 +337,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         miSemesterName.setTitle(semesterName);
     }
 
+    /**
+     * Shows a dialog for the user to choose the current semester
+     */
     private void showChooseCurrentSemesterDialog(){
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -268,6 +364,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         alert.show();
     }
 
+    /**
+     * Method called when the add FAB is tapped
+     */
     @OnClick(R.id.fab_add)
     public void fabAddOnClick(){
         if(!isFABOpen){
@@ -278,27 +377,44 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         }
     }
 
+    /**
+     * Method called when the add semester FAB is tapped
+     */
     @OnClick(R.id.fab_add_semester)
     public void fabAddSemesterOnClick() {
         showAddSemesterActivity();
     }
 
+    /**
+     * Method called when the add subject FAB is tapped
+     */
     @OnClick(R.id.fab_add_subject)
     public void fabAddSubjectOnClick() {
         showAddSubjectActivity();
     }
 
+    /**
+     * Method called when the add grade FAB is tapped
+     */
     @OnClick(R.id.fab_add_grade)
     public void fabAddGradeOnClick(){
         showAddGradeActivity();
     }
 
+    /**
+     * Method called when a subject is tapped
+     * @param view
+     * @param position position of the item in the {@link SubjectsRecyclerViewAdapter}
+     */
     @Override
     public void onItemClick(View view, int position) {
 //        Toast.makeText(this, "You clicked " + subjectsRvAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
         showSubjectDetailActivity(subjectsRvAdapter.getItem(position));
     }
 
+    /**
+     * Shows the FAB menu
+     */
     private void showFABMenu(){
         isFABOpen=true;
 
@@ -313,6 +429,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         layoutAddSemester.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
     }
 
+    /**
+     * Closes the FAB menu
+     */
     private void closeFABMenu(){
         isFABOpen=false;
 
@@ -327,7 +446,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Sub
         layoutAddSemester.setVisibility(View.GONE);
     }
 
-
+    /**
+     * Configures the behaviour of the back button in the activity
+     */
     @Override
     public void onBackPressed() {
         if(isFABOpen){
