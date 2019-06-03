@@ -23,6 +23,9 @@ import butterknife.OnClick;
  */
 public class EditSemesterActivity extends BaseActivity implements EditSemesterContract.View {
 
+    /**
+     * Presenter that the activity will use to interact with the DB.
+     */
     EditSemesterContract.Presenter presenter;
 
     /**

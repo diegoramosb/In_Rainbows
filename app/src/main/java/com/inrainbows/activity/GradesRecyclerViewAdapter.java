@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.OnClick;
 
 /**
+ * Adapter for the RecyclerView that shows the grades in the Subject view
  * @author diego on 4/08/2018.
  */
 public class GradesRecyclerViewAdapter extends RecyclerView.Adapter<GradesRecyclerViewAdapter.ViewHolder> {

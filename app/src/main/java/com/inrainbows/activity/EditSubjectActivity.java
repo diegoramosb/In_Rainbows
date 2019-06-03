@@ -19,12 +19,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * Activity for editing subject info
  * @author diego on 22/07/2018.
  */
 public class EditSubjectActivity extends BaseActivity implements EditSubjectContract.View {
 
+    /**
+     * Presenter that the activity will use to interact with the DB.
+     */
     EditSubjectContract.Presenter presenter;
 
+    /**
+     * Current semester that the subject will be added to
+     */
     private Semester currentSemester;
 
     /**
@@ -45,10 +52,15 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
     @BindView(R.id.et_3)
     EditText et_3;
 
+    /**
+     * Initializes the activity
+     * @param savedInstanceState state parameters
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Semester passed by the main activity through the intent
         currentSemester = Parcels.unwrap(getIntent().getParcelableExtra("currentSemester"));
 
         setUIComponents();
@@ -77,9 +89,12 @@ public class EditSubjectActivity extends BaseActivity implements EditSubjectCont
         et_3.setText(R.string.sample_subject_class_hours);
     }
 
+    /**
+     * Inserts a new subject in the database through the presenter
+     */
     @OnClick(R.id.fab_check)
     public void insertSubject() {
-        if(currentSemester != null) {
+        if(currentSemester != null) { //Validates that the semester i
             Subject subject = new Subject.SubjectBuilder(0L, et_1.getText().toString(),
                     Double.valueOf(et_2.getText().toString()), Double.valueOf(et_3.getText().toString()),
                     currentSemester.getId())

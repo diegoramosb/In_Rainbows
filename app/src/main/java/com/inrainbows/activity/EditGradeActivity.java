@@ -14,7 +14,6 @@ import android.widget.Spinner;
 
 import com.inrainbows.R;
 import com.inrainbows.mvp.model.Grade;
-import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.EditGradePresenter;
 import com.inrainbows.mvp.view.EditGradeContract;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
 public class EditGradeActivity extends BaseActivity implements EditGradeContract.View {
 
     /**
-     * Presenter
+     * Presenter that the activity will use to interact with the DB.
      */
     EditGradeContract.Presenter presenter;
 
