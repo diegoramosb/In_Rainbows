@@ -16,21 +16,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Presenter of the {@link com.inrainbows.activity.MainActivity}
  * @author diego on 15/07/2018.
  */
 public class MainPresenter extends ViewModel implements MainContract.Presenter {
 
 //    MainContract.View view;
 
+    /**
+     * App database
+     */
     private AppDatabase db;
 
+    /**
+     * MutableLiveData for the current semester
+     */
     private MutableLiveData<Semester> currentSemester = new MutableLiveData<>();
 
+    /**
+     * MutableLiveDate for the subjects of the semester
+     */
     private MutableLiveData<List<Subject>> subjects = new MutableLiveData<>();
 
+    /**
+     * Constructor
+     */
     public MainPresenter() {
+        //This is an empty constructor
     }
 
+    /**
+     * Sets the app database to the one given. It also gets the current semester and subjects
+     * @param db given app database
+     */
     @Override
     public void setDb(AppDatabase db) {
         this.db = db;
@@ -38,6 +56,9 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         getSubjectsFromDb();
     }
 
+    /**
+     * Gets the current semester from the DB and sets it as such
+     */
     private void getCurrentSemesterFromDb() {
         SemesterEntity entity = db.semesterDao().getCurrentSemester();
         if(entity != null){
@@ -52,6 +73,9 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         }
     }
 
+    /**
+     * Gets the subjects of the current semester and sets it as such
+     */
     private void getSubjectsFromDb(){
         if(currentSemester.getValue() != null) {
             List<Subject> semesterSubjects = subjectEntityListToSubject(db.subjectDao().getAllSubjectsWithSemesterId(currentSemester.getValue().getId()));
@@ -62,6 +86,10 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         }
     }
 
+    /**
+     * Sets the given semester as the current semester in the DB
+     * @param semester semester to be set as current
+     */
     @Override
     public void setCurrentSemester(Semester semester) {
         Semester current = currentSemester.getValue();
@@ -76,16 +104,29 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         getCurrentSemesterFromDb();
     }
 
+    /**
+     * Returns the current semester
+     * @return the current semester
+     */
     @Override
     public MutableLiveData<Semester> getCurrentSemester() {
         return currentSemester;
     }
 
+    /**
+     * Returns the list of semesters from the DB
+     * @return
+     */
     @Override
     public List<Semester> getAllSemesters() {
         return semesterEntityListToSemester(db.semesterDao().getAllList());
     }
 
+    /**
+     * Converts a list of {@link SemesterEntity} to a list of {@link Semester}
+     * @param semesterEntityList entity list
+     * @return a list of Semesters with the elements of the SemesterEntity list
+     */
     private List<Semester> semesterEntityListToSemester(List<SemesterEntity> semesterEntityList){
         List<Semester> ans = new ArrayList<>();
         for(SemesterEntity semesterEntity : semesterEntityList){
@@ -94,7 +135,11 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         return ans;
     }
 
-
+    /**
+     * Converts a list of {@link SubjectEntity} to a list of {@link Subject}
+     * @param subjects entity list
+     * @return a list of Subjects with the elements of the SubjectEntity list
+     */
     private List<Subject> subjectEntityListToSubject(List<SubjectEntity> subjects){
         List<Subject> ans = new ArrayList<>();
         for(SubjectEntity entity : subjects){
@@ -103,6 +148,11 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         return ans;
     }
 
+    /**
+     * Converts a list of {@link GradeEntity} to a list of {@link Grade}
+     * @param entities entity list
+     * @return a list of Grades with the elements of the GradeEntity list
+     */
     private List<Grade> gradeEntityListToGrade(List<GradeEntity> entities){
         List<Grade> ans = new ArrayList<>();
         for(GradeEntity entity : entities){
@@ -111,6 +161,10 @@ public class MainPresenter extends ViewModel implements MainContract.Presenter {
         return ans;
     }
 
+    /**
+     * Returns the subject list of the current semester
+     * @return
+     */
     @Override
     public MutableLiveData<List<Subject>> getSubjects() {
         return subjects;

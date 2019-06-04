@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Converter from a list of grades to a parcel and vice-versa
  * @author diego on 1/10/2018.
  */
 public class GradeListsConverter implements ParcelConverter<List<Grade>> {
