@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.inrainbows.R;
+import com.inrainbows.activity.adapters.SubjectsRecyclerViewAdapter;
 import com.inrainbows.mvp.model.Semester;
 import com.inrainbows.mvp.model.Subject;
 import com.inrainbows.mvp.presenter.MainPresenter;

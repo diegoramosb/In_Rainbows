@@ -1,7 +1,6 @@
-package com.inrainbows.activity;
+package com.inrainbows.activity.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +22,21 @@ import butterknife.OnClick;
  */
 public class GradesRecyclerViewAdapter extends RecyclerView.Adapter<GradesRecyclerViewAdapter.ViewHolder> {
 
+    /**
+     * List of Grades to be shown
+     */
     private List<Grade> grades;
 
+    /**
+     * RecyclerView inflater
+     */
     private LayoutInflater inflater;
 
+    /**
+     * Inflater constructor
+     * @param context app context
+     * @param grades list of grades to be displayed
+     */
     public GradesRecyclerViewAdapter(Context context, List<Grade> grades) {
         this.inflater = LayoutInflater.from(context);
         this.grades = grades;
@@ -56,16 +66,35 @@ public class GradesRecyclerViewAdapter extends RecyclerView.Adapter<GradesRecycl
         return 0;
     }
 
+    /**
+     * ViewHolder class that contains the UI elements
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        /**
+         * TextView to display the grade name
+         */
         TextView tvGradeName;
 
+        /**
+         * TextView to display the grade
+         */
         TextView tvGradeGrade;
 
+        /**
+         * TextView to display the grade percentage
+         */
         TextView tvGradePercentage;
 
+        /**
+         * Image button to go to the edit grade activity
+         */
         ImageButton ibEditGrade;
 
+        /**
+         * ViewHolder constructor
+         * @param view
+         */
         public ViewHolder(View view){
             super(view);
             tvGradeName = view.findViewById(R.id.tv_grade_name);
@@ -86,10 +115,19 @@ public class GradesRecyclerViewAdapter extends RecyclerView.Adapter<GradesRecycl
         }
     }
 
+    /**
+     * Sets the grades to the given list
+     * @param grades list of grades to be set
+     */
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
     }
 
+    /**
+     * Returns the grade with the given id
+     * @param id grade id
+     * @return the grade with the given id
+     */
     Grade getItem(int id){
         return grades.get(id);
     }

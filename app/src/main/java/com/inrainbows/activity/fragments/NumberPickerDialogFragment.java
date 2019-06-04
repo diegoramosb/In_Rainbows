@@ -1,4 +1,4 @@
-package com.inrainbows.activity;
+package com.inrainbows.activity.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
