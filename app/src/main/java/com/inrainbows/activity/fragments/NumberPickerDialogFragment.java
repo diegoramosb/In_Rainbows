@@ -17,42 +17,56 @@ import com.inrainbows.R;
 import butterknife.BindView;
 
 /**
+ * Fragment to choose an mount of time to register in a time log
  * @author diego on 5/08/2018.
  */
 public class NumberPickerDialogFragment extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
 
+    /**
+     * Constant for add time mode
+     */
     public final static int ADD = 1;
 
+    /**
+     * Constant for remove time mode
+     */
     public final static int REMOVE = 2;
 
+    /**
+     * NumberPicker for hours
+     */
     NumberPicker npHours;
 
+    /**
+     * NumberPicker for minutes
+     */
     NumberPicker npMinutes;
 
+    /**
+     *
+     */
     private NumberPickerDialogListener listener;
 
     @BindView(R.id.header_frame)
-    FrameLayout headerFrame;
+    public FrameLayout headerFrame;
 
-
-//    public static NumberPickerDialogFragment newInstance() {
-//        return new NumberPickerDialogFragment();
-//    }
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-
+    /**
+     * Creates a new dialog
+     * @param savedInstanceState instance state
+     * @return a new dialog
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        //Gets the dialog builder
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        //Gets the dialog inflater
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.number_picker_dialog, null);
 
+        //Configures the number pickers
         npHours = view.findViewById(R.id.np_hour);
         npHours.setMinValue(0);
         npHours.setMaxValue(23);
@@ -60,8 +74,11 @@ public class NumberPickerDialogFragment extends AppCompatDialogFragment implemen
         npMinutes.setMinValue(0);
         npMinutes.setMaxValue(59);
 
+        //Sets the title to add time or remove time accordingly
+
         final int title = getArguments().getInt("title");
 
+        //Configures the dialog elements
         builder.setView(view)
                 .setTitle( title == ADD ? R.string.add_time_dialog_title : R.string.remove_time_dialog_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -81,6 +98,10 @@ public class NumberPickerDialogFragment extends AppCompatDialogFragment implemen
         return builder.create();
     }
 
+    /**
+     * Method to set the app context as the listener
+     * @param context app context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -93,12 +114,15 @@ public class NumberPickerDialogFragment extends AppCompatDialogFragment implemen
         }
     }
 
+    /**
+     * Interface of the NumberPickerDialogListener for the fragment listener
+     */
     public interface NumberPickerDialogListener {
         void modifyTime(int hours, int minutes, int mode);
     }
 
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-
+        //TODO: Do something when the value is changed
     }
 }

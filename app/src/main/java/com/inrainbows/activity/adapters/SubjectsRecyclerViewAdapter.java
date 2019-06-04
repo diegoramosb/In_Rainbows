@@ -116,7 +116,7 @@ public class SubjectsRecyclerViewAdapter extends RecyclerView.Adapter<SubjectsRe
         this.subjects = subjects;
     }
 
-    Subject getItem(int id){
+    public Subject getItem(int id){
         return subjects.get(id);
     }
 
